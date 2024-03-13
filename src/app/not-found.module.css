@@ -1,0 +1,41 @@
+
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100dvw;
+    height: 100dvh;
+}
+
+.message{
+    padding-top:300px;
+    align-self: center;
+    font-size: 36px;
+    margin-bottom: 160px;
+}
+.linkbox{
+    align-self: flex-start;
+    display: flex;
+    justify-content: start;
+    margin: 45px;
+    width: 300px;
+    height: 260px;
+    border: 1px solid #888;
+    border-radius: 6px;
+}
+
+.link{
+    align-self: flex-end;
+
+    margin: 20px;
+
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #111;
+}
+.link:hover{
+    background-color: #eee;
+}
