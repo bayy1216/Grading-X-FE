@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.leftWrapper{
+    background-color: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 200px;
+    position: fixed;
+
+    border-right: 1px solid #ccc;
+}
+
+.section{
+    font-size: 20px;
+    font-weight: normal;
+    color: #111;
+    padding: 10px 10px;
+
+}
+
+.rightWrapper{
+    flex: 1;
+    flex-direction: column;
+    background-color: #F2F2F2;
+    padding-left: 200px; /* Adjusted padding to account for the fixed sidebar */
+    overflow-y: auto; /* Enable vertical scrolling for the entire rightWrapper */
+}
+
+.topHeader {
+    height: 50px;
+    width: 100%; /* Take up the full width of the viewport */
+    border-bottom: 1px solid #ccc;
+
+    position: fixed;
+
+    background-color: #F2F2F2;
+}
+.content{
+    background-color: #F2F2F2;
+    padding-top: 51px; /* Add padding to push content below the fixed topHeader */
+    min-height: 100vh; /* Calculate the minimum height of the content area */
+}

@@ -4,8 +4,38 @@
     align-items: center;
     width: 100dvw;
     height: 100dvh;
-    background-color: #1c1c1c;
+    background-color: var(--background-blackgrey);
 }
+.header {
+    width: 100dvw;
+    height: 60px;
+    background-color: var(--background-blackgrey);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #444;
+}
+.headerLeft {
+    flex: 1;
+}
+
+.link{
+    margin-right: 120px;
+    text-decoration: none;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 300;
+
+    padding: 4px 12px;
+    border: 1px solid #f2f2f2;
+    border-radius: 6px;
+    background-color: mediumseagreen;
+}
+.link:hover{
+    background-color: #ccc;
+}
+
 
 .introduction {
     margin-top: 250px;
@@ -15,5 +45,4 @@
     font-size: 22px;
     font-weight: 500;
     color: white;
-
 }
