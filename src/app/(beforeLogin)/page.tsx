@@ -7,7 +7,7 @@ export default function Home() {
     <main className={styles.container}>
       <div className={styles.header}>
         <div className={styles.headerLeft}></div>
-        <Link href={'/dashboard/class'} className={styles.link}>
+        <Link href={'/dashboard/course'} className={styles.link}>
           dashboard
         </Link>
       </div>

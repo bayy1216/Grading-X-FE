@@ -1,0 +1,19 @@
+.container {
+    width: 100dvw;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.currentClass{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.previousClass{
+    display: flex;
+    flex-direction: row;
+}

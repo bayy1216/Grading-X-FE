@@ -14,7 +14,7 @@ export default function NavMenu() {
   return (
     <div className={style.container}>
       <div className={style.topHeader}>
-        <Link href={'/dashboard/class'} className={style.link}>
+        <Link href={'/dashboard/course'} className={style.link}>
           <h1>Dashboard</h1>
         </Link>
       </div>
@@ -23,8 +23,8 @@ export default function NavMenu() {
 
       <div className={style.section}>Classes</div>
       <ul>
-        <Link href={'/dashboard/class'} className={style.link}>
-          {segment === 'class' ? <div className={style.current}>클래스 관리 ✓</div> :
+        <Link href={'/dashboard/course'} className={style.link}>
+          {segment === 'course' ? <div className={style.current}>클래스 관리 ✓</div> :
             <li>클래스</li>}
         </Link>
 
