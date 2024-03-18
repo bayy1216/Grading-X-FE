@@ -1,5 +1,10 @@
 .container {
     width: 230px;
     height: 230px;
+    background-color: #fafafa;
     border: 1px solid #ccc;
+}
+
+.container:hover {
+    background-color: #f0f0f0;
 }

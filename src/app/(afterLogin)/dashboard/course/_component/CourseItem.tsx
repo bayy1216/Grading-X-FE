@@ -1,8 +1,13 @@
 import style from "@/app/(afterLogin)/dashboard/course/_component/courseItem.module.css";
 
-export default function CourseItem() {
+type Props = {
+  onClick: () => void;
+}
+
+export default function CourseItem({onClick}: Props) {
+
   return (
-    <div className={style.container}>
+    <div className={style.container} onClick={onClick}>
       <div>
         <h2>클래스 이름</h2>
         <p>클래스 설명</p>

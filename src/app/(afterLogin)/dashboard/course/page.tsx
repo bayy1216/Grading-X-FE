@@ -6,20 +6,20 @@ import CourseItem from "@/app/(afterLogin)/dashboard/course/_component/CourseIte
 export default function Page() {
   const router = useRouter();
 
-  function go(){
-    router.push('/dashboard/class/21d')
+  function go(id: string){
+    router.push(`/dashboard/course/${id}`)
   }
   return (
     <div className={style.container}>
       <div className={style.currentClass}>
-        <CourseItem/>
-        <CourseItem/>
-        <CourseItem/>
+        <CourseItem onClick={()=>go('dd')}/>
+        <CourseItem onClick={()=>go('dd')}/>
+        <CourseItem onClick={()=>go('dd')}/>
       </div>
       <div className={style.previousClass}>
-        <CourseItem/>
-        <CourseItem/>
-        <CourseItem/>
+        <CourseItem onClick={()=>go('dd')}/>
+        <CourseItem onClick={()=>go('dd')}/>
+        <CourseItem onClick={()=>go('dd')}/>
       </div>
     </div>
   );
