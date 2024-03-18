@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    width: 200px;
+    width: var(--bashboard-sidebar-width);
     position: fixed;
 
     border-right: 1px solid #ccc;
@@ -27,12 +27,12 @@
     flex: 1;
     flex-direction: column;
     background-color: #F2F2F2;
-    padding-left: 200px; /* Adjusted padding to account for the fixed sidebar */
+    padding-left: var(--bashboard-sidebar-width);
     overflow-y: auto; /* Enable vertical scrolling for the entire rightWrapper */
 }
 
 .topHeader {
-    height: 50px;
+    height: var(--bashboard-header-height);
     width: 100%; /* Take up the full width of the viewport */
     border-bottom: 1px solid #ccc;
 

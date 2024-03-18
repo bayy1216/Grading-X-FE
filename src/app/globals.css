@@ -12,4 +12,7 @@ body {
 
 :root {
   --background-blackgrey: #1c1c1c;
+
+  --bashboard-header-height: 45px;
+  --bashboard-sidebar-width: 200px;
 }

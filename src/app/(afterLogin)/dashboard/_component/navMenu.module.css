@@ -6,14 +6,24 @@
     background-color: #ccc;
 }
 
+.topHeader {
+    height: var(--bashboard-header-height);
+    border-bottom: 1px solid #ccc;
+}
+
 .container h1{
     padding: 10px 20px;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 400;
     color: #111;
     text-align: start;
-    border-bottom: 1px solid #ccc;
 }
+
+.section {
+    padding: 10px 20px;
+
+}
+
 .container ul{
     list-style: none;
     padding: 0;

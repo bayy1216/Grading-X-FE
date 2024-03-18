@@ -13,9 +13,12 @@ export default function NavMenu() {
   }
   return (
     <div className={style.container}>
-      <Link href={'/dashboard/class'} className={style.link}>
-        <h1>Dashboard</h1>
-      </Link>
+      <div className={style.topHeader}>
+        <Link href={'/dashboard/class'} className={style.link}>
+          <h1>Dashboard</h1>
+        </Link>
+      </div>
+
 
 
       <div className={style.section}>Classes</div>
