@@ -29,6 +29,7 @@
     background-color: #F2F2F2;
     padding-left: var(--bashboard-sidebar-width);
     overflow-y: auto; /* Enable vertical scrolling for the entire rightWrapper */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
 .topHeader {
