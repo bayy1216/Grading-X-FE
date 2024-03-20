@@ -4,6 +4,7 @@ import style from '@/app/(beforeLogin)/_component/login.module.css';
 import {ChangeEventHandler, FormEventHandler, useState} from "react";
 import {redirect, useRouter} from "next/navigation";
 import {signIn} from "next-auth/react";
+import SignupButton from "@/app/(beforeLogin)/_component/SignupButton";
 
 export default function LoginModal() {
   const [email, setEmail] = useState('');
@@ -61,6 +62,7 @@ export default function LoginModal() {
             </svg>
           </button>
           <div>로그인하세요.</div>
+          <SignupButton />
         </div>
         <form onSubmit={onSubmit}>
           <div className={style.modalBody}>
