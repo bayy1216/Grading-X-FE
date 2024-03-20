@@ -7,9 +7,15 @@ export default function Home() {
     <main className={styles.container}>
       <div className={styles.header}>
         <div className={styles.headerLeft}></div>
-        <Link href={'/dashboard/course'} className={styles.link}>
-          dashboard
-        </Link>
+        <div className={styles.headerRight}>
+
+          <Link href={'/dashboard/course'} className={styles.link}>
+            dashboard
+          </Link>
+          <Link href={'/login'} className={styles.link}>
+            로그인
+          </Link>
+        </div>
       </div>
       <div className={styles.introduction}>
         <div>Automate Your exam questions</div>
