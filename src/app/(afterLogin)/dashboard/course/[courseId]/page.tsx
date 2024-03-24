@@ -46,10 +46,7 @@ export default function Page({params}: Props) {
     <div className={style.container}>
       {
         sampleDatas.map((assignment) =>
-          <div key={assignment.id} onClick={()=> onClick(assignment.id)} className={style.item}>
-            <ExamItem exam={assignment} />
-          </div>
-
+            <ExamItem key={assignment.id} exam={assignment} onclick={()=> onClick(assignment.id)}/>
         )
       }
 

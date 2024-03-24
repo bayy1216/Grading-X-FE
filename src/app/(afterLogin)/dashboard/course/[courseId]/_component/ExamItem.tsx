@@ -4,13 +4,14 @@ import {Exam} from "@/api/exam/exam.response"
 
 type Props = {
   exam: Exam;
+  onclick: () => void;
 };
 
 
-export default function ExamItem({exam}: Props){
+export default function ExamItem({exam, onclick}: Props){
 
   return (
-    <div className={style.container}>
+    <div className={style.container} onClick={onclick}>
       <div className={style.leftWrapper}>
         <div className={style.title}>
           {exam.name}
