@@ -6,10 +6,11 @@ import { cookies } from 'next/headers'
 export const {
   handlers: { GET, POST },
   auth,
+  signIn,
 } = NextAuth({
   pages: {
     signIn: '/login',
-    //newUser: '/signup',
+    newUser: '/signup',
   },
   callbacks: {
     jwt({ token,user}) {

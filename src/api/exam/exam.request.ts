@@ -1,4 +1,4 @@
-export interface AssignmentCreateRequest {
+export interface ExamCreateRequest {
   name: string;
   description: string;
   startTime: string;
@@ -6,7 +6,7 @@ export interface AssignmentCreateRequest {
 }
 
 
-export interface AssignmentUpdateRequest {
+export interface ExamUpdateRequest {
   name: string;
   description: string;
   startTime: string;

@@ -18,9 +18,17 @@
 .headerLeft {
     flex: 1;
 }
+.headerRight {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 60px;
+}
 
 .link{
-    margin-right: 120px;
+    margin-right: 10px;
     text-decoration: none;
     color: white;
 
