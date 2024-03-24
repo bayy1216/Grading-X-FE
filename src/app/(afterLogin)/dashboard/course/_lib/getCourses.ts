@@ -1,10 +1,10 @@
 
 export async function getCourses() {
-  const res = await fetch(`/api/course`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BE_BASE_URL}/api/course`, {
     next: {
       tags: ['courses'],
     },
-    cache: 'no-cache',
+    cache: 'no-store',
   });
 
   if (!res.ok) {
