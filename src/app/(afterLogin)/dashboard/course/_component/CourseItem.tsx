@@ -12,16 +12,11 @@ export default function CourseItem({onClick, course}: Props) {
     <div className={style.container} onClick={onClick}>
       <div>
         <h2>{course.courseName}</h2>
-        <p>클래스 설명</p>
       </div>
 
       <div>
-        <h2>{course.startDate}</h2>
-        <h2>{course.endDate}</h2>
-      </div>
-      <div>
-        <h2>수강생</h2>
-        <p>수강생 수</p>
+        <p>{course.startDate}</p>
+        <p>{course.endDate}</p>
       </div>
     </div>
   );
