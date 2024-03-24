@@ -1,5 +1,7 @@
+"use client";
 import {ExamDetail} from "@/api/exam/exam.response";
 import style from "./page.module.css"
+import { useRouter } from "next/navigation";
 
 const detailData : ExamDetail = {
   id: 1,
@@ -10,12 +12,20 @@ const detailData : ExamDetail = {
 }
 type Props = {
   params: {
+    courseId: string;
     examId: string;
   }
 };
 
 
 export default function Page({params}: Props) {
+  const router = useRouter();
+  const onTakeExam = () => {
+
+    console.log(`Take exam ${params.examId} in course ${params.courseId}`);
+    router.push(`/dashboard/course/${params.courseId}/exam/${params.examId}/take`);
+  }
+
   return (
     <div className={style.container}>
       <div className={style.header}>
@@ -33,7 +43,7 @@ export default function Page({params}: Props) {
         <h2>Description</h2>
         <p>{detailData.description}</p>
 
-        <button className={style.startExam}>
+        <button className={style.startExam} onClick={onTakeExam}>
           Start Exam
         </button>
       </div>
