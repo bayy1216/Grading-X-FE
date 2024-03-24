@@ -1,26 +1,26 @@
-import style from './assignmentItem.module.css';
-import {Assignment} from "@/api/assignment/assignment.response";
+import style from './examItem.module.css';
+import {Exam} from "@/api/exam/exam.response"
 
 
 type Props = {
-  assignment: Assignment;
+  exam: Exam;
 };
 
 
-export default function AssignmentItem({assignment}: Props){
+export default function ExamItem({exam}: Props){
 
   return (
     <div className={style.container}>
       <div className={style.leftWrapper}>
         <div className={style.title}>
-          {assignment.name}
+          {exam.name}
         </div>
         <div className={style.data}>
           <div className={style.startTime}>
-            {assignment.startTime}
+            {exam.startTime}
           </div>
           <div className={style.endTime}>
-            {assignment.endTime}
+            {exam.endTime}
           </div>
         </div>
       </div>

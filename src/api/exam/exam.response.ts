@@ -1,11 +1,11 @@
-export interface Assignment{
+export interface Exam {
   id: number;
   name: string;
   startTime: string;
   endTime: string;
 }
 
-export interface AssignmentDetail{
+export interface ExamDetail {
   id: number;
   name: string;
   description: string;
