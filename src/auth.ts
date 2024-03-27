@@ -66,14 +66,14 @@ export const {
 
         const backendJwt = await authResponse.json()
         // path: '/'로 설정하면 해당 쿠키는 사이트 내의 모든 페이지에서 유효하게 됩니다.
-        cookies().set('be-access-token', backendJwt.accessToken, {
+        cookies().set('access_token', backendJwt.accessToken, {
           path: '/' ,
           maxAge: 60 * 60 * 24, // 24시간
           httpOnly: true,
         });
         // httpOnly 플래그를 사용하여 쿠키를 HTTP 요청에만 전송되도록 할 수 있습니다.
         // 이렇게하면 JavaScript에서는 쿠키에 액세스할 수 없으므로 보안이 강화됩니다
-        cookies().set('be-refresh-token', backendJwt.refreshToken, {
+        cookies().set('refresh_token', backendJwt.refreshToken, {
           path: '/api/auth/reissue' ,
           httpOnly: true,
           maxAge: 60 * 60 * 24 * 14 // 14일
