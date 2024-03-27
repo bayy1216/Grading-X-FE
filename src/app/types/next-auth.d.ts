@@ -5,8 +5,10 @@ declare module "next-auth" {
     user: {
       id: number;
       email: string;
+    };
+    backendJwt: {
       accessToken: string;
       refreshToken: string;
-    };
+    }
   }
 }
