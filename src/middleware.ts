@@ -6,24 +6,6 @@ import {signOut} from "next-auth/react";
 export async function middleware(request: NextRequest) {
   const session = await auth();
   //console.log('middleware session', session);
-  if(session && accessTokenCheck(session.backendJwt.accessToken, 60)){
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BE_BASE_URL}/api/auth/reissue`, {
-      method: "POST",
-    });
-    if(!res.ok) {
-      await signOut({callbackUrl: '/login'});
-      return;
-    }
-    const accessToken = await res.text();
-    const response =  NextResponse.next();
-    response.cookies.set('access_token', accessToken, {
-      path: '/' ,
-      maxAge: 60 * 60 * 24, // 24시간
-      httpOnly: true,
-    });
-    return response;
-
-  }
 
   //matcher에서 로그인 되어있을때, 로그인페이지로 접근하려고 하면 대시보드로 리다이렉트
   if (session && isLoginPath(request)) {

@@ -1,7 +1,16 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { cookies } from 'next/headers'
+import {cookies} from 'next/headers'
+import {signOut} from "next-auth/react";
 
+function accessTokenCheck(accessToken: string, minute: number) {
+  //accessToken 유효기간 확인
+  const payload = JSON.parse(atob(accessToken.split('.')[1]));
+  const exp = payload.exp * 1000;
+  const now = Date.now();
+  return exp - now < minute * 60 * 1000;
+
+}
 
 export const {
   handlers: { GET, POST },
@@ -13,17 +22,31 @@ export const {
     newUser: '/signup',
   },
   callbacks: {
-    jwt({ token,user}) {
+    async jwt({ token,user}) {
       // console.log('auth.ts jwt', token);
       // console.log('auth.ts jwt user', user);
       return { ...user, ...token };// 로그인에서 user에 넣은 정보를 FE JWT에 넣어준다.
     },
-    session({ session, token}) {
+    async session({ session, token}) {
       // console.log('auth.ts session callback', session, token);
       session.backendJwt = {
         accessToken: token.accessToken as string,
         refreshToken: token.refreshToken as string
       }// jwt 콜백에서 넣었던 BE jwt를 FE 세션에 넣어준다.
+      if(accessTokenCheck(session.backendJwt.accessToken, 60)){
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BE_BASE_URL}/api/auth/reissue`, {
+          method: "POST",
+        });
+        if(!res.ok) {
+          await signOut({callbackUrl: '/login'});
+        }
+        session.backendJwt.accessToken = await res.text();
+        cookies().set('access_token', session.backendJwt.accessToken, {
+          path: '/' ,
+          maxAge: 60 * 60 * 24, // 24시간
+          httpOnly: true,
+        });
+      }
       return session;
     }
   },
