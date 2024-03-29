@@ -17,7 +17,7 @@ export default function CourseItems() {
 
   const onClick = (id: number) => {
     console.log('click');
-    nav(`/dashboard/course/${id}`);
+    nav(`/dashboard/course/${id}/exam`);
   }
 
   return data?.map((course) => (
