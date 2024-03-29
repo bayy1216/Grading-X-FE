@@ -1,11 +1,14 @@
 import './App.css'
 import Router from "./pages/Router.tsx";
+import RQProvider from "./components/common/RQProvider.tsx";
 
 function App() {
 
   return (
     <>
-      <Router />
+      <RQProvider>
+        <Router />
+      </RQProvider>
     </>
   )
 }
