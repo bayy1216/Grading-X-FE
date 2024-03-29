@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    align-items: stretch;
     flex-direction: row;
 }
 
@@ -20,8 +21,16 @@
 
 
 .rightWrapper {
+    /*margin-left: var(--bashboard-sidebar-width);*/
+    height: 100dvh;
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+
+    position: fixed;
+    top: 0;
+    left: var(--bashboard-sidebar-width);
+    bottom: 0;
 
 }
