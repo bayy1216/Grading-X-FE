@@ -6,7 +6,7 @@ import {getCourses} from "../../api/course/course.api.ts";
 
 
 export default function CourseItems() {
-  const { data } = useQuery<Course[]>({
+  const {data} = useQuery<Course[]>({
     queryKey: ['dashboard', 'courses'],
     queryFn: getCourses,
     staleTime: 1000 * 60 * 5, // 5 minutes 동안 fresh data를 유지(fresh -> stale)
@@ -15,7 +15,7 @@ export default function CourseItems() {
 
   const nav = useNavigate();
 
-  const onClick = (id:number) => {
+  const onClick = (id: number) => {
     console.log('click');
     nav(`/dashboard/course/${id}`);
   }
