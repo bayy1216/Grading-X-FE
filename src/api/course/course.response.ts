@@ -1,4 +1,5 @@
-import {Member} from "@/api/member/member.response";
+import {Member} from "../member/member.response.ts";
+
 
 export interface Course {
   id: number;
