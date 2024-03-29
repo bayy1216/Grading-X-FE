@@ -21,7 +21,7 @@ export default function NavMenu() {
       <div className={style.section}>Classes</div>
       <ul>
         <Link to={'/dashboard/course'} className={style.link}>
-          {location.pathname.endsWith('course') ? <div className={style.current}>클래스 관리 ✓</div> :
+          {location.pathname.includes('course') ? <div className={style.current}>클래스 관리 ✓</div> :
             <li>클래스</li>}
         </Link>
 
@@ -30,7 +30,7 @@ export default function NavMenu() {
       <div className={style.section}>Account</div>
       <ul>
         <Link to={'/dashboard/account'} className={style.link}>
-          {location.pathname.endsWith('account') ? <div className={style.current}>계정 관리 ✓</div> :
+          {location.pathname.includes('account') ? <div className={style.current}>계정 관리 ✓</div> :
             <li>계정</li>}
         </Link>
       </ul>
