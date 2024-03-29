@@ -6,9 +6,13 @@ import ExamDetailPage from "./dashborad/course/exam/ExamDetailPage.tsx";
 import ExamTakePage from "./dashborad/course/exam/take/ExamTakePage.tsx";
 import DashboardPage from "./dashborad/DashboardPage.tsx";
 import CourseDetailPage from "./dashborad/course/CourseDetailPage.tsx";
+import LoginPage from "./LoginPage.tsx";
+import SignupPage from "./SignupPage.tsx";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
+  {path: "/login", element: <LoginPage />},
+  {path: "/signup", element: <SignupPage />},
   {
     path: "dashboard",
     children: [
