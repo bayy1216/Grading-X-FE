@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.leftWrapper{
+    background-color: #F2F2F2;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*height: 100vh;*/
+    width: var(--bashboard-sidebar-width);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    border-right: 1px solid #ccc;
+}
+
+
+.rightWrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+}
