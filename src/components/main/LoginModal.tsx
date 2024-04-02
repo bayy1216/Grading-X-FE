@@ -3,6 +3,8 @@ import style from './login.module.css';
 import {useNavigate} from "react-router-dom";
 import SignupButton from "./SignupButton.tsx";
 import BackButton from "./BackButton.tsx";
+import {login} from "../../api/auth/auth.api.ts";
+import secureLocalStorage from "react-secure-storage";
 
 
 export default function LoginModal() {
@@ -15,21 +17,11 @@ export default function LoginModal() {
     e.preventDefault();
     setMessage('');
     try {
-      // const response = await signIn("credentials", {
-      //   email,
-      //   password,
-      //   redirect: false,
-      // })
-      // if(response?.error) {
-      //   throw new Error(response.error);
-      // }
-      //
-      // console.log("response", response);
-      // if (!response?.ok) {
-      //   setMessage('아이디와 비밀번호가 일치하지 않습니다.');
-      // } else {
-      //   router.replace('/dashboard');
-      // }
+      const token = await login({email, password});
+      secureLocalStorage.setItem('accessToken', token.accessToken);
+      secureLocalStorage.setItem('refreshToken', token.refreshToken);
+      console.log('token', token);
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
       setMessage('아이디와 비밀번호가 일치하지 않습니다.');

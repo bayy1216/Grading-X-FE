@@ -1,7 +1,11 @@
+import style from "./CoursePage.module.css";
+import CourseItems from "../../../components/course/CourseItems.tsx";
 export default function CoursePage() {
   return (
-    <div>
-      <h1>Course Page</h1>
+    <div className={style.container}>
+      <div className={style.currentClass}>
+        <CourseItems/>
+      </div>
     </div>
   );
 }
