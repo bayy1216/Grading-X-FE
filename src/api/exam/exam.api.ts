@@ -1,5 +1,6 @@
 import {Exam, ExamDetail} from "./exam.response.ts";
 import {QueryFunction} from "@tanstack/react-query";
+import {axiosClient} from "../AxiosClient.ts";
 
 const exams = [
   {
@@ -26,8 +27,11 @@ const exams = [
 ]
 
 
-export async function getExams(): Promise<Exam[]>{
-  return exams;
+export const getExams: QueryFunction<Exam[], [_1:string, _2:string, number]>
+ = async ({queryKey}): Promise<Exam[]> => {
+  const [_1, _2, courseId] = queryKey;
+  const response = await axiosClient.get(`/api/exam-content/course/${courseId}`);
+  return response.data.examContents;
 }
 
 export const getExamDetail: QueryFunction<ExamDetail, [_1:string, _2:string, number]>
