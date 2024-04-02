@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import SignupButton from "./SignupButton.tsx";
 import BackButton from "./BackButton.tsx";
 import {login} from "../../api/auth/auth.api.ts";
-import {Cookies} from "react-cookie";
+import secureLocalStorage from "react-secure-storage";
 
 
 export default function LoginModal() {
@@ -18,10 +18,9 @@ export default function LoginModal() {
     setMessage('');
     try {
       const token = await login({email, password});
-
-      const cookies = new Cookies();
-      cookies.set("access_token", token.accessToken, {path: "/", httpOnly: true});
-      cookies.set("refresh_token", token.refreshToken, {path: "/", httpOnly: true});
+      secureLocalStorage.setItem('accessToken', token.accessToken);
+      secureLocalStorage.setItem('refreshToken', token.refreshToken);
+      console.log('token', token);
       navigate('/dashboard');
     } catch (err) {
       console.error(err);

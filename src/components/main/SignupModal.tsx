@@ -1,7 +1,10 @@
 import style from './signup.module.css';
 import BackButton from "./BackButton";
-import {FormEventHandler, useState} from "react";
+import {ChangeEventHandler, FormEventHandler, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {signup} from "../../api/auth/auth.api.ts";
+import {MemberType} from "../../api/member/member.response.ts";
+import secureLocalStorage from "react-secure-storage";
 
 function showMessage(message: string | null) {
   console.log('message', message);
@@ -24,18 +27,40 @@ function showMessage(message: string | null) {
 }
 
 export default function SignupModal() {
-
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [nickname, setNickname] = useState('');
   const [message, setMessage] = useState('');
+  const [memberType, setMemberType] = useState('INSTRUCTOR');
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setMessage('');
     try {
-      //
+      const token = await signup({
+        email: id,
+        password: password,
+        name: nickname,
+        memberType: memberType as MemberType
+      });
+      secureLocalStorage.setItem('accessToken', token.accessToken);
+      secureLocalStorage.setItem('refreshToken', token.refreshToken);
+      navigate('/dashboard');
+
     } catch (err) {
       console.error(err);
       setMessage('아이디와 비밀번호가 일치하지 않습니다.');
     }
   }
+
+  const onChangeId: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setId(e.target.value)
+  };
+
+  const onChangePassword: ChangeEventHandler<HTMLInputElement> = (e) => { setPassword(e.target.value) };
+  const onChangeNickname: ChangeEventHandler<HTMLInputElement> = (e) => { setNickname(e.target.value) };
+
+
+
   const navigate = useNavigate();
   const onClickClose = () => {
     //홈으로 이동
@@ -67,30 +92,48 @@ export default function SignupModal() {
             <div className={style.modalBody}>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="id">아이디</label>
-                <input id="id" name="id" className={style.input} type="text" placeholder=""
-                       required
+                <input id="id" className={style.input} type="text" placeholder=""
+                       value={id}
+                       onChange={onChangeId}
                 />
               </div>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="name">닉네임</label>
-                <input id="name" name="name" className={style.input} type="text" placeholder=""
-                       required
+                <label className={style.inputLabel} htmlFor="name">닉네임</label>
+                <input id="name" className={style.input} type="text" placeholder=""
+                       value={nickname}
+                       onChange={onChangeNickname}
                 />
               </div>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="password">비밀번호</label>
-                <input id="password" name="password" className={style.input} type="password" placeholder=""
-                       required
+                <input id="password" className={style.input} type="password" placeholder=""
+                       value={password}
+                       onChange={onChangePassword}
                 />
               </div>
               <div className={style.inputDiv}>
-                <label className={style.inputLabel} htmlFor="image">프로필</label>
-                <input id="image" name="image" required className={style.input} type="file" accept="image/*"
-                />
+                <div className={style.radioLabel}>
+                  <div className={style.labelRow}>
+                  <label htmlFor="INSTRUCTOR">
+                      선생님 <input id="INSTRUCTOR" name="memberType" type="radio" value="INSTRUCTOR" required onChange={
+                    () => setMemberType(MemberType.INSTRUCTOR)
+                  }/>
+                    </label>
+                    <label htmlFor="STUDENT">
+                      학생 <input id="STUDENT" name="memberType" type="radio" value="STUDENT" required onChange={
+                    () => setMemberType(MemberType.STUDENT)
+                    }/>
+                    </label>
+                    <div></div>
+                  </div>
+                </div>
+
               </div>
             </div>
+
             <div className={style.modalFooter}>
-              <button type="submit" className={style.actionButton} disabled={message !== ''}>가입하기</button>
+              <button type="submit" className={style.actionButton} disabled={false}>가입하기</button>
               <div className={style.error}>{showMessage(message)}</div>
             </div>
           </form>
