@@ -1,32 +1,17 @@
-// import {axiosClient} from "../AxiosClient.ts";
+import {axiosClient} from "../AxiosClient.ts";
 
 import {Course} from "./course.response.ts";
+import {CourseCreateRequest} from "./course.request.ts";
 
 export async function getCourses() : Promise<Course[]>{
-  // const res = await axiosClient.get("/api/course");
-  // return res.data;
-  return [
-    {
-      id: 1,
-      courseName: "ReactJS",
-      startDate: "2021-01-01",
-      endDate: "2021-01-30",
-      member: {
-        email: "test@example.com",
-        name: "John Doe",
-        memberType: "INSTRUCTOR",
-      },
-    },
-    {
-      id: 2,
-      courseName: "VueJS",
-      startDate: "2021-02-01",
-      endDate: "2021-02-28",
-      member: {
-        email: "test2far1@example.com",
-        name: "Jane Doe",
-        memberType: "INSTRUCTOR",
-      },
-    },
-  ];
+  const res = await axiosClient.get("/api/course");
+  return res.data.courseResponses;
+
+}
+
+export async function createCourse(request: CourseCreateRequest) : Promise<number>{
+  const res = await axiosClient.post("/api/course", {
+    ...request
+  });
+  return res.data;
 }

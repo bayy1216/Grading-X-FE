@@ -10,9 +10,13 @@ import {useState} from "react";
 export default function ExamPage() {
   const nav = useNavigate();
   const location = useLocation();
+  //dashboard/course/1/exam 에서 1추출
+  const courseId = parseInt(location.pathname.split("/")[3] || "0");
 
-  const { data} = useQuery<Exam[]>({
-    queryKey: ['dashboard', 'exams'],
+
+
+  const { data} = useQuery<Exam[], Object, Exam[], [_1:string, _2:string, _3:number]>({
+    queryKey: ['dashboard', 'exams', courseId],
     queryFn: getExams,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
