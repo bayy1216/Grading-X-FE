@@ -30,7 +30,7 @@ const exams = [
 export const getExams: QueryFunction<Exam[], [_1:string, _2:string, number]>
  = async ({queryKey}): Promise<Exam[]> => {
   const [_1, _2, courseId] = queryKey;
-  const response = await axiosClient.get(`/api/exam-content/course/${courseId}`);
+  const response = await axiosClient.get(`/api/v1/exam-content/course/${courseId}`);
   return response.data.examContents;
 }
 
