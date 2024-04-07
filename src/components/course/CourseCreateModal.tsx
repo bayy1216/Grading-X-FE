@@ -41,7 +41,7 @@ export default function CourseCreateModal({onCreate}:Props) {
             const newCourse : Course = {
               id: newId,
               ...createCourseRequest,
-              member: {
+              instructor: {
                 email: "d",
                 name: "d",
                 memberType: MemberType.INSTRUCTOR
