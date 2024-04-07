@@ -12,3 +12,7 @@ export interface ExamDetail {
   startTime: string;
   endTime: string;
 }
+
+export interface ExamsResponse {
+  examContents: Exam[];
+}

@@ -14,3 +14,7 @@ export interface Question {
   index: number;
   weightage: number;
 }
+
+export interface QuestionsResponse{
+  questions: Question[];
+}

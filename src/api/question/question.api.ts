@@ -1,14 +1,14 @@
 import {axiosClient} from "../AxiosClient.ts";
-import {Criteria, Question} from "./question.response.ts";
+import {Criteria, QuestionsResponse} from "./question.response.ts";
 import {
   QuestionCreateRequest,
   QuestionUpdateRequest
 } from "./question.request.ts";
 
-export async function getQuestionsByExamId(examContentId: number): Promise<Question[]> {
+export async function getQuestionsByExamId(examContentId: number): Promise<QuestionsResponse> {
   const res
     = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/question`);
-  return res.data.questions;
+  return res.data;
 }
 
 export async function createQuestion(examContentId: number, request: QuestionCreateRequest): Promise<number> {
@@ -28,7 +28,7 @@ export async function updateQuestion(request: QuestionUpdateRequest): Promise<nu
   return res.data;
 }
 
-export async function getCriteria(questionId: number): Promise<Criteria[]> {
+export async function getCriteria(questionId: number): Promise<Criteria> {
   const res
     = await axiosClient.get(`/api/v1/course/exam-content/question/${questionId}/criteria`);
   return res.data;

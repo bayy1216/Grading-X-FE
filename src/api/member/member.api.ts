@@ -7,9 +7,9 @@ export async function getMemberInfo(): Promise<Member> {
   return response.data;
 }
 
-export async function updateMemberInfo(requset: MemberUpdateRequest): Promise<void> {
+export async function updateMemberInfo(request: MemberUpdateRequest): Promise<void> {
   await axiosClient.put("/api/v1/member", {
-    ...requset
+    ...request
   });
   return;
 }

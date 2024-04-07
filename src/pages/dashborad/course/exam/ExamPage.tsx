@@ -1,8 +1,8 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import style from "./ExamPage.module.css";
 import ExamItem from "../../../../components/exam/ExamItem.tsx";
-import {Exam} from "../../../../api/exam/exam.response.ts";
-import {getExams} from "../../../../api/exam/exam.api.ts";
+import { ExamsResponse} from "../../../../api/exam/exam.response.ts";
+import {getExamsByCourseId} from "../../../../api/exam/exam.api.ts";
 import {useQuery} from "@tanstack/react-query";
 import ExamHeader from "../../../../components/exam/ExamHeader.tsx";
 import {useState} from "react";
@@ -15,9 +15,9 @@ export default function ExamPage() {
 
 
 
-  const { data} = useQuery<Exam[], Object, Exam[], [_1:string, _2:string, _3:number]>({
+  const { data} = useQuery<ExamsResponse, Object, ExamsResponse, [_1:string, _2:string, _3:number]>({
     queryKey: ['dashboard', 'exams', courseId],
-    queryFn: getExams,
+    queryFn: getExamsByCourseId,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
   });
@@ -37,7 +37,7 @@ export default function ExamPage() {
     <div className={style.container}>
       <ExamHeader examTitle={examTitle} setExamTitle={(t)=>setExamTitle(t)} onSearch={onSearch}/>
       {
-        data?.map((assignment) =>
+        data?.examContents.map((assignment) =>
           <ExamItem key={assignment.id} exam={assignment} onclick={()=> onClick(assignment.id)}/>
         )
       }

@@ -8,3 +8,7 @@ export interface Course {
   endDate: string;
   instructor: Member;
 }
+
+export interface CoursesResponse {
+  courseResponses: Course[];
+}
