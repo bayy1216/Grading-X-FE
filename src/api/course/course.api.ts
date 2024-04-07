@@ -1,6 +1,6 @@
 import {axiosClient} from "../AxiosClient.ts";
 
-import { CoursesResponse} from "./course.response.ts";
+import {Course, CoursesResponse} from "./course.response.ts";
 import {CourseCreateRequest, CourseUpdateRequest} from "./course.request.ts";
 
 export async function getCourses() : Promise<CoursesResponse>{
