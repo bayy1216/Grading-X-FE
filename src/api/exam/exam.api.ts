@@ -1,6 +1,7 @@
 import {Exam, ExamDetail} from "./exam.response.ts";
 import {QueryFunction} from "@tanstack/react-query";
 import {axiosClient} from "../AxiosClient.ts";
+import {ExamSaveRequest} from "./exam.request.ts";
 
 const exams = [
   {
@@ -39,4 +40,24 @@ export const getExamDetail: QueryFunction<ExamDetail, [_1:string, _2:string, num
   const [_1, _2, examId] = queryKey;
 
   return exams.find(exam => exam.id === examId) as ExamDetail;
+}
+
+
+/**
+ * 시험 시작
+ */
+export async function examStartGuest(examId: number): Promise<void> {
+  await axiosClient.post(`/api/v1/exam/${examId}`);
+  return;
+}
+
+
+/**
+ * 현재까지 풀은 문제 서버에 전송하기
+ */
+export async function saveExamAnswer(examId: number, examSaveRequest: ExamSaveRequest): Promise<void> {
+  await axiosClient.post(`/api/v1/exam/${examId}/save`,{
+    ...examSaveRequest
+  });
+  return;
 }

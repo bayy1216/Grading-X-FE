@@ -12,3 +12,14 @@ export interface ExamUpdateRequest {
   startTime: string;
   endTime: string;
 }
+
+
+export interface ExamSaveRequest {
+  email: string;
+  answers: MemberExamAnswer[];
+}
+
+export interface MemberExamAnswer {
+  questionId: number;
+  answer: string;
+}

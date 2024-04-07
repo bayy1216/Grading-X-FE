@@ -1,19 +1,20 @@
-import {Member, MemberType} from "./member.response.ts";
+import {Member} from "./member.response.ts";
 import {MemberUpdateRequest} from "./member.request.ts";
+import {axiosClient} from "../AxiosClient.ts";
 
 export async function getMemberInfo(): Promise<Member> {
-  return {
-    email: "das@test.com",
-    name: "John Doe",
-    memberType: MemberType.INSTRUCTOR,
-  };
+  const response = await axiosClient.get("/api/v1/member");
+  return response.data;
 }
 
-export async function updateMemberInfo(requset: MemberUpdateRequest){
-  console.log(requset);
+export async function updateMemberInfo(requset: MemberUpdateRequest): Promise<void> {
+  await axiosClient.put("/api/v1/member", {
+    ...requset
+  });
   return;
 }
 
-export async function signOut(){
+export async function signOut(): Promise<void> {
+  await axiosClient.delete("/api/v1/member");
   return;
 }
