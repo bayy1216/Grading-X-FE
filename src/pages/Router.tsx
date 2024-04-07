@@ -9,6 +9,10 @@ import LoginPage from "./LoginPage.tsx";
 import SignupPage from "./SignupPage.tsx";
 import DashboardLayout from "./dashborad/DashBoardLayout.tsx";
 import AccountPage from "./dashborad/account/AccountPage.tsx";
+import {getMemberInfo} from "../api/member/member.api.ts";
+import {useQuery} from "@tanstack/react-query";
+import {Member} from "../api/member/member.response.ts";
+import {createContext} from "react";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
@@ -27,12 +31,28 @@ const router = createBrowserRouter([
     ]
   },
 ]);
+interface Props {
+  member: Member | null;
+  isError: boolean;
+  refetch: () => void;
+}
 
+export const MemberContext = createContext<Props>({member: null, isError: false, refetch: () => {}});
 
 export default function Router() {
+  const { data, isError,refetch }  = useQuery<Member>({
+    queryKey: ['member', 'info'],
+    queryFn: getMemberInfo,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+  });
   return (
-    <>
+    <MemberContext.Provider value={{
+      member: data || null, // data가 null이면 null을 넣고 아니면 data를 넣는다.
+      isError,
+      refetch,
+    }}>
       <RouterProvider router={router} />
-    </>
+    </MemberContext.Provider>
   );
 }
