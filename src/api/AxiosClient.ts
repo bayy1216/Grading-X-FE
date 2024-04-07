@@ -46,6 +46,9 @@ axiosClient.interceptors.response.use(
         secureLocalStorage.setItem('accessToken', data.accessToken);
         secureLocalStorage.setItem('refreshToken', data.refreshToken);
         return axiosClient(originalRequest);
+      }else{
+        secureLocalStorage.removeItem('accessToken');
+        secureLocalStorage.removeItem('refreshToken');
       }
       return Promise.reject(error);
     }
