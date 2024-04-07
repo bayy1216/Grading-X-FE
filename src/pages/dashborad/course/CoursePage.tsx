@@ -46,6 +46,7 @@ export default function CoursePage() {
         {isModalOpen && <CourseCreateModal onCreate={
           course => {
             data?.push(course);
+            setIsModalOpen(false);
           }
         }/>}
       </div>
