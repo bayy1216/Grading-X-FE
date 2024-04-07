@@ -7,7 +7,7 @@ import {ExamSaveRequest, ExamUpdateRequest} from "./exam.request.ts";
 export const getExamsByCourseId: QueryFunction<ExamsResponse, [_1:string, _2:string, number]>
  = async ({queryKey}): Promise<ExamsResponse> => {
   const [_1, _2, courseId] = queryKey;
-  const response = await axiosClient.get(`/api/v1/exam-content/course/${courseId}`);
+  const response = await axiosClient.get(`/api/v1/course/exam-content/${courseId}`);
   return response.data;
 }
 
