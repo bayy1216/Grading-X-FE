@@ -1,12 +1,20 @@
 import style from "./NavMenu.module.css";
-import {Link, useLocation } from "react-router-dom";
+import {Link, useLocation, useNavigate } from "react-router-dom";
+import secureLocalStorage from "react-secure-storage";
+import {logout} from "../../api/auth/auth.api.ts";
 
 export default function NavMenu() {
   // const [drawerOpen, setDrawerOpen] = useState(false);
-
   const location = useLocation();
+  const navigate = useNavigate();
+
   const onLogout = () => {
     console.log('logout');
+    secureLocalStorage.removeItem('accessToken');
+    secureLocalStorage.removeItem('refreshToken');
+    logout().then(() => {
+      navigate('/dashboard');
+    });
   }
   return (
     <div className={style.container}>
