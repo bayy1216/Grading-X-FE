@@ -2,6 +2,7 @@ import style from "./NavMenu.module.css";
 import {Link, useLocation, useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import {logout} from "../../api/auth/auth.api.ts";
+import {useQueryClient} from "@tanstack/react-query";
 
 export default function NavMenu() {
   // const [drawerOpen, setDrawerOpen] = useState(false);
@@ -12,6 +13,10 @@ export default function NavMenu() {
     console.log('logout');
     secureLocalStorage.removeItem('accessToken');
     secureLocalStorage.removeItem('refreshToken');
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({
+      queryKey: ['member']
+    });
     logout().then(() => {
       navigate('/dashboard');
     });
