@@ -1,14 +1,22 @@
 .container {
-    width: 100dvw;
+    width: 100%;
     height: 100dvh;
 
     display: flex;
     flex-direction: column;
+    padding: 30px;
+    align-items: center; /* 수평 중앙 정렬 */
 }
 
 
 .currentClass{
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 3개의 컬럼, 각 컬럼은 동일한 크기 */
+    gap: 20px; /* 그리드 아이템 간격 */
+}
+
+.grid-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
 }

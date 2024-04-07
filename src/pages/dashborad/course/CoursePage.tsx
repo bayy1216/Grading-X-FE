@@ -31,16 +31,18 @@ export default function CoursePage() {
       <div className={style.currentClass}>
         {!isModalOpen &&
             <>
+                {
+                  data?.courseResponses.map((course) => (
+                    <div className={style.gridItem} key={course.id}>
+                      <CourseItem course={course} onClick={()=>onClick(course.id)} />
+                    </div>
+                  ))
+                }
                 <Button variant="contained" color="primary" onClick={
                   () => {
                     setIsModalOpen(true);
                   }
                 }>Create a new course</Button>
-                {
-                  data?.courseResponses.map((course) => (
-                    <CourseItem key={course.id} course={course} onClick={()=>onClick(course.id)}/>
-                  ))
-                }
             </>
         }
         {isModalOpen && <CourseCreateModal onCreate={
