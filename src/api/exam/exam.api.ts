@@ -1,7 +1,7 @@
 import { ExamDetail, ExamsResponse} from "./exam.response.ts";
 import {QueryFunction} from "@tanstack/react-query";
 import {axiosClient} from "../AxiosClient.ts";
-import {ExamSaveRequest, ExamUpdateRequest} from "./exam.request.ts";
+import {ExamSaveRequest, ExamTakeGuestRequest, ExamUpdateRequest} from "./exam.request.ts";
 
 
 export const getExamsByCourseId: QueryFunction<ExamsResponse, [_1:string, _2:string, number]>
@@ -31,8 +31,10 @@ export async function updateExamDetail(examId: number, examUpdateRequest: ExamUp
 /**
  * 시험 시작
  */
-export async function examStartGuestByExamId(examId: number): Promise<void> {
-  await axiosClient.post(`/api/v1/exam/${examId}`);
+export async function examStartGuestByExamId(examId: number, examTakeGuestRequest: ExamTakeGuestRequest): Promise<void> {
+  await axiosClient.post(`/api/v1/exam/${examId}`,{
+    ...examTakeGuestRequest
+  });
   return;
 }
 
