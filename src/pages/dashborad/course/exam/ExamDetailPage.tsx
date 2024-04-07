@@ -2,7 +2,7 @@ import {ExamDetail} from "../../../../api/exam/exam.response.ts";
 import style from "./ExamDetailPage.module.css";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
-import {getExamDetail} from "../../../../api/exam/exam.api.ts";
+import {getExamDetailById} from "../../../../api/exam/exam.api.ts";
 
 export default function ExamDetailPage() {
   const nav = useNavigate();
@@ -12,7 +12,7 @@ export default function ExamDetailPage() {
 
   const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:string, _3:number]>({
     queryKey: ['dashboard', 'exam', examId],
-    queryFn: getExamDetail,
+    queryFn: getExamDetailById,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
   });
