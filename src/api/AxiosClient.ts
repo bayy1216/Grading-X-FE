@@ -33,7 +33,7 @@ axiosClient.interceptors.response.use(
       if (!refreshToken) {
         return Promise.reject(error);
       }
-      const resp = await fetch(`/api/auth/reissue`, {
+      const resp = await fetch(`/api/v1/auth/reissue`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
