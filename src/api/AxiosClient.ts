@@ -33,7 +33,7 @@ axiosClient.interceptors.response.use(
       if (!refreshToken) {
         return Promise.reject(error);
       }
-      const resp = await fetch(`/api/v1/auth/reissue`, {
+      const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/reissue`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -42,11 +42,13 @@ axiosClient.interceptors.response.use(
         },
       });
       if (resp.ok) {
+        console.log('토큰 재발급 성공');
         const data = await resp.json();
         secureLocalStorage.setItem('accessToken', data.accessToken);
         secureLocalStorage.setItem('refreshToken', data.refreshToken);
         return axiosClient(originalRequest);
       }else{
+        console.log('토큰 재발급 실패');
         secureLocalStorage.removeItem('accessToken');
         secureLocalStorage.removeItem('refreshToken');
       }
