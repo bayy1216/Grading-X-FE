@@ -15,6 +15,8 @@ import {Member} from "../api/member/member.response.ts";
 import {createContext, useEffect, useState} from "react";
 import {INFO, MEMBER, MINUTE_10, MINUTE_5} from "../const/data.ts";
 import CourseCreatePage from "./(afterLogin)/dashborad/course/CourseCreatePage.tsx";
+import ExamCreatePage from "./(afterLogin)/dashborad/course/exam/ExamCreatePage.tsx";
+import ExamDetailEditPage from "./(afterLogin)/dashborad/course/exam/ExamDetailEditPage.tsx";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
@@ -28,7 +30,9 @@ const router = createBrowserRouter([
       {path: "course/create", element: <CourseCreatePage />},
       {path: "course/:courseId", element: <CourseDetailPage />},
       {path: "course/:courseId/exam", element: <ExamPage />},
+      {path: "course/:courseId/exam/create", element: <ExamCreatePage />},
       {path: "course/:courseId/exam/:examId", element: <ExamDetailPage />},
+      {path: "course/:courseId/exam/:examId/edit", element: <ExamDetailEditPage />},
       {path: "course/:courseId/exam/:examId/take", element: <ExamTakePage />},
       {path: "account", element: <AccountPage />},
     ]
