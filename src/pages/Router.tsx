@@ -13,7 +13,7 @@ import {getMemberInfo} from "../api/member/member.api.ts";
 import {useQuery} from "@tanstack/react-query";
 import {Member} from "../api/member/member.response.ts";
 import {createContext, useEffect, useState} from "react";
-import {INFO, MEMBER} from "../const/data.ts";
+import {INFO, MEMBER, MINUTE_10, MINUTE_5} from "../const/data.ts";
 import CourseCreatePage from "./(afterLogin)/dashborad/course/CourseCreatePage.tsx";
 
 const router = createBrowserRouter([
@@ -48,8 +48,8 @@ export default function Router() {
   const { data, isError,refetch }  = useQuery<Member>({
     queryKey: [MEMBER, INFO],
     queryFn: getMemberInfo,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    staleTime: MINUTE_5,
+    gcTime: MINUTE_10,
   });
   const [isLoginChangedFlag, setIsLoginChangedFlag] = useState(false);
 

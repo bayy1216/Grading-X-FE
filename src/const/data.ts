@@ -11,3 +11,6 @@ export const EXAMS = "exams";
 
 
 //************* const *************//
+
+export const MINUTE_5 = 1000 * 60 * 5;
+export const MINUTE_10 = 1000 * 60 * 10;

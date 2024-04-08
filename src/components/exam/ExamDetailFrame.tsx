@@ -7,7 +7,7 @@ import {TextField} from "@mui/material";
 import {ExamDetail} from "../../api/exam/exam.response.ts";
 import {examStartGuestByExamId, getExamDetailById} from "../../api/exam/exam.api.ts";
 import {ExamTakeGuestRequest} from "../../api/exam/exam.request.ts";
-import {DASHBOARD, EXAMS} from "../../const/data.ts";
+import {DASHBOARD, EXAMS, MINUTE_10, MINUTE_5} from "../../const/data.ts";
 
 export default function ExamDetailFrame() {
   const nav = useNavigate();
@@ -20,8 +20,8 @@ export default function ExamDetailFrame() {
   const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:string, _3:number]>({
     queryKey: [DASHBOARD, EXAMS, examId],
     queryFn: getExamDetailById,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    staleTime: MINUTE_5,
+    gcTime: MINUTE_10,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
