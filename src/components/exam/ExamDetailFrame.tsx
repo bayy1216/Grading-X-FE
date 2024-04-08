@@ -40,6 +40,10 @@ export default function ExamDetailFrame() {
     )
   }
 
+  const onEditButtonClick = () => {
+    nav(`${location.pathname}/edit`);
+  }
+
   return (
     <div className={style.container}>
       <div className={style.header}>
@@ -51,6 +55,7 @@ export default function ExamDetailFrame() {
           <div className={style.endTime}>
             {data?.endTime}
           </div>
+          <button className={style.edit} onClick={onEditButtonClick}>Edit</button>
         </div>
       </div>
       <div className={style.content}>

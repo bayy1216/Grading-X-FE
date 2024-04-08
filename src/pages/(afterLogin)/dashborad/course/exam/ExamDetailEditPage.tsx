@@ -11,8 +11,9 @@ export default function ExamDetailEditPage() {
   const navigate = useNavigate();
   const location = useLocation();
   // /dashboard/course/3/exam/4/edit 에서 4을 추출
-  const examId = parseInt(location.pathname.split("/")[4] || "0");
+  const examId = parseInt(location.pathname.split("/")[5] || "0");
   const courseId = parseInt(location.pathname.split("/")[3] || "0");
+
 
   const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:string, _3:number]>({
     queryKey: [DASHBOARD, EXAMS, examId],
@@ -29,6 +30,7 @@ export default function ExamDetailEditPage() {
   });
 
   useEffect(() => {
+    console.log(data);
     if(data) {
       setUpdateExamDto({
         name: data.name,
