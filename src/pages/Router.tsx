@@ -13,6 +13,7 @@ import {getMemberInfo} from "../api/member/member.api.ts";
 import {useQuery} from "@tanstack/react-query";
 import {Member} from "../api/member/member.response.ts";
 import {createContext, useEffect, useState} from "react";
+import {INFO, MEMBER} from "../const/data.ts";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
@@ -43,7 +44,7 @@ export const MemberContext = createContext<Props>({
 
 export default function Router() {
   const { data, isError,refetch }  = useQuery<Member>({
-    queryKey: ['member', 'info'],
+    queryKey: [MEMBER, INFO],
     queryFn: getMemberInfo,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,

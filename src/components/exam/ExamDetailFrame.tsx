@@ -7,6 +7,7 @@ import {TextField} from "@mui/material";
 import {ExamDetail} from "../../api/exam/exam.response.ts";
 import {examStartGuestByExamId, getExamDetailById} from "../../api/exam/exam.api.ts";
 import {ExamTakeGuestRequest} from "../../api/exam/exam.request.ts";
+import {DASHBOARD, EXAMS} from "../../const/data.ts";
 
 export default function ExamDetailFrame() {
   const nav = useNavigate();
@@ -17,7 +18,7 @@ export default function ExamDetailFrame() {
   const [guestEmail, setGuestEmail] = useState<string>("");
 
   const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:string, _3:number]>({
-    queryKey: ['dashboard', 'exam', examId],
+    queryKey: [DASHBOARD, EXAMS, examId],
     queryFn: getExamDetailById,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,

@@ -5,6 +5,7 @@ import {logout} from "../../api/auth/auth.api.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {useContext} from "react";
 import {MemberContext} from "../../pages/Router.tsx";
+import {MEMBER} from "../../const/data.ts";
 
 export default function NavMenu() {
   // const [drawerOpen, setDrawerOpen] = useState(false);
@@ -17,7 +18,7 @@ export default function NavMenu() {
     secureLocalStorage.removeItem('refreshToken');
     const queryClient = useQueryClient();
     queryClient.invalidateQueries({
-      queryKey: ['member']
+      queryKey: [MEMBER]
     });
     logout().then(() => {
       changeLoginFlag();
