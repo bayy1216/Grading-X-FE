@@ -27,7 +27,7 @@ export async function createExam(courseId: number, examCreateRequest: ExamCreate
 }
 
 export async function updateExamDetail(examId: number, examUpdateRequest: ExamUpdateRequest){
-  await axiosClient.put(`/api/v1/exam/${examId}`, {
+  await axiosClient.put(`/api/v1/course/exam-content/${examId}`, {
     ...examUpdateRequest
   });
   return;
