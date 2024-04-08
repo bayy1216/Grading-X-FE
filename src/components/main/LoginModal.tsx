@@ -1,10 +1,11 @@
-import {ChangeEventHandler, FormEventHandler, useState} from "react";
+import {ChangeEventHandler, FormEventHandler, useContext, useEffect, useState} from "react";
 import style from './login.module.css';
 import {useNavigate} from "react-router-dom";
 import SignupButton from "./SignupButton.tsx";
 import BackButton from "./BackButton.tsx";
 import {login} from "../../api/auth/auth.api.ts";
 import secureLocalStorage from "react-secure-storage";
+import {MemberContext} from "../../pages/Router.tsx";
 
 
 export default function LoginModal() {
@@ -12,7 +13,21 @@ export default function LoginModal() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
+
   const navigate = useNavigate();
+
+  /**
+   * 로그인이 되어있는 경우에는 바로 dashboard로 이동
+   * useEffect를 사용하는 이유는 렌더링이 된 후에 실행되기 때문에
+   */
+  const {member} = useContext(MemberContext);
+  useEffect(() => {
+    if(member) {
+      console.log('member', member);
+      navigate('/dashboard', {replace: true});
+    }
+  },[member]);
+
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setMessage('');
