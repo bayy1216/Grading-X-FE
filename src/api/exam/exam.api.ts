@@ -4,9 +4,9 @@ import {axiosClient} from "../AxiosClient.ts";
 import {ExamSaveRequest, ExamTakeGuestRequest, ExamUpdateRequest} from "./exam.request.ts";
 
 
-export const getExamsByCourseId: QueryFunction<ExamsResponse, [_1:string, _2:string, number]>
+export const getExamsByCourseId: QueryFunction<ExamsResponse, [_1:string, _2:string, number, _4:string]>
  = async ({queryKey}): Promise<ExamsResponse> => {
-  const [_1, _2, courseId] = queryKey;
+  const [_1, _2, courseId, _4] = queryKey;
   const response = await axiosClient.get(`/api/v1/course/${courseId}/exam-content`);
   return response.data;
 }

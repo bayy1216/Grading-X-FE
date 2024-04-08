@@ -14,6 +14,7 @@ export default function ExamDetailFrame() {
   const location = useLocation();
 
   const examId = parseInt(location.pathname.split("/").pop() || "0");
+  console.log("exmmaID" + examId);
 
   const [guestEmail, setGuestEmail] = useState<string>("");
 

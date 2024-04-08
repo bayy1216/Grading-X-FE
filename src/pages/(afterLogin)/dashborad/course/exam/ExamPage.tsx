@@ -6,7 +6,7 @@ import {getExamsByCourseId} from "../../../../../api/exam/exam.api.ts";
 import {useQuery} from "@tanstack/react-query";
 import ExamHeader from "../../../../../components/exam/ExamHeader.tsx";
 import {useState} from "react";
-import {DASHBOARD, EXAMS, MINUTE_10, MINUTE_5} from "../../../../../const/data.ts";
+import {COURSES, DASHBOARD, EXAMS, MINUTE_10, MINUTE_5} from "../../../../../const/data.ts";
 
 export default function ExamPage() {
   const nav = useNavigate();
@@ -16,8 +16,8 @@ export default function ExamPage() {
 
 
 
-  const { data} = useQuery<ExamsResponse, Object, ExamsResponse, [_1:string, _2:string, _3:number]>({
-    queryKey: [DASHBOARD, EXAMS, courseId],
+  const { data} = useQuery<ExamsResponse, Object, ExamsResponse, [_1:string, _2:string, _3:number, _4:string]>({
+    queryKey: [DASHBOARD, COURSES, courseId, EXAMS],
     queryFn: getExamsByCourseId,
     staleTime: MINUTE_5,
     gcTime: MINUTE_10,
