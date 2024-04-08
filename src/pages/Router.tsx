@@ -14,6 +14,7 @@ import {useQuery} from "@tanstack/react-query";
 import {Member} from "../api/member/member.response.ts";
 import {createContext, useEffect, useState} from "react";
 import {INFO, MEMBER} from "../const/data.ts";
+import CourseCreatePage from "./(afterLogin)/dashborad/course/CourseCreatePage.tsx";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
     children: [
       {path: "", element: <Navigate replace to={"/dashboard/course"} />},
       {path: "course", element: <CoursePage />},
+      {path: "course/create", element: <CourseCreatePage />},
       {path: "course/:courseId", element: <CourseDetailPage />},
       {path: "course/:courseId/exam", element: <ExamPage />},
       {path: "course/:courseId/exam/:examId", element: <ExamDetailPage />},

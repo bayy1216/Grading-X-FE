@@ -1,16 +1,13 @@
 import style from "./CoursePage.module.css";
-import CourseCreateModal from "../../../../components/course/CourseCreateModal.tsx";
-import {useState} from "react";
 import {getCourses} from "../../../../api/course/course.api.ts";
 import {Button} from "@mui/material";
 import {useQuery} from "@tanstack/react-query";
-import { CoursesResponse} from "../../../../api/course/course.response.ts";
+import {CoursesResponse} from "../../../../api/course/course.response.ts";
 import {useNavigate} from "react-router-dom";
 import CourseItem from "../../../../components/course/CourseItem.tsx";
 import {COURSES, DASHBOARD, MEMBER} from "../../../../const/data.ts";
 
 export default function CoursePage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {data} = useQuery<CoursesResponse>({
     queryKey: [MEMBER, DASHBOARD, COURSES],
@@ -30,28 +27,19 @@ export default function CoursePage() {
   return (
     <div className={style.container}>
       <div className={style.currentClass}>
-        {!isModalOpen &&
-            <>
-                {
-                  data?.courseResponses.map((course) => (
-                    <div className={style.gridItem} key={course.id}>
-                      <CourseItem course={course} onClick={()=>onClick(course.id)} />
-                    </div>
-                  ))
-                }
-                <Button variant="contained" color="primary" onClick={
-                  () => {
-                    setIsModalOpen(true);
-                  }
-                }>Create a new course</Button>
-            </>
+        {
+          data?.courseResponses.map((course) => (
+            <div className={style.gridItem} key={course.id}>
+              <CourseItem course={course} onClick={() => onClick(course.id)}/>
+            </div>
+          ))
         }
-        {isModalOpen && <CourseCreateModal onCreate={
-          course => {
-            data?.courseResponses.push(course);
-            setIsModalOpen(false);
+        <Button variant="contained" color="primary" onClick={
+          () => {
+            //setIsModalOpen(true);
+            nav('/dashboard/course/create');
           }
-        }/>}
+        }>Create a new course</Button>
       </div>
     </div>
   );
