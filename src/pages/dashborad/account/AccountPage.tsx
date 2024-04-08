@@ -8,7 +8,7 @@ import {MemberUpdateRequest} from "../../../api/member/member.request.ts";
 import MemberEditInfo from "../../../components/account/MemberEditInfo.tsx";
 
 export default function AccountPage() {
-  const {member, refetch} = useContext(MemberContext);
+  const {member, changeLoginFlag } = useContext(MemberContext);
   if(!member) {
     return <div>Loading Account...</div>;
   }
@@ -54,7 +54,7 @@ export default function AccountPage() {
       password: editedMember.password,
       memberType: editedMember.memberType as 'INSTRUCTOR' | 'STUDENT'
     }
-    updateMemberInfo(request).then(refetch);
+    updateMemberInfo(request).then(changeLoginFlag);
   };
 
   return (
