@@ -12,7 +12,7 @@ import AccountPage from "./dashborad/account/AccountPage.tsx";
 import {getMemberInfo} from "../api/member/member.api.ts";
 import {useQuery} from "@tanstack/react-query";
 import {Member} from "../api/member/member.response.ts";
-import {createContext} from "react";
+import {createContext, useEffect, useState} from "react";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
@@ -34,10 +34,12 @@ const router = createBrowserRouter([
 interface Props {
   member: Member | null;
   isError: boolean;
-  refetch: () => void;
+  changeLoginFlag: () => void;
 }
 
-export const MemberContext = createContext<Props>({member: null, isError: false, refetch: () => {}});
+export const MemberContext = createContext<Props>({
+  member: null, isError: false, changeLoginFlag: () => {},
+});
 
 export default function Router() {
   const { data, isError,refetch }  = useQuery<Member>({
@@ -46,11 +48,23 @@ export default function Router() {
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
   });
+  const [isLoginChangedFlag, setIsLoginChangedFlag] = useState(false);
+
+  useEffect(() => {
+    refetch();
+  }, [isLoginChangedFlag]);
+
+  useEffect(() => {
+    console.log("UseEffect")
+    if(!data){
+      refetch().then(r => console.log('refetch', r)).catch(e => console.error(e));
+    }
+  }, [data, refetch]);
   return (
     <MemberContext.Provider value={{
       member: data || null, // data가 null이면 null을 넣고 아니면 data를 넣는다.
       isError,
-      refetch,
+      changeLoginFlag: () => setIsLoginChangedFlag(!isLoginChangedFlag),
     }}>
       <RouterProvider router={router} />
     </MemberContext.Provider>

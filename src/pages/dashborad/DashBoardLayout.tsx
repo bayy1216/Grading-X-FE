@@ -21,7 +21,7 @@ export default function DashboardLayout() {
     if(isError) {
       nav('/login');
     }
-  }, [member, isError]);
+  }, [member, isError, ]);
 
 
   return (

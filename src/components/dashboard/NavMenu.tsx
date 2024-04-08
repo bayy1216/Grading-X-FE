@@ -1,13 +1,15 @@
 import style from "./NavMenu.module.css";
-import {Link, useLocation, useNavigate } from "react-router-dom";
+import {Link, useLocation } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import {logout} from "../../api/auth/auth.api.ts";
 import {useQueryClient} from "@tanstack/react-query";
+import {useContext} from "react";
+import {MemberContext} from "../../pages/Router.tsx";
 
 export default function NavMenu() {
   // const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
+  const {changeLoginFlag} = useContext(MemberContext);
 
   const onLogout = () => {
     console.log('logout');
@@ -18,7 +20,7 @@ export default function NavMenu() {
       queryKey: ['member']
     });
     logout().then(() => {
-      navigate('/dashboard');
+      changeLoginFlag();
     });
   }
   return (
