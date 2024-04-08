@@ -1,12 +1,12 @@
 import style from "./CoursePage.module.css";
-import CourseCreateModal from "../../../components/course/CourseCreateModal.tsx";
+import CourseCreateModal from "../../../../components/course/CourseCreateModal.tsx";
 import {useState} from "react";
-import {getCourses} from "../../../api/course/course.api.ts";
+import {getCourses} from "../../../../api/course/course.api.ts";
 import {Button} from "@mui/material";
 import {useQuery} from "@tanstack/react-query";
-import { CoursesResponse} from "../../../api/course/course.response.ts";
+import { CoursesResponse} from "../../../../api/course/course.response.ts";
 import {useNavigate} from "react-router-dom";
-import CourseItem from "../../../components/course/CourseItem.tsx";
+import CourseItem from "../../../../components/course/CourseItem.tsx";
 
 export default function CoursePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);

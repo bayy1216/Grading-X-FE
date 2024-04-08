@@ -1,11 +1,11 @@
 import {useContext, useState} from "react";
-import {MemberContext} from "../../Router.tsx";
+import {MemberContext} from "../../../Router.tsx";
 import {Box, Button, Container, Grid, SelectChangeEvent} from '@mui/material';
-import MemberCard from "../../../components/account/MemberCard.tsx";
-import {MemberType} from "../../../api/member/member.response.ts";
-import {updateMemberInfo} from "../../../api/member/member.api.ts";
-import {MemberUpdateRequest} from "../../../api/member/member.request.ts";
-import MemberEditInfo from "../../../components/account/MemberEditInfo.tsx";
+import MemberCard from "../../../../components/account/MemberCard.tsx";
+import {MemberType} from "../../../../api/member/member.response.ts";
+import {updateMemberInfo} from "../../../../api/member/member.api.ts";
+import {MemberUpdateRequest} from "../../../../api/member/member.request.ts";
+import MemberEditInfo from "../../../../components/account/MemberEditInfo.tsx";
 
 export default function AccountPage() {
   const {member, changeLoginFlag } = useContext(MemberContext);

@@ -1,7 +1,7 @@
 import {Outlet, useNavigate} from "react-router-dom";
-import NavMenu from "../../components/dashboard/NavMenu.tsx";
+import NavMenu from "../../../components/dashboard/NavMenu.tsx";
 import style from "./DashBoardLayout.module.css";
-import {MemberContext} from "../Router.tsx";
+import {MemberContext} from "../../Router.tsx";
 import {useContext, useEffect, useState} from "react";
 
 export default function DashboardLayout() {

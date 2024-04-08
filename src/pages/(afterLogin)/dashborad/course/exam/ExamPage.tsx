@@ -1,10 +1,10 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import style from "./ExamPage.module.css";
-import ExamItem from "../../../../components/exam/ExamItem.tsx";
-import { ExamsResponse} from "../../../../api/exam/exam.response.ts";
-import {getExamsByCourseId} from "../../../../api/exam/exam.api.ts";
+import ExamItem from "../../../../../components/exam/ExamItem.tsx";
+import { ExamsResponse} from "../../../../../api/exam/exam.response.ts";
+import {getExamsByCourseId} from "../../../../../api/exam/exam.api.ts";
 import {useQuery} from "@tanstack/react-query";
-import ExamHeader from "../../../../components/exam/ExamHeader.tsx";
+import ExamHeader from "../../../../../components/exam/ExamHeader.tsx";
 import {useState} from "react";
 
 export default function ExamPage() {
