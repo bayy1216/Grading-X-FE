@@ -4,6 +4,7 @@ import {useState} from "react";
 import {createExam} from "../../../../../api/exam/exam.api.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {COURSES, DASHBOARD, EXAMS} from "../../../../../const/data.ts";
+import {ExamCreateRequest} from "../../../../../api/exam/exam.request.ts";
 
 export default function ExamCreatePage() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export default function ExamCreatePage() {
   // /dashboard/course/3/exam/create 에서 3을 추출
   const courseId = parseInt(location.pathname.split("/")[3] || "0");
 
-  const [createExamDto, setCreateExamDto] = useState({
+  const [createExamDto, setCreateExamDto] = useState<ExamCreateRequest>({
     name: '',
     description: '',
     startTime: '',
