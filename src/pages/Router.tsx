@@ -51,12 +51,14 @@ export default function Router() {
   const [isLoginChangedFlag, setIsLoginChangedFlag] = useState(false);
 
   useEffect(() => {
+    console.log("[isLoginChangedFlag] UseEffect")
     refetch();
   }, [isLoginChangedFlag]);
 
   useEffect(() => {
-    console.log("UseEffect")
+    console.log("ROUTER UseEffect")
     if(!data){
+      console.log("[data,refetch]refetch")
       refetch().then(r => console.log('refetch', r)).catch(e => console.error(e));
     }
   }, [data, refetch]);

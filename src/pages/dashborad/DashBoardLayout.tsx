@@ -5,7 +5,7 @@ import {MemberContext} from "../Router.tsx";
 import {useContext, useEffect, useState} from "react";
 
 export default function DashboardLayout() {
-  const {member, isError } = useContext(MemberContext);
+  const {member, isError, changeLoginFlag } = useContext(MemberContext);
   const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   /**
@@ -13,6 +13,7 @@ export default function DashboardLayout() {
    * context.isError가 true이면 로그인 페이지로 이동한다.
    */
   useEffect(() => {
+    changeLoginFlag();
     if (member !== null) {
       setIsLoading(false);
     }else {
@@ -21,7 +22,7 @@ export default function DashboardLayout() {
     if(isError) {
       nav('/login');
     }
-  }, [member, isError, ]);
+  }, [member, isError]);
 
 
   return (

@@ -14,7 +14,6 @@ export default function LoginModal() {
   const [message, setMessage] = useState('');
 
 
-  const {changeLoginFlag} = useContext(MemberContext);
   const navigate = useNavigate();
 
   /**
@@ -37,7 +36,6 @@ export default function LoginModal() {
       secureLocalStorage.setItem('accessToken', token.accessToken);
       secureLocalStorage.setItem('refreshToken', token.refreshToken);
       console.log('token', token);
-      changeLoginFlag();
       navigate('/dashboard');
     } catch (err) {
       console.error(err);

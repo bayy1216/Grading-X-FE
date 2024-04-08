@@ -1,11 +1,10 @@
 import style from './signup.module.css';
 import BackButton from "./BackButton";
-import {ChangeEventHandler, FormEventHandler, useContext, useState} from "react";
+import {ChangeEventHandler, FormEventHandler, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {signup} from "../../api/auth/auth.api.ts";
 import {MemberType} from "../../api/member/member.response.ts";
 import secureLocalStorage from "react-secure-storage";
-import {MemberContext} from "../../pages/Router.tsx";
 
 function showMessage(message: string | null) {
   console.log('message', message);
@@ -34,7 +33,6 @@ export default function SignupModal() {
   const [message, setMessage] = useState('');
   const [memberType, setMemberType] = useState('INSTRUCTOR');
 
-  const {changeLoginFlag} = useContext(MemberContext);
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setMessage('');
@@ -47,7 +45,6 @@ export default function SignupModal() {
       });
       secureLocalStorage.setItem('accessToken', token.accessToken);
       secureLocalStorage.setItem('refreshToken', token.refreshToken);
-      changeLoginFlag();
       navigate('/dashboard');
 
     } catch (err) {
