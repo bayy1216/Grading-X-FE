@@ -10,13 +10,12 @@ import SignupPage from "./(beforeLogin)/SignupPage.tsx";
 import DashboardLayout from "./(afterLogin)/dashborad/DashBoardLayout.tsx";
 import AccountPage from "./(afterLogin)/dashborad/account/AccountPage.tsx";
 import {getMemberInfo} from "../api/member/member.api.ts";
-import {useQuery} from "@tanstack/react-query";
-import {Member} from "../api/member/member.response.ts";
-import {createContext, useEffect, useState} from "react";
-import {INFO, MEMBER, MINUTE_10, MINUTE_5} from "../const/data.ts";
+import {useEffect} from "react";
 import CourseCreatePage from "./(afterLogin)/dashborad/course/CourseCreatePage.tsx";
 import ExamCreatePage from "./(afterLogin)/dashborad/course/exam/ExamCreatePage.tsx";
 import ExamDetailEditPage from "./(afterLogin)/dashborad/course/exam/ExamDetailEditPage.tsx";
+import {useMemberStore} from "../store/member.store.ts";
+import secureLocalStorage from "react-secure-storage";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
@@ -38,44 +37,23 @@ const router = createBrowserRouter([
     ]
   },
 ]);
-interface Props {
-  member: Member | null;
-  isError: boolean;
-  changeLoginFlag: () => void;
-}
-
-export const MemberContext = createContext<Props>({
-  member: null, isError: false, changeLoginFlag: () => {},
-});
 
 export default function Router() {
-  const { data, isError,refetch }  = useQuery<Member>({
-    queryKey: [MEMBER, INFO],
-    queryFn: getMemberInfo,
-    staleTime: MINUTE_5,
-    gcTime: MINUTE_10,
-  });
-  const [isLoginChangedFlag, setIsLoginChangedFlag] = useState(false);
+  const memberStore = useMemberStore();
 
   useEffect(() => {
-    console.log("[isLoginChangedFlag] UseEffect")
-    refetch();
-  }, [isLoginChangedFlag]);
-
-  useEffect(() => {
-    console.log("ROUTER UseEffect")
-    if(!data){
-      console.log("[data,refetch]refetch")
-      refetch().then(r => console.log('refetch', r)).catch(e => console.error(e));
+    console.log('memberStore.data', memberStore.data);
+    if(memberStore.data !== null || secureLocalStorage.getItem('accessToken') === null){
+      return;
     }
-  }, [data, refetch]);
+    getMemberInfo().then((member) => {
+      console.log('member', member);
+      memberStore.setData(member);
+    });
+  }, []);
+
+
   return (
-    <MemberContext.Provider value={{
-      member: data || null, // data가 null이면 null을 넣고 아니면 data를 넣는다.
-      isError,
-      changeLoginFlag: () => setIsLoginChangedFlag(!isLoginChangedFlag),
-    }}>
-      <RouterProvider router={router} />
-    </MemberContext.Provider>
+    <RouterProvider router={router} />
   );
 }

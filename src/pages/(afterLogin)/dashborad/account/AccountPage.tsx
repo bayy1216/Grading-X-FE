@@ -1,14 +1,17 @@
-import {useContext, useState} from "react";
-import {MemberContext} from "../../../Router.tsx";
+import {useState} from "react";
 import {Box, Button, Container, Grid, SelectChangeEvent} from '@mui/material';
 import MemberCard from "../../../../components/account/MemberCard.tsx";
 import {MemberType} from "../../../../api/member/member.response.ts";
 import {updateMemberInfo} from "../../../../api/member/member.api.ts";
 import {MemberUpdateRequest} from "../../../../api/member/member.request.ts";
 import MemberEditInfo from "../../../../components/account/MemberEditInfo.tsx";
+import {useMemberStore} from "../../../../store/member.store.ts";
 
 export default function AccountPage() {
-  const {member, changeLoginFlag } = useContext(MemberContext);
+
+  const memberStore = useMemberStore();
+  const member = memberStore.data;
+
   if(!member) {
     return <div>Loading Account...</div>;
   }
@@ -54,7 +57,9 @@ export default function AccountPage() {
       password: editedMember.password,
       memberType: editedMember.memberType as 'INSTRUCTOR' | 'STUDENT'
     }
-    updateMemberInfo(request).then(changeLoginFlag);
+    updateMemberInfo(request).then((_) => {
+      memberStore.setData(editedMember);
+    });
   };
 
   return (

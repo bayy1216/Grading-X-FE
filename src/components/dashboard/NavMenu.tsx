@@ -3,14 +3,13 @@ import {Link, useLocation } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import {logout} from "../../api/auth/auth.api.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {useContext} from "react";
-import {MemberContext} from "../../pages/Router.tsx";
 import {MEMBER} from "../../const/data.ts";
+import {useMemberStore} from "../../store/member.store.ts";
 
 export default function NavMenu() {
   // const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
-  const {changeLoginFlag} = useContext(MemberContext);
+  const memberStore = useMemberStore();
 
   const onLogout = () => {
     console.log('logout');
@@ -21,7 +20,7 @@ export default function NavMenu() {
       queryKey: [MEMBER]
     });
     logout().then(() => {
-      changeLoginFlag();
+      memberStore.setData(null);
     });
   }
   return (

@@ -1,29 +1,40 @@
 import {Outlet, useNavigate} from "react-router-dom";
 import NavMenu from "../../../components/dashboard/NavMenu.tsx";
 import style from "./DashBoardLayout.module.css";
-import {MemberContext} from "../../Router.tsx";
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
+import {useMemberStore} from "../../../store/member.store.ts";
+import {getMemberInfo} from "../../../api/member/member.api.ts";
+import secureLocalStorage from "react-secure-storage";
 
 export default function DashboardLayout() {
-  const {member, isError, changeLoginFlag } = useContext(MemberContext);
   const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+
+  const memberStore = useMemberStore();
+
   /**
-   * context.member가 null이면 로딩중이므로 Loading...을 반환한다.
-   * context.isError가 true이면 로그인 페이지로 이동한다.
+   * 로그인이 안되어있다면 정보 불러오기 시도 후, 로그인 페이지로 이동
    */
   useEffect(() => {
-    changeLoginFlag();
-    if (member !== null) {
-      setIsLoading(false);
-    }else {
-      setIsLoading(true);
-    }
-    if(isError) {
+    if(secureLocalStorage.getItem('accessToken') === null) {
       nav('/login');
+      return;
     }
-  }, [member, isError]);
+    if(memberStore.data == null) {
+      getMemberInfo().then((member) => {
+        memberStore.setData(member);
+        setIsLoading(false);
+      }).catch(() => {
+        nav('/login');
+      });
+    }else {
+      setIsLoading(false);
+    }
+  }, []);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={style.container}>
@@ -31,7 +42,7 @@ export default function DashboardLayout() {
         <NavMenu/>
       </div>
       <div className={style.rightWrapper}>
-        {isLoading ? <div>Loading...</div> : <Outlet/>}
+        <Outlet />
       </div>
     </div>
   );
