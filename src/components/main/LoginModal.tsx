@@ -1,4 +1,4 @@
-import {ChangeEventHandler, FormEventHandler, useEffect, useState} from "react";
+import {ChangeEventHandler, FormEventHandler, useState} from "react";
 import style from './login.module.css';
 import {useNavigate} from "react-router-dom";
 import SignupButton from "./SignupButton.tsx";
@@ -19,15 +19,6 @@ export default function LoginModal() {
 
   const memberStore = useMemberStore();
 
-  /**
-   * 로그인이 되어있는 경우에는 바로 dashboard로 이동
-   * useEffect를 사용하는 이유는 렌더링이 된 후에 실행되기 때문에
-   */
-  useEffect(() => {
-    if(memberStore.data !== null) {
-      navigate('/dashboard', {replace: true});
-    }
-  },[]);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
