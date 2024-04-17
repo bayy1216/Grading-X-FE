@@ -30,7 +30,6 @@
     padding: 0;
     margin: 0;
     font-size: 16px;
-    border-bottom: 1px solid #ccc;
 }
 
 .container ul li{
@@ -53,10 +52,9 @@
     background-color: #ccc;
 }
 
-.logout{
+.container .logout{
     position: absolute;
     bottom: 0;
-    width: 100%;
     text-align: center;
     padding: 10px 0;
     font-size: 16px;
