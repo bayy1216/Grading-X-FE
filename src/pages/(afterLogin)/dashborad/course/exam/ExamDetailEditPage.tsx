@@ -15,8 +15,8 @@ export default function ExamDetailEditPage() {
   const courseId = parseInt(location.pathname.split("/")[3] || "0");
 
 
-  const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:string, _3:number]>({
-    queryKey: [DASHBOARD, EXAMS, examId],
+  const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:number]>({
+    queryKey: [EXAMS, examId],
     queryFn: getExamDetailById,
     staleTime: MINUTE_5,
   });
