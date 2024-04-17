@@ -1,5 +1,6 @@
 import style from './ExamItem.module.css';
 import {Exam} from "../../api/exam/exam.response.ts";
+import dayjs from "dayjs";
 
 type Props = {
   exam: Exam;
@@ -9,6 +10,8 @@ type Props = {
 
 export default function ExamItem({exam, onclick}: Props){
 
+  const startTime = dayjs(exam.startTime).format('YYYY-MM-DD HH:mm');
+  const endTime = dayjs(exam.endTime).format('YYYY-MM-DD HH:mm');
   return (
     <div className={style.container} onClick={onclick}>
       <div className={style.leftWrapper}>
@@ -17,10 +20,10 @@ export default function ExamItem({exam, onclick}: Props){
         </div>
         <div className={style.data}>
           <div className={style.startTime}>
-            {exam.startTime}
+            {startTime}
           </div>
           <div className={style.endTime}>
-            {exam.endTime}
+            {endTime}
           </div>
         </div>
       </div>
