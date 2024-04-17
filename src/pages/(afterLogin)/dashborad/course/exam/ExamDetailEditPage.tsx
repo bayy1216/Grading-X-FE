@@ -1,11 +1,12 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import { getExamDetailById, updateExamDetail} from "../../../../../api/exam/exam.api.ts";
+import {getExamDetailById, updateExamDetail} from "../../../../../api/exam/exam.api.ts";
 import {COURSES, DASHBOARD, EXAMS, MINUTE_5} from "../../../../../const/data.ts";
-import {Box, Button, Container, Grid, TextField} from "@mui/material";
 import {ExamDetail} from "../../../../../api/exam/exam.response.ts";
 import {ExamUpdateRequest} from "../../../../../api/exam/exam.request.ts";
+import {Input} from "@/components/ui/input.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 export default function ExamDetailEditPage() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function ExamDetailEditPage() {
   const courseId = parseInt(location.pathname.split("/")[3] || "0");
 
 
-  const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:number]>({
+  const {data} = useQuery<ExamDetail, Object, ExamDetail, [_1: string, _2: number]>({
     queryKey: [EXAMS, examId],
     queryFn: getExamDetailById,
     staleTime: MINUTE_5,
@@ -30,7 +31,7 @@ export default function ExamDetailEditPage() {
 
   useEffect(() => {
     console.log(data);
-    if(data) {
+    if (data) {
       setUpdateExamDto({
         name: data.name,
         description: data.description,
@@ -41,7 +42,7 @@ export default function ExamDetailEditPage() {
   }, [data]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     setUpdateExamDto((prev) => ({
       ...prev,
       [name]: value
@@ -59,7 +60,7 @@ export default function ExamDetailEditPage() {
   const queryClient = useQueryClient();
 
   const handleSaveClick = async () => {
-    if(!updateExamDto.name || !updateExamDto.description || !updateExamDto.startTime || !updateExamDto.endTime) {
+    if (!updateExamDto.name || !updateExamDto.description || !updateExamDto.startTime || !updateExamDto.endTime) {
       alert('입력 값을 확인해주세요.');
     }
     //2024-04-08T00:00:00.000Z 형식으로 변환
@@ -82,42 +83,27 @@ export default function ExamDetailEditPage() {
     navigate(-1);
   }
   return (
-    <Container maxWidth="md">
-      <Box my={4}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <form>
-              <TextField
-                name="name"
-                label="Name"
-                value={updateExamDto.name}
-                onChange={handleInputChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                name="description"
-                label="Description"
-                value={updateExamDto.description}
-                onChange={handleInputChange}
-                fullWidth
-                margin="normal"
-              />
+    <>
+      <form>
+        <Input
+          name="name"
+          value={updateExamDto.name}
+          onChange={handleInputChange}
+        />
+        <Input
+          name="description"
+          value={updateExamDto.description}
+          onChange={handleInputChange}
+        />
 
-              <label>Start date</label>
-              <input type="date" onChange={changeStartDate}/>
-              <label>End date</label>
-              <input type="date" onChange={changeEndDate}/>
+        <label>Start date</label>
+        <input type="date" onChange={changeStartDate}/>
+        <label>End date</label>
+        <input type="date" onChange={changeEndDate}/>
 
-            </form>
-          </Grid>
-        </Grid>
-        <Box mt={3}>
-          <Button variant="contained" color="primary" onClick={handleSaveClick}>수정</Button>
-        </Box>
-      </Box>
-    </Container>
+      </form>
+      <Button  onClick={handleSaveClick}>수정</Button>
 
-
+    </>
   );
 }

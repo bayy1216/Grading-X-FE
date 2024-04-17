@@ -1,6 +1,4 @@
-import {Member, memberTypeToKo} from "../../api/member/member.response.ts";
-import { Box, Container, Grid, Typography } from '@mui/material';
-
+import {Member, memberTypeToKo} from "@/api/member/member.response.ts";
 type Props = {
   member: Member;
 };
@@ -8,16 +6,10 @@ type Props = {
 
 export default function MemberCard({member}:Props) {
   return (
-    <Container maxWidth="md">
-      <Box my={4}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <Typography variant="h4">{member.name}</Typography>
-            <Typography variant="subtitle1" color="textSecondary">{member.email}</Typography>
-            <Typography variant="body1">유형: {memberTypeToKo(member.memberType)}</Typography>
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <>
+      <div>{member.name}</div>
+      <div>{member.email}</div>
+      <div>{memberTypeToKo(member.memberType)}</div>
+    </>
   );
 }

@@ -1,12 +1,12 @@
-import {Button} from "@mui/material";
 import {useState} from "react";
-import {CourseCreateRequest} from "../../api/course/course.request.ts";
-import {createCourse} from "../../api/course/course.api.ts";
+import {CourseCreateRequest} from "@/api/course/course.request.ts";
+import {createCourse} from "@/api/course/course.api.ts";
 import {useNavigate} from "react-router-dom";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {COURSES, DASHBOARD, MEMBER} from "../../const/data.ts";
-import {Course, CoursesResponse} from "../../api/course/course.response.ts";
-import {useMemberStore} from "../../store/member.store.ts";
+import {COURSES, DASHBOARD, MEMBER} from "@/const/data.ts";
+import {Course, CoursesResponse} from "@/api/course/course.response.ts";
+import {useMemberStore} from "@/store/member.store.ts";
+import {Button} from "@/components/ui/button.tsx";
 
 export default function CourseCreateModal() {
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ export default function CourseCreateModal() {
         <label>End date</label>
         <input type="date" onChange={changeEndDate}/>
         <br/>
-        <Button variant="contained" color="primary" onClick={onButtonClick}>Create a new course</Button>
+        <Button onClick={onButtonClick}>Create a new course</Button>
       </div>
     </div>
   );

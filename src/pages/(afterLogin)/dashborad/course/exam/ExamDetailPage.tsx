@@ -7,7 +7,7 @@ import {examStartGuestByExamId, getExamDetailById} from "../../../../../api/exam
 import {ExamTakeGuestRequest} from "../../../../../api/exam/exam.request.ts";
 import dayjs from "dayjs";
 import style from "./ExamDetailPage.module.css";
-import {TextField} from "@mui/material";
+import {Input} from "@/components/ui/input.tsx";
 
 export default function ExamDetailPage() {
   const nav = useNavigate();
@@ -66,13 +66,10 @@ export default function ExamDetailPage() {
         <h2>Description</h2>
         <p>{data?.description}</p>
 
-        <TextField
+        <Input
           name="email"
-          label="Email"
           value={guestEmail}
           onChange={handleInputChange}
-          fullWidth
-          margin="normal"
         />
         <button className={style.startExam} onClick={onTakeExam}>
           Start Exam
