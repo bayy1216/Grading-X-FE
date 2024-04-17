@@ -3,8 +3,10 @@ import {useState} from "react";
 import {CourseCreateRequest} from "../../api/course/course.request.ts";
 import {createCourse} from "../../api/course/course.api.ts";
 import {useNavigate} from "react-router-dom";
-import {useQueryClient} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {COURSES, DASHBOARD, MEMBER} from "../../const/data.ts";
+import {Course, CoursesResponse} from "../../api/course/course.response.ts";
+import {useMemberStore} from "../../store/member.store.ts";
 
 export default function CourseCreateModal() {
   const navigate = useNavigate();
@@ -23,14 +25,36 @@ export default function CourseCreateModal() {
     setCreateCourseRequest({...createCourseRequest, endDate: e.target.value});
   }
 
-  const queryClient = useQueryClient();
-  const onButtonClick = async () => {
-    await createCourse(createCourseRequest);
-    await queryClient.invalidateQueries({
-      queryKey: [MEMBER, DASHBOARD, COURSES],
-    });
+  const memberStore = useMemberStore();
 
-    navigate('/dashboard/course', {replace: true});
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: createCourse,
+    onSuccess: async (data) => {
+      console.log('beforeSetData');
+      queryClient.setQueryData([MEMBER, DASHBOARD, COURSES], (old: CoursesResponse) => {
+        const newCourse : Course = {
+          id: data,
+          instructor : memberStore.data!!,
+          ...createCourseRequest,
+        }
+        return {
+          ...old,
+          courseResponses: [...old.courseResponses, newCourse]
+        }
+      });
+      console.log('success');
+      navigate('/dashboard/course', {replace: true});
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+
+  });
+
+  const onButtonClick = async () => {
+    mutation.mutate(createCourseRequest);
   }
 
   return (
