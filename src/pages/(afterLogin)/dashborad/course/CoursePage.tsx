@@ -5,7 +5,7 @@ import {useQuery} from "@tanstack/react-query";
 import {CoursesResponse} from "../../../../api/course/course.response.ts";
 import {useNavigate} from "react-router-dom";
 import CourseItem from "../../../../components/course/CourseItem.tsx";
-import {COURSES, DASHBOARD, MEMBER, MINUTE_10, MINUTE_5} from "../../../../const/data.ts";
+import {COURSES, DASHBOARD, MEMBER, MINUTE_5} from "../../../../const/data.ts";
 
 export default function CoursePage() {
 
@@ -13,7 +13,6 @@ export default function CoursePage() {
     queryKey: [MEMBER, DASHBOARD, COURSES],
     queryFn: getCourses,
     staleTime: MINUTE_5, // 5 minutes 동안 fresh data를 유지(fresh -> stale)
-    gcTime: MINUTE_10, // 5 minutes 동안 garbage collection을 하지 않음. staleTime <= gcTime
   });
 
   const nav = useNavigate();

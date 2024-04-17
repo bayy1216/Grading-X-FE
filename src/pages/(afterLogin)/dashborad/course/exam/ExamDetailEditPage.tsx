@@ -2,7 +2,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import { getExamDetailById, updateExamDetail} from "../../../../../api/exam/exam.api.ts";
-import {COURSES, DASHBOARD, EXAMS, MINUTE_10, MINUTE_5} from "../../../../../const/data.ts";
+import {COURSES, DASHBOARD, EXAMS, MINUTE_5} from "../../../../../const/data.ts";
 import {Box, Button, Container, Grid, TextField} from "@mui/material";
 import {ExamDetail} from "../../../../../api/exam/exam.response.ts";
 import {ExamUpdateRequest} from "../../../../../api/exam/exam.request.ts";
@@ -19,7 +19,6 @@ export default function ExamDetailEditPage() {
     queryKey: [DASHBOARD, EXAMS, examId],
     queryFn: getExamDetailById,
     staleTime: MINUTE_5,
-    gcTime: MINUTE_10,
   });
 
   const [updateExamDto, setUpdateExamDto] = useState<ExamUpdateRequest>({
