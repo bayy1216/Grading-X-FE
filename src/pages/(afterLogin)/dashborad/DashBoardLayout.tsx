@@ -1,14 +1,13 @@
 import {Outlet, useNavigate} from "react-router-dom";
 import NavMenu from "../../../components/dashboard/NavMenu.tsx";
 import style from "./DashBoardLayout.module.css";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useMemberStore} from "../../../store/member.store.ts";
 import {getMemberInfo} from "../../../api/member/member.api.ts";
 import secureLocalStorage from "react-secure-storage";
 
 export default function DashboardLayout() {
   const nav = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
 
   const memberStore = useMemberStore();
 
@@ -23,18 +22,12 @@ export default function DashboardLayout() {
     if(memberStore.data == null) {
       getMemberInfo().then((member) => {
         memberStore.setData(member);
-        setIsLoading(false);
+
       }).catch(() => {
         nav('/login');
       });
-    }else {
-      setIsLoading(false);
     }
   }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className={style.container}>
