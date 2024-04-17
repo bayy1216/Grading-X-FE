@@ -1,11 +1,11 @@
 import style from "./CoursePage.module.css";
-import {getCourses} from "../../../../api/course/course.api.ts";
-import {Button} from "@mui/material";
+import {getCourses} from "@/api/course/course.api.ts";
 import {useQuery} from "@tanstack/react-query";
-import {CoursesResponse} from "../../../../api/course/course.response.ts";
-import {useNavigate} from "react-router-dom";
+import {CoursesResponse} from "@/api/course/course.response.ts";
+import {Link, useNavigate} from "react-router-dom";
 import CourseItem from "../../../../components/course/CourseItem.tsx";
-import {COURSES, DASHBOARD, MEMBER, MINUTE_5} from "../../../../const/data.ts";
+import {COURSES, DASHBOARD, MEMBER, MINUTE_5} from "@/const/data.ts";
+import {Button} from "@/components/ui/button.tsx";
 
 export default function CoursePage() {
 
@@ -33,12 +33,9 @@ export default function CoursePage() {
             </div>
           ))
         }
-        <Button variant="contained" color="primary" onClick={
-          () => {
-            //setIsModalOpen(true);
-            nav('/dashboard/course/create');
-          }
-        }>Create a new course</Button>
+        <Button size={"lg"} asChild>
+          <Link to="/dashboard/course/create">Create a new course</Link>
+        </Button>
       </div>
     </div>
   );
