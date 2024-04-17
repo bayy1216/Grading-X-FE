@@ -1,12 +1,11 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {useQuery} from "@tanstack/react-query";
-import {ExamDetail} from "../../../../../api/exam/exam.response.ts";
-import {EXAMS, MINUTE_10, MINUTE_5} from "../../../../../const/data.ts";
-import {examStartGuestByExamId, getExamDetailById} from "../../../../../api/exam/exam.api.ts";
-import {ExamTakeGuestRequest} from "../../../../../api/exam/exam.request.ts";
+import {ExamDetail} from "@/api/exam/exam.response.ts";
+import {EXAMS, MINUTE_10, MINUTE_5} from "@/const/data.ts";
+import {examStartGuestByExamId, getExamDetailById} from "@/api/exam/exam.api.ts";
+import {ExamTakeGuestRequest} from "@/api/exam/exam.request.ts";
 import dayjs from "dayjs";
-import style from "./ExamDetailPage.module.css";
 import {Input} from "@/components/ui/input.tsx";
 
 export default function ExamDetailPage() {
@@ -49,20 +48,20 @@ export default function ExamDetailPage() {
   const endTime = dayjs(data?.endTime).format('YYYY-MM-DD HH:mm');
 
   return (
-    <div className={style.container}>
-      <div className={style.header}>
+    <div className="flex flex-col items-start justify-start w-full h-full">
+      <div className="flex flex-row items-center justify-between w-full p-5 border-b border-gray-300">
         <h1>{data?.name}</h1>
-        <div className={style.data}>
-          <div className={style.startTime}>
+        <div className="flex flex-row items-center">
+          <div className="text-base font-medium mb-2 mr-5">
             {startTime}
           </div>
-          <div className={style.endTime}>
+          <div className="text-base font-medium mb-2">
             {endTime}
           </div>
-          <button className={style.edit} onClick={onEditButtonClick}>Edit</button>
+          <button className="border-2 m-2 p-2" onClick={onEditButtonClick}>Edit</button>
         </div>
       </div>
-      <div className={style.content}>
+      <div className="flex flex-col items-center justify-center w-full p-5">
         <h2>Description</h2>
         <p>{data?.description}</p>
 
@@ -71,7 +70,7 @@ export default function ExamDetailPage() {
           value={guestEmail}
           onChange={handleInputChange}
         />
-        <button className={style.startExam} onClick={onTakeExam}>
+        <button className="flex flex-row items-center justify-center w-300 p-5 m-2 border border-gray-300" onClick={onTakeExam}>
           Start Exam
         </button>
       </div>

@@ -77,16 +77,5 @@ export default function DashboardLayout() {
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
-  )
-
-  // return (
-  //   <div className={style.container}>
-  //     <div className={style.leftWrapper}>
-  //       <NavMenu/>
-  //     </div>
-  //     <div className={style.rightWrapper}>
-  //       <Outlet />
-  //     </div>
-  //   </div>
-  // );
+  );
 }

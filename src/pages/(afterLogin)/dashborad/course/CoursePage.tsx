@@ -1,4 +1,3 @@
-import style from "./CoursePage.module.css";
 import {getCourses} from "@/api/course/course.api.ts";
 import {useQuery} from "@tanstack/react-query";
 import {CoursesResponse} from "@/api/course/course.response.ts";
@@ -24,11 +23,11 @@ export default function CoursePage() {
 
 
   return (
-    <div className={style.container}>
-      <div className={style.currentClass}>
+    <div className="w-full h-screen flex flex-col p-8 items-center overflow-y-auto">
+      <div className="grid grid-cols-4 gap-5">
         {
           data?.courseResponses.map((course) => (
-            <div className={style.gridItem} key={course.id}>
+            <div className="" key={course.id}>
               <CourseItem course={course} onClick={() => onClick(course.id)}/>
             </div>
           ))

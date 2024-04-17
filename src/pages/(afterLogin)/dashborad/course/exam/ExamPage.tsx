@@ -1,12 +1,11 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import style from "./ExamPage.module.css";
 import ExamItem from "../../../../../components/exam/ExamItem.tsx";
-import { ExamsResponse} from "../../../../../api/exam/exam.response.ts";
-import {getExamsByCourseId} from "../../../../../api/exam/exam.api.ts";
+import { ExamsResponse} from "@/api/exam/exam.response.ts";
+import {getExamsByCourseId} from "@/api/exam/exam.api.ts";
 import {useQuery} from "@tanstack/react-query";
 import ExamHeader from "../../../../../components/exam/ExamHeader.tsx";
 import {useState} from "react";
-import {COURSES, DASHBOARD, EXAMS, MINUTE_10, MINUTE_5} from "../../../../../const/data.ts";
+import {COURSES, DASHBOARD, EXAMS, MINUTE_10, MINUTE_5} from "@/const/data.ts";
 
 export default function ExamPage() {
   const nav = useNavigate();
@@ -35,7 +34,7 @@ export default function ExamPage() {
   }
 
   return (
-    <div className={style.container}>
+    <div className="flex flex-col items-start justify-start w-full h-full overflow-y-auto">
       <ExamHeader examTitle={examTitle} setExamTitle={(t)=>setExamTitle(t)} onSearch={onSearch}/>
       {
         data?.examContents.map((assignment) =>

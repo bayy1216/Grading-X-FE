@@ -1,5 +1,4 @@
-import style from "./CourseItem.module.css";
-import {Course} from "../../api/course/course.response.ts";
+import {Course} from "@/api/course/course.response.ts";
 
 type Props = {
   onClick: () => void;
@@ -9,7 +8,7 @@ type Props = {
 export default function CourseItem({onClick, course}: Props) {
 
   return (
-    <div className={style.container} onClick={onClick}>
+    <div className="w-56 h-48 bg-white border border-gray-300 p-2 hover:bg-gray-200" onClick={onClick}>
       <div>
         <h3>{course.courseName}</h3>
       </div>
