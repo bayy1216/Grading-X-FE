@@ -10,6 +10,9 @@ import {Button} from "@/components/ui/button.tsx";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
+import {format} from "date-fns";
+import CalendarPicker from "@/components/common/CalendarPicker.tsx";
+
 
 export default function CourseCreatePage() {
   const navigate = useNavigate();
@@ -21,11 +24,13 @@ export default function CourseCreatePage() {
   const changeCourseName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCreateCourseRequest({...createCourseRequest, courseName: e.target.value});
   }
-  const changeStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCreateCourseRequest({...createCourseRequest, startDate: e.target.value});
+  const changeStartDate = (date: Date | undefined) => {
+    if (!date) return;
+    setCreateCourseRequest({...createCourseRequest, startDate: format(date, "yyyy-MM-dd")});
   }
-  const changeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCreateCourseRequest({...createCourseRequest, endDate: e.target.value});
+  const changeEndDate = (date: Date | undefined) => {
+    if (!date) return;
+    setCreateCourseRequest({...createCourseRequest, endDate: format(date, "yyyy-MM-dd")});
   }
 
   const memberStore = useMemberStore();
@@ -64,6 +69,9 @@ export default function CourseCreatePage() {
     mutation.mutate(createCourseRequest);
   }
 
+  const startDate = createCourseRequest.startDate === "" ? undefined : new Date(createCourseRequest.startDate);
+  const endDate = createCourseRequest.endDate === "" ? undefined : new Date(createCourseRequest.endDate);
+
   const cancelClick = () => {
     navigate('/dashboard/course', {replace: true});
   }
@@ -72,9 +80,9 @@ export default function CourseCreatePage() {
     <div className="w-full h-full flex flex-col items-center">
       <Card className="mt-32 w-[350px]">
         <CardHeader>
-          <CardTitle>Create Coures</CardTitle>
+          <CardTitle>강의 생성</CardTitle>
           <CardDescription>
-            Make a new course.
+            신규 강의를 생성합니다.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -82,10 +90,10 @@ export default function CourseCreatePage() {
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name" className="text-left">
-                  Name
+                  강의명
                 </Label>
                 <Input
-                  name="courseName" placeholder="courseName"
+                  name="courseName" placeholder="강의명"
                   value={createCourseRequest.courseName}
                   onChange={changeCourseName}
                   className="col-span-3"
@@ -95,32 +103,28 @@ export default function CourseCreatePage() {
                 <Label htmlFor="name" className="text-left">
                   시작일
                 </Label>
-                <Input
-                  name="startDate" placeholder="startDate"
-                  value={createCourseRequest.startDate}
-                  onChange={changeStartDate}
-                  className="col-span-3"
+                <CalendarPicker
+                  date={startDate}
+                  onSelect={changeStartDate}
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name" className="text-left">
                   종료일
                 </Label>
-                <Input
-                  name="endDate" placeholder="endDate"
-                  value={createCourseRequest.endDate}
-                  onChange={changeEndDate}
-                  className="col-span-3"
+
+                <CalendarPicker
+                  date={endDate}
+                  onSelect={changeEndDate}
                 />
               </div>
-
 
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline" onClick={cancelClick}>Cancel</Button>
-          <Button type="button" onClick={onButtonClick}>Save changes</Button>
+          <Button variant="outline" onClick={cancelClick}>취소</Button>
+          <Button type="button" onClick={onButtonClick}>생성</Button>
         </CardFooter>
       </Card>
     </div>
