@@ -35,10 +35,10 @@ export default function CoursePage() {
       </div>
 
       <div className="w-full border rounded flex flex-col items-center mt-6">
-        <p className="mt-6 mb-4">create a new course</p>
+        <p className="mt-6 mb-4">새로운 강의를 만들어 보세요.</p>
 
         <Button className="" size={"default"} asChild>
-          <Link to="/dashboard/course/create">Create a new course</Link>
+          <Link to="/dashboard/course/create">강의 추가</Link>
         </Button>
         <div className="mb-12"/>
       </div>

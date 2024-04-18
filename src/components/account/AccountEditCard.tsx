@@ -17,9 +17,9 @@ export default function AccountEditCard({editedMember, handleInputChange, handle
   return (
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>Edit Profile</CardTitle>
+        <CardTitle>프로필 편집</CardTitle>
         <CardDescription>
-          Make changes to your profile here. Click save when you're done.
+          회원 정보를 수정합니다.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -27,10 +27,10 @@ export default function AccountEditCard({editedMember, handleInputChange, handle
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name" className="text-left">
-                Name
+                닉네임
               </Label>
               <Input
-                name="name" placeholder="name"
+                name="name" placeholder="닉네임"
                 value={editedMember.name}
                 onChange={handleInputChange}
                 className="col-span-3"
@@ -38,10 +38,10 @@ export default function AccountEditCard({editedMember, handleInputChange, handle
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email" className="text-left">
-                Email
+                이메일
               </Label>
               <Input
-                name="email" placeholder="email"
+                name="email" placeholder="이메일"
                 value={editedMember.email}
                 onChange={handleInputChange}
                 className="col-span-3"
@@ -49,10 +49,10 @@ export default function AccountEditCard({editedMember, handleInputChange, handle
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password" className="text-left">
-                password
+                비밀번호
               </Label>
               <Input
-                name="password" placeholder="password"
+                name="password" placeholder="비밀번호"
                 value={editedMember.password}
                 onChange={handleInputChange}
                 className="col-span-3"
@@ -61,7 +61,7 @@ export default function AccountEditCard({editedMember, handleInputChange, handle
 
             <div className="flex flex-col space-y-1.5">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="framework">Framework</Label>
+                <Label htmlFor="framework">유형</Label>
                 <Select
                   value={editedMember.memberType}
                   onValueChange={handleMemberTypeChange}
@@ -81,8 +81,8 @@ export default function AccountEditCard({editedMember, handleInputChange, handle
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={cancelClick}>Cancel</Button>
-        <Button type="button" onClick={saveClick}>Save changes</Button>
+        <Button variant="outline" onClick={cancelClick}>취소</Button>
+        <Button type="button" onClick={saveClick}>저장</Button>
       </CardFooter>
     </Card>
   );
