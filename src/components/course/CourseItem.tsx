@@ -8,14 +8,17 @@ type Props = {
 export default function CourseItem({onClick, course}: Props) {
 
   return (
-    <div className="w-56 h-48 bg-white border border-gray-300 p-2 hover:bg-gray-200" onClick={onClick}>
-      <div>
-        <h3>{course.courseName}</h3>
+    <div className="w-80 h-48 bg-white flex flex-col
+    rounded
+     border border-gray-300 p-4 hover:bg-gray-200"
+         onClick={onClick}
+    >
+      <div className="flex-1">
+        <div className="text-2xl">{course.courseName}</div>
+        <p className="text-sm">{course.startDate} - {course.endDate}</p>
       </div>
-
       <div>
-        <p>{course.startDate} - {course.endDate}</p>
-        <p>Instructor: {course.instructor.name}</p>
+        <p className="text-sm">Instructor: {course.instructor.name}</p>
       </div>
     </div>
   );
