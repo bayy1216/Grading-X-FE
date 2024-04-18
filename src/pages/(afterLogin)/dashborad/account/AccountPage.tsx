@@ -1,10 +1,11 @@
 import {useState} from "react";
-import MemberCard from "../../../../components/account/MemberCard.tsx";
-import { Member, MemberType} from "@/api/member/member.response.ts";
+import {Member, MemberType} from "@/api/member/member.response.ts";
 import {updateMemberInfo} from "@/api/member/member.api.ts";
 import {MemberUpdateRequest} from "@/api/member/member.request.ts";
 import {useMemberStore} from "@/store/member.store.ts";
-import {MemberEditDialog} from "@/components/account/MemberEditDialog.tsx";
+import AccountEditCard from "@/components/account/AccountEditCard.tsx";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
+import {Separator} from "@/components/ui/separator.tsx";
 
 const initialMember: Member = {
   name: "",
@@ -60,15 +61,34 @@ export default function AccountPage() {
     });
   };
 
+  const cancelClick = () => {
+    setEditedMember({
+      ...member,
+      password: ''
+    });
+  }
+
   return (
-    <>
-      <MemberCard member={member}/>
-      <MemberEditDialog
-        editedMember={editedMember}
-        handleInputChange={handleInputChange}
-        handleMemberTypeChange={handleMemberTypeChange}
-        saveClick={handleSaveClick}
-      />
-    </>
+    <div className="flex flex-col">
+      <Tabs defaultValue="account" className="w-full pl-24 pr-24 mt-24">
+        <TabsList className="grid w-80 grid-cols-2">
+          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="settings">Settings</TabsTrigger>
+        </TabsList>
+        <div className="font-medium text-2xl mt-4 mb-2">
+          {member.name} settings
+        </div>
+        <Separator className="w-full mb-12"/>
+        <TabsContent value="account">
+            <AccountEditCard
+              editedMember={editedMember}
+              handleInputChange={handleInputChange}
+              handleMemberTypeChange={handleMemberTypeChange}
+              saveClick={handleSaveClick}
+              cancelClick={cancelClick}
+            />
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }
