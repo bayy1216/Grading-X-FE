@@ -37,7 +37,7 @@ export default function DashboardLayout() {
   const defaultLayout = layout ? JSON.parse(layout) : [265,1300]
   const defaultCollapsed = collapsed ? JSON.parse(collapsed) : false
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed)
-  const navCollapsedSize =4;
+  const navCollapsedSize = 2;
 
   return (
       <ResizablePanelGroup

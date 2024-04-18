@@ -6,6 +6,9 @@ import {MEMBER} from "@/const/data.ts";
 import {useMemberStore} from "@/store/member.store.ts";
 import {cn} from "@/lib/utils.ts";
 import {buttonVariants} from "@/components/ui/button.tsx";
+import {LibraryBig, LogOut, LucideIcon, Menu, Users2} from "lucide-react";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip.tsx";
+import {Separator} from "@/components/ui/separator.tsx";
 
 interface Props {
   isCollapsed: boolean;
@@ -13,7 +16,7 @@ interface Props {
 
 interface NavLink {
   title: string;
-  icon: string;
+  icon: LucideIcon;
   variant: 'default' | 'ghost';
   to: string;
 }
@@ -38,22 +41,28 @@ export default function NavMenu({isCollapsed}: Props) {
   }
 
   const links: NavLink[] = [
-    {title: 'Dashboard', icon: "DashboardIcon", variant: 'ghost', to: '/dashboard'},
     {
-      title: 'Classes',
-      icon: "ClassesIcon",
+      title: 'Dashboard',
+      icon: Menu,
+      variant: 'ghost',
+      to: '/dashboard'
+    },
+    {
+      title: 'Courses',
+      icon: LibraryBig,
       variant: location.pathname.includes('course') ? 'default' : 'ghost',
       to: '/dashboard/course'
     },
     {
       title: 'Account',
-      icon: "AccountIcon",
+      icon: Users2,
       variant: location.pathname.includes('account') ? 'default' : 'ghost',
       to: '/dashboard/account'
     },
   ]
 
   return (
+    <TooltipProvider>
     <div
       data-collapsed={isCollapsed}
       className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2 h-full"
@@ -61,7 +70,8 @@ export default function NavMenu({isCollapsed}: Props) {
       <nav className="grid gap-1 px-2 group-[data-collapsed=true]:justify-center group-[data-collapsed=true]:px-2">
         {links.map((link, index) =>
           isCollapsed ? (
-            <>
+            <Tooltip key={index} delayDuration={0}>
+            <TooltipTrigger asChild>
               <Link
                 to={link.to}
                 className={cn(
@@ -71,9 +81,14 @@ export default function NavMenu({isCollapsed}: Props) {
                   "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
                 )}
               >
+                <link.icon className="h-4 w-4"/>
                 <span className="sr-only">{link.title}</span>
               </Link>
-            </>
+            </TooltipTrigger>
+              <TooltipContent side="right" className="flex items-center gap-4">
+                {link.title}
+              </TooltipContent>
+            </Tooltip>
           ) : (
             <>
               <Link
@@ -86,32 +101,45 @@ export default function NavMenu({isCollapsed}: Props) {
                   "justify-start"
                 )}
               >
+                <link.icon className="h-4 w-4 mr-2"/>
                 {link.title}
 
               </Link>
             </>
           )
         )}
+        <Separator/>
 
         {isCollapsed ? (
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
           <Link to={'/'} onClick={onLogout}
                 className={cn(
                   buttonVariants({variant: 'ghost', size: "icon"}),
                   "h-9 w-9",
                 )}>
+
+            <LogOut className="h-4 w-4"/>
             <span className="sr-only">로그아웃</span>
 
           </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right" className="flex items-center gap-4">
+              로그아웃
+            </TooltipContent>
+          </Tooltip>
         ) : (
           <Link to={'/'} onClick={onLogout}
                 className={cn(
                   buttonVariants({variant: 'ghost', size: "sm"}),
                   "justify-start"
                 )}>
+            <LogOut className="h-4 w-4 mr-2"/>
             로그아웃
           </Link>
         )}
       </nav>
     </div>
+    </TooltipProvider>
   );
 }
