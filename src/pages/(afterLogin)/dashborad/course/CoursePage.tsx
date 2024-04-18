@@ -32,10 +32,17 @@ export default function CoursePage() {
             </div>
           ))
         }
-        <Button size={"lg"} asChild>
+      </div>
+
+      <div className="w-full border rounded flex flex-col items-center mt-6">
+        <p className="mt-6 mb-4">create a new course</p>
+
+        <Button className="" size={"default"} asChild>
           <Link to="/dashboard/course/create">Create a new course</Link>
         </Button>
+        <div className="mb-12"/>
       </div>
+
     </div>
   );
 }
