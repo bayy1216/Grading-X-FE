@@ -4,6 +4,7 @@ import {cn} from "@/lib/utils.ts";
 import {CalendarIcon} from "lucide-react";
 import {Calendar} from "@/components/ui/calendar.tsx";
 import {format} from "date-fns";
+import {ko} from "date-fns/locale";
 
 interface Props {
   date: Date | undefined;
@@ -22,7 +23,7 @@ export default function CalendarPicker({date, onSelect}: Props) {
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>날짜를 선택해 주세요</span>}
+          {date ? format(date, "PPP",{locale: ko}) : <span>날짜를 선택해 주세요</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
