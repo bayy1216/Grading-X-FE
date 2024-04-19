@@ -7,6 +7,9 @@ import {ExamDetail} from "../../../../../api/exam/exam.response.ts";
 import {ExamUpdateRequest} from "../../../../../api/exam/exam.request.ts";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Label} from "@/components/ui/label.tsx";
+import CalendarWithTimePicker from "@/components/common/CalendarWithTimePicker.tsx";
 
 export default function ExamDetailEditPage() {
   const navigate = useNavigate();
@@ -49,12 +52,19 @@ export default function ExamDetailEditPage() {
     }));
   };
 
-  const changeStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdateExamDto({...updateExamDto, startTime: e.target.value});
+  const changeStartDate = (date: Date | undefined) => {
+    if (!date) return;
+    setUpdateExamDto({
+      ...updateExamDto,
+      startTime: date.toISOString(),
+    });
   }
-
-  const changeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdateExamDto({...updateExamDto, endTime: e.target.value});
+  const changeEndDate = (date: Date | undefined) => {
+    if (!date) return;
+    setUpdateExamDto({
+      ...updateExamDto,
+      endTime:  date.toISOString(),
+    });
   }
 
   const queryClient = useQueryClient();
@@ -82,28 +92,72 @@ export default function ExamDetailEditPage() {
 
     navigate(-1);
   }
+  const startDate = updateExamDto.startTime ? new Date(updateExamDto.startTime) : undefined;
+  const endDate = updateExamDto.endTime ? new Date(updateExamDto.endTime) : undefined;
+  const cancelClick = () => {
+    navigate(-1);
+  }
   return (
-    <>
-      <form>
-        <Input
-          name="name"
-          value={updateExamDto.name}
-          onChange={handleInputChange}
-        />
-        <Input
-          name="description"
-          value={updateExamDto.description}
-          onChange={handleInputChange}
-        />
+    <div className="w-full h-full flex flex-col items-center">
+      <Card className="mt-32 w-[350px]">
+        <CardHeader>
+          <CardTitle>시험 생성</CardTitle>
+          <CardDescription>
+            신규 시험를 생성합니다.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form>
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name" className="text-left">
+                  시험 이름
+                </Label>
+                <Input
+                  name="name" placeholder="시험 이름"
+                  value={updateExamDto.name}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="description" className="text-left">
+                  설명
+                </Label>
+                <Input
+                  name="description" placeholder="설명"
+                  value={updateExamDto.description}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name" className="text-left">
+                  시작일
+                </Label>
+                <CalendarWithTimePicker
+                  date={startDate}
+                  onSelect={changeStartDate}
+                />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name" className="text-left">
+                  종료일
+                </Label>
+                <CalendarWithTimePicker
+                  date={endDate}
+                  onSelect={changeEndDate}
+                />
+              </div>
 
-        <label>Start date</label>
-        <input type="date" onChange={changeStartDate}/>
-        <label>End date</label>
-        <input type="date" onChange={changeEndDate}/>
-
-      </form>
-      <Button  onClick={handleSaveClick}>수정</Button>
-
-    </>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button variant="outline" onClick={cancelClick}>취소</Button>
+          <Button type="button" onClick={handleSaveClick}>생성</Button>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
