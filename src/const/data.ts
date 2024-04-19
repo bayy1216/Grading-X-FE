@@ -9,6 +9,8 @@ export const COURSES = "courses";
 
 export const EXAMS = "exams";
 
+export const QUESTIONS = "questions";
+
 
 //************* const *************//
 
