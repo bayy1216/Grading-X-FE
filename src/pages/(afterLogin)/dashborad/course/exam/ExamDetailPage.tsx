@@ -1,12 +1,10 @@
-import {useLocation, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import {ExamDetail} from "@/api/exam/exam.response.ts";
 import {EXAMS, MINUTE_10, MINUTE_5} from "@/const/data.ts";
-import {examStartGuestByExamId, getExamDetailById} from "@/api/exam/exam.api.ts";
-import {ExamTakeGuestRequest} from "@/api/exam/exam.request.ts";
+import {getExamDetailById} from "@/api/exam/exam.api.ts";
 import dayjs from "dayjs";
-import {Input} from "@/components/ui/input.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 export default function ExamDetailPage() {
   const nav = useNavigate();
@@ -15,8 +13,6 @@ export default function ExamDetailPage() {
   const examId = parseInt(location.pathname.split("/").pop() || "0");
   console.log("exmmaID" + examId);
 
-  const [guestEmail, setGuestEmail] = useState<string>("");
-
   const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:number]>({
     queryKey: [EXAMS, examId],
     queryFn: getExamDetailById,
@@ -24,24 +20,10 @@ export default function ExamDetailPage() {
     gcTime: MINUTE_10,
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGuestEmail(e.target.value);
-  }
-
-  const onTakeExam = () => {
-    const req : ExamTakeGuestRequest  = {
-      email: guestEmail,
-    }
-    examStartGuestByExamId(examId, req).then(
-      (_) => {
-        nav(`${location.pathname}/take?email=${guestEmail}`);
-      }
-    )
-  }
-
   const onEditButtonClick = () => {
     nav(`${location.pathname}/edit`);
   }
+
 
 
   const startTime = dayjs(data?.startTime).format('YYYY-MM-DD HH:mm');
@@ -65,14 +47,9 @@ export default function ExamDetailPage() {
         <h2>Description</h2>
         <p>{data?.description}</p>
 
-        <Input
-          name="email"
-          value={guestEmail}
-          onChange={handleInputChange}
-        />
-        <button className="flex flex-row items-center justify-center w-300 p-5 m-2 border border-gray-300" onClick={onTakeExam}>
-          Start Exam
-        </button>
+        <Button className="items-center mt-32" size={"default"} asChild>
+          <Link to={`${location.pathname}/question-edit`}>문제 편집</Link>
+        </Button>
       </div>
 
     </div>

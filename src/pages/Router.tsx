@@ -17,6 +17,7 @@ import ExamDetailEditPage from "./(afterLogin)/dashborad/course/exam/ExamDetailE
 import {useMemberStore} from "../store/member.store.ts";
 import secureLocalStorage from "react-secure-storage";
 import GuestExamTakePage from "@/pages/(beforeLogin)/GuestExamTakePage.tsx";
+import ExamQuestionEditPage from "@/pages/(afterLogin)/dashborad/course/exam/ExamQuestionEditPage.tsx";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       {path: "course/:courseId/exam/create", element: <ExamCreatePage />},
       {path: "course/:courseId/exam/:examId", element: <ExamDetailPage />},
       {path: "course/:courseId/exam/:examId/edit", element: <ExamDetailEditPage />},
+      {path: "course/:courseId/exam/:examId/question-edit", element: <ExamQuestionEditPage />},
       {path: "course/:courseId/exam/:examId/take", element: <ExamTakePage />},
       {path: "account", element: <AccountPage />},
     ]
