@@ -126,9 +126,8 @@ export default function ExamQuestionEditPage() {
 
 
   return (
-    <div className="flex flex-row w-full h-full items-start justify-center">
-
-      <div className="flex flex-col items-start justify-start h-full">
+    <div className="flex flex-row w-full h-full items-start justify-start overflow-y-auto relative">
+      <div className="flex flex-col items-end justify-start h-full w-1/2 pr-4">
         {questions.map((question) => (
           <ExamQuestionEditItem
             key={question.id}
@@ -136,16 +135,16 @@ export default function ExamQuestionEditPage() {
             onQuestionChange={(e) =>
               onQuestionChange(e, question.id)
             }
-            onChangeUp={onChangeUp}
-            onChangeDown={onChangeDown}
-            onDelete={onDelete}
-            isLast={questions.length  === question.index}
+            onChangeUp={()=>onChangeUp(question.id)}
+            onChangeDown={()=>onChangeDown(question.id)}
+            onDelete={()=>onDelete(question.id)}
+            isLast={questions.length === question.index}
           />
         ))}
       </div>
-      <div className="">
+      <div className="sticky w-1/2 right-0 top-0 flex flex-col items-start justify-center h-full">
         <Button
-          className="w-32 h-12"
+          className="w-32 h-12 mb-4"
           onClick={onAddQuestion}
         >
           문제 추가
