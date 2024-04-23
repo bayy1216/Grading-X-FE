@@ -5,11 +5,17 @@ import {MINUTE_5, QUESTIONS} from "@/const/data.ts";
 import {getQuestionsByExamId} from "@/api/question/question.api.ts";
 import {useEffect, useState} from "react";
 import ExamQuestionEditItem from "@/components/exam/ExamQuestionEditItem.tsx";
+import {Button} from "@/components/ui/button.tsx";
+
+
+const isChanged = (origin: Question, current: Question) => {
+  return origin.weightage !== current.weightage || origin.query !== current.query || origin.index !== current.index;
+}
 
 export default function ExamQuestionEditPage() {
   const location = useLocation();
   const examId = parseInt(location.pathname.split("/")[5] || "0");
-  const { data} = useQuery<QuestionsResponse,Object, QuestionsResponse, [_1:string, _2: number]>({
+  const {data} = useQuery<QuestionsResponse, Object, QuestionsResponse, [_1: string, _2: number]>({
     queryKey: [QUESTIONS, examId],
     queryFn: getQuestionsByExamId,
     staleTime: MINUTE_5, // 5 minutes 동안 fresh data를 유지(fresh -> stale)
@@ -20,7 +26,7 @@ export default function ExamQuestionEditPage() {
     setQuestions(data?.questions?.sort((a, b) => a.index - b.index) || []);
   }, [data]);
 
-  const onQuestionChange = (e:React.ChangeEvent<HTMLInputElement>, id:number) => {
+  const onQuestionChange = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
     const {name, value} = e.target;
     const question = questions.find((q) => q.id === id);
     if (!question) return;
@@ -28,7 +34,6 @@ export default function ExamQuestionEditPage() {
       ...question,
       [name]: value,
     }
-
 
 
     setQuestions((prev) => {
@@ -40,7 +45,7 @@ export default function ExamQuestionEditPage() {
       });
     });
   }
-  const onChangeUp = (id:number) => {
+  const onChangeUp = (id: number) => {
     const question = questions.find((q) => q.id === id);
     if (!question) return;
     const qIndex = question.index;
@@ -52,7 +57,7 @@ export default function ExamQuestionEditPage() {
           ...q,
           index: changeQuestion.index,
         }
-      }else if(q.id === changeQuestion.id){
+      } else if (q.id === changeQuestion.id) {
         return {
           ...q,
           index: question.index,
@@ -64,7 +69,7 @@ export default function ExamQuestionEditPage() {
 
   }
 
-  const onChangeDown = (id:number) => {
+  const onChangeDown = (id: number) => {
     const question = questions.find((q) => q.id === id);
     if (!question) return;
     const qIndex = question.index;
@@ -76,7 +81,7 @@ export default function ExamQuestionEditPage() {
           ...q,
           index: changeQuestion.index,
         }
-      }else if(q.id === changeQuestion.id){
+      } else if (q.id === changeQuestion.id) {
         return {
           ...q,
           index: question.index
@@ -87,20 +92,71 @@ export default function ExamQuestionEditPage() {
     setQuestions(exchangeQuestions.sort((a, b) => a.index - b.index));
   }
 
+  const onDelete = (id: number) => {
+    setQuestions((prev) => {
+      return prev.filter((q) => q.id !== id);
+    });
+  }
+
+  const onAddQuestion = () => {
+    setQuestions((prev) => {
+      return [
+        ...prev,
+        {
+          id: (prev.length + 1) * -1,
+          index: prev.length + 1,
+          weightage: 0,
+          query: "",
+        }
+      ];
+    });
+  }
+
+  const onQuestionSave = () => {
+    const createQuestions = questions.filter((q) => q.id < 0);
+    const updateQuestions = questions.filter((q) =>{
+      const originQuestion = data?.questions?.find((oq) => oq.id === q.id);
+      return originQuestion && isChanged(originQuestion, q);
+    });
+    console.log("createQuestions", createQuestions);
+    console.log("updateQuestions", updateQuestions);
+    return;
+  }
+
+
 
   return (
-    <div className="flex flex-col items-start justify-start w-full h-full">
-      {questions.map((question) => (
-        <ExamQuestionEditItem
-          key={question.id}
-          question={question}
-          onQuestionChange={(e) =>
-            onQuestionChange(e, question.id)
-          }
-          onChangeUp={onChangeUp}
-          onChangeDown={onChangeDown}
-        />
-      ))}
+    <div className="flex flex-row w-full h-full items-start justify-center">
+
+      <div className="flex flex-col items-start justify-start h-full">
+        {questions.map((question) => (
+          <ExamQuestionEditItem
+            key={question.id}
+            question={question}
+            onQuestionChange={(e) =>
+              onQuestionChange(e, question.id)
+            }
+            onChangeUp={onChangeUp}
+            onChangeDown={onChangeDown}
+            onDelete={onDelete}
+            isLast={questions.length  === question.index}
+          />
+        ))}
+      </div>
+      <div className="">
+        <Button
+          className="w-32 h-12"
+          onClick={onAddQuestion}
+        >
+          문제 추가
+        </Button>
+        <Button
+          className="w-32 h-12"
+          onClick={onQuestionSave}
+        >
+          저장
+        </Button>
+      </div>
     </div>
   );
 }
