@@ -26,13 +26,26 @@ export default function ExamQuestionEditPage() {
     setQuestions(data?.questions?.sort((a, b) => a.index - b.index) || []);
   }, [data]);
 
+  const [dirty, setDirty] = useState(false);
+
+  useEffect(() => {
+    if (questions.length === 0) return;
+    const isDirty = questions.some((q) => {
+      const originQuestion = data?.questions?.find((oq) => oq.id === q.id);
+      return originQuestion && isChanged(originQuestion, q);
+    }) || questions.some((q) => q.id < 0);
+    setDirty(isDirty);
+  }, [questions]);
+
   const onQuestionChange = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
     const {name, value} = e.target;
+    if(name === "weightage" && isNaN(Number(value))) return;
+
     const question = questions.find((q) => q.id === id);
     if (!question) return;
     const newQuestion = {
       ...question,
-      [name]: value,
+      [name]: name === "weightage" ? Number(value) : value,
     }
 
 
@@ -149,7 +162,7 @@ export default function ExamQuestionEditPage() {
         >
           문제 추가
         </Button>
-        <Button
+        <Button disabled={!dirty}
           className="w-32 h-12"
           onClick={onQuestionSave}
         >
