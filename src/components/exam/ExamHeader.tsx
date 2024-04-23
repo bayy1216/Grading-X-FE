@@ -1,5 +1,5 @@
 import React, { } from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 type Props = {
   onSearch: () => void;
@@ -8,7 +8,6 @@ type Props = {
 }
 
 export default function ExamHeader({onSearch, examTitle, setExamTitle}: Props) {
-  const navigation = useNavigate();
   const location = useLocation();
 
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,10 +21,6 @@ export default function ExamHeader({onSearch, examTitle, setExamTitle}: Props) {
     }
   }
 
-  const onCreateButtonClick = () =>{
-    navigation(`${location.pathname}/create`);
-  }
-
   return (
     <div className="flex flex-row justify-between items-center p-4 border-b border-gray-300 w-full">
       <input
@@ -35,7 +30,7 @@ export default function ExamHeader({onSearch, examTitle, setExamTitle}: Props) {
         onKeyDown={onEnter}
         onChange={onChangeId} type="text" placeholder="시험 검색"
       />
-      <button className="bg-green-500 text-white p-2 rounded-md cursor-pointer" onClick={onCreateButtonClick}>Create Exam</button>
+      <Link to={`${location.pathname}/create`} className="bg-green-500 text-white p-2 rounded-md cursor-pointer" >Create Exam</Link>
     </div>
   );
 }

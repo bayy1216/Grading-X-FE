@@ -27,9 +27,9 @@ export default function CoursePage() {
       <div className="grid grid-cols-4 gap-5">
         {
           data?.courseResponses.map((course) => (
-            <div className="" key={course.id}>
+            <Link to={`/dashboard/course/${course.id}/exam`} key={course.id}>
               <CourseItem course={course} onClick={() => onClick(course.id)}/>
-            </div>
+            </Link>
           ))
         }
       </div>

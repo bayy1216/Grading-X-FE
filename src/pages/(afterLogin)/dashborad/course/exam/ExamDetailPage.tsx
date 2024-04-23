@@ -40,7 +40,7 @@ export default function ExamDetailPage() {
           <div className="text-base font-medium mb-2">
             {endTime}
           </div>
-          <button className="border-2 m-2 p-2" onClick={onEditButtonClick}>Edit</button>
+          <Link to={`${location.pathname}/edit`} className="border-2 m-2 p-2" onClick={onEditButtonClick}>Edit</Link>
         </div>
       </div>
       <div className="flex flex-col items-center justify-center w-full p-5">
