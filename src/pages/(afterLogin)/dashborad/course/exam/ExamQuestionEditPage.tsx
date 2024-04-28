@@ -28,12 +28,12 @@ export default function ExamQuestionEditPage() {
 
   const [dirty, setDirty] = useState(false);
 
+  /**
+   * useEffect를 사용하여 questions가 변경될 때마다 dirty를 계산한다.
+   * JSON의 값에 따라 dirty를 계산한다.
+   */
   useEffect(() => {
-    if (questions.length === 0) return;
-    const isDirty = questions.some((q) => {
-      const originQuestion = data?.questions?.find((oq) => oq.id === q.id);
-      return originQuestion && isChanged(originQuestion, q);
-    }) || questions.some((q) => q.id < 0);
+    const isDirty = JSON.stringify(questions) !== JSON.stringify(data?.questions);
     setDirty(isDirty);
   }, [questions]);
 
@@ -58,6 +58,10 @@ export default function ExamQuestionEditPage() {
       });
     });
   }
+  /**
+   * 문제를 위로 이동시키는 함수
+   * 문제의 index를 변경하여 정렬한다.
+   */
   const onChangeUp = (id: number) => {
     const question = questions.find((q) => q.id === id);
     if (!question) return;
@@ -82,6 +86,10 @@ export default function ExamQuestionEditPage() {
 
   }
 
+  /**
+   * 문제를 아래로 이동시키는 함수
+   * 문제의 index를 변경하여 정렬한다.
+   */
   const onChangeDown = (id: number) => {
     const question = questions.find((q) => q.id === id);
     if (!question) return;
