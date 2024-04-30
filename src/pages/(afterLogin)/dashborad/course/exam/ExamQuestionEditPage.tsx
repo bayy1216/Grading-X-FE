@@ -1,6 +1,6 @@
 import {useLocation} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
-import {Question, QuestionsResponse} from "@/api/question/question.response.ts";
+import {Question, QuestionEdit, QuestionEditResponse} from "@/api/question/question.response.ts";
 import {MINUTE_5, QUESTIONS} from "@/const/data.ts";
 import {getQuestionsByExamId} from "@/api/question/question.api.ts";
 import {useEffect, useState} from "react";
@@ -15,13 +15,13 @@ const isChanged = (origin: Question, current: Question) => {
 export default function ExamQuestionEditPage() {
   const location = useLocation();
   const examId = parseInt(location.pathname.split("/")[5] || "0");
-  const {data} = useQuery<QuestionsResponse, Object, QuestionsResponse, [_1: string, _2: number]>({
+  const {data} = useQuery<QuestionEditResponse, Object, QuestionEditResponse, [_1: string, _2: number]>({
     queryKey: [QUESTIONS, examId],
     queryFn: getQuestionsByExamId,
     staleTime: MINUTE_5, // 5 minutes 동안 fresh data를 유지(fresh -> stale)
   });
 
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<QuestionEdit[]>([]);
   useEffect(() => {
     setQuestions(data?.questions?.sort((a, b) => a.index - b.index) || []);
   }, [data]);
@@ -128,6 +128,8 @@ export default function ExamQuestionEditPage() {
           index: prev.length + 1,
           weightage: 0,
           query: "",
+          answers: [],
+          keywords: [],
         }
       ];
     });
@@ -142,6 +144,94 @@ export default function ExamQuestionEditPage() {
     console.log("createQuestions", createQuestions);
     console.log("updateQuestions", updateQuestions);
     return;
+  }
+
+  const onAnswerAdd = (id: number) => {
+    setQuestions((prev) => {
+      return prev.map((q) => {
+        if (q.id === id) {
+          return {
+            ...q,
+            answers: [...q.answers, ""],
+          }
+        }
+        return q;
+      });
+    });
+  }
+
+  const onAnswerChange = (id: number, value: string, index: number) => {
+    setQuestions((prev) => {
+      return prev.map((q) => {
+        if (q.id === id) {
+          return {
+            ...q,
+            answers: q.answers.map((a, i) => {
+              return i === index ? value : a;
+            }),
+          }
+        }
+        return q;
+      });
+    });
+  }
+
+  const onAnswerDelete = (id: number, index: number) => {
+    setQuestions((prev) => {
+      return prev.map((q) => {
+        if (q.id === id) {
+          return {
+            ...q,
+            answers: q.answers.filter((_, i) => i !== index),
+          }
+        }
+        return q;
+      });
+    });
+  }
+
+  const onKeywordAdd = (id: number) => {
+    setQuestions((prev) => {
+      return prev.map((q) => {
+        if (q.id === id) {
+          return {
+            ...q,
+            keywords: [...q.keywords, ""],
+          }
+        }
+        return q;
+      });
+    });
+  }
+
+  const onKeywordChange = (id: number, value: string, index: number) => {
+    setQuestions((prev) => {
+      return prev.map((q) => {
+        if (q.id === id) {
+          return {
+            ...q,
+            keywords: q.keywords.map((k, i) => {
+              return i === index ? value : k;
+            }),
+          }
+        }
+        return q;
+      });
+    });
+  }
+
+  const onKeywordDelete = (id: number, index: number) => {
+    setQuestions((prev) => {
+      return prev.map((q) => {
+        if (q.id === id) {
+          return {
+            ...q,
+            keywords: q.keywords.filter((_, i) => i !== index),
+          }
+        }
+        return q;
+      });
+    });
   }
 
 
@@ -159,6 +249,12 @@ export default function ExamQuestionEditPage() {
             onChangeUp={()=>onChangeUp(question.id)}
             onChangeDown={()=>onChangeDown(question.id)}
             onDelete={()=>onDelete(question.id)}
+            onAnswerAdd={onAnswerAdd}
+            onAnswerChange={onAnswerChange}
+            onAnswerDelete={onAnswerDelete}
+            onKeywordAdd={onKeywordAdd}
+            onKeywordDelete={onKeywordDelete}
+            onKeywordChange={onKeywordChange}
             isLast={questions.length === question.index}
           />
         ))}
