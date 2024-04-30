@@ -35,7 +35,7 @@ export default function ExamQuestionEditItem({
                                              }: Props) {
 
   return (
-    <div className="flex flex-col border m-2 p-4 w-80">
+    <div className="flex flex-col border m-2 p-4 w-[600px]">
       <div className="flex flex-row">
         <div className="flex-1">
           문제 {question.index}
@@ -83,7 +83,7 @@ export default function ExamQuestionEditItem({
           className="col-span-3"
         />
       </div>
-      <div className="mt-2 flex flex-col space-y-1.5">
+      <div className="mt-4 flex flex-col space-y-1.5">
         <Label htmlFor="answer" className="text-left">
           정답
         </Label>
@@ -97,7 +97,7 @@ export default function ExamQuestionEditItem({
             />
             <Button
               onClick={() => onAnswerDelete(question.id, index)}
-              className="w-32 h-12"
+              variant="outline"
             >
               삭제
             </Button>
@@ -106,12 +106,12 @@ export default function ExamQuestionEditItem({
 
         <Button
           onClick={() => onAnswerAdd(question.id)}
-          className="w-32 h-12"
+          variant="outline"
         >
           정답 추가
         </Button>
       </div>
-      <div className="mt-2 flex flex-col space-y-1.5">
+      <div className="mt-4 flex flex-col space-y-1.5">
         <Label htmlFor="keyword" className="text-left">
           키워드
         </Label>
@@ -125,7 +125,7 @@ export default function ExamQuestionEditItem({
             />
             <Button
               onClick={() => onKeywordDelete(question.id, index)}
-              className="w-32 h-12"
+              variant="outline"
             >
               삭제
             </Button>
@@ -133,7 +133,7 @@ export default function ExamQuestionEditItem({
         ))}
         <Button
           onClick={() => onKeywordAdd(question.id)}
-          className="w-32 h-12"
+          variant="outline"
         >
           키워드 추가
         </Button>

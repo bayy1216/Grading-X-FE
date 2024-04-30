@@ -6,6 +6,7 @@ import {getQuestionsByExamId} from "@/api/question/question.api.ts";
 import {useEffect, useState} from "react";
 import ExamQuestionEditItem from "@/components/exam/ExamQuestionEditItem.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import {GreenButton} from "@/components/ui/GreenButton.tsx";
 
 
 const isChanged = (origin: Question, current: Question) => {
@@ -39,7 +40,7 @@ export default function ExamQuestionEditPage() {
 
   const onQuestionChange = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
     const {name, value} = e.target;
-    if(name === "weightage" && isNaN(Number(value))) return;
+    if (name === "weightage" && isNaN(Number(value))) return;
 
     const question = questions.find((q) => q.id === id);
     if (!question) return;
@@ -137,7 +138,7 @@ export default function ExamQuestionEditPage() {
 
   const onQuestionSave = () => {
     const createQuestions = questions.filter((q) => q.id < 0);
-    const updateQuestions = questions.filter((q) =>{
+    const updateQuestions = questions.filter((q) => {
       const originQuestion = data?.questions?.find((oq) => oq.id === q.id);
       return originQuestion && isChanged(originQuestion, q);
     });
@@ -235,7 +236,6 @@ export default function ExamQuestionEditPage() {
   }
 
 
-
   return (
     <div className="flex flex-row w-full h-full items-start justify-start overflow-y-auto relative">
       <div className="flex flex-col items-end justify-start h-full w-1/2 pr-4">
@@ -246,9 +246,9 @@ export default function ExamQuestionEditPage() {
             onQuestionChange={(e) =>
               onQuestionChange(e, question.id)
             }
-            onChangeUp={()=>onChangeUp(question.id)}
-            onChangeDown={()=>onChangeDown(question.id)}
-            onDelete={()=>onDelete(question.id)}
+            onChangeUp={() => onChangeUp(question.id)}
+            onChangeDown={() => onChangeDown(question.id)}
+            onDelete={() => onDelete(question.id)}
             onAnswerAdd={onAnswerAdd}
             onAnswerChange={onAnswerChange}
             onAnswerDelete={onAnswerDelete}
@@ -261,17 +261,22 @@ export default function ExamQuestionEditPage() {
       </div>
       <div className="sticky w-1/2 right-0 top-0 flex flex-col items-start justify-center h-full">
         <Button
-          className="w-32 h-12 mb-4"
+          className="mb-2"
           onClick={onAddQuestion}
+          variant="outline"
         >
-          문제 추가
+          <div className="w-24">
+            문제 추가
+          </div>
         </Button>
-        <Button disabled={!dirty}
-          className="w-32 h-12"
+        <GreenButton
+          disabled={!dirty}
           onClick={onQuestionSave}
         >
-          저장
-        </Button>
+          <div className="w-24">
+            저장
+          </div>
+        </GreenButton>
       </div>
     </div>
   );
