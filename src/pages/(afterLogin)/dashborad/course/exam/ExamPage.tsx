@@ -1,4 +1,4 @@
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import ExamItem from "../../../../../components/exam/ExamItem.tsx";
 import { ExamsResponse} from "@/api/exam/exam.response.ts";
 import {getExamsByCourseId} from "@/api/exam/exam.api.ts";
@@ -8,7 +8,6 @@ import {useState} from "react";
 import {COURSES, DASHBOARD, EXAMS, MINUTE_10, MINUTE_5} from "@/const/data.ts";
 
 export default function ExamPage() {
-  const nav = useNavigate();
   const location = useLocation();
   //dashboard/course/1/exam 에서 1추출
   const courseId = parseInt(location.pathname.split("/")[3] || "0");
@@ -22,10 +21,7 @@ export default function ExamPage() {
     gcTime: MINUTE_10,
   });
 
-  const onClick = (id: number) => {
-    nav(`${location.pathname}/${id}`);
-    console.log("Clicked");
-  }
+
 
   const [examTitle, setExamTitle] = useState('');
   const onSearch = () => {
@@ -38,7 +34,9 @@ export default function ExamPage() {
       <ExamHeader examTitle={examTitle} setExamTitle={(t)=>setExamTitle(t)} onSearch={onSearch}/>
       {
         data?.examContents.map((assignment) =>
-          <ExamItem key={assignment.id} exam={assignment} onclick={()=> onClick(assignment.id)}/>
+          <Link className="w-full" to={`${location.pathname}/${assignment.id}`} key={assignment.id}>
+            <ExamItem key={assignment.id} exam={assignment}/>
+          </Link>
         )
       }
     </div>

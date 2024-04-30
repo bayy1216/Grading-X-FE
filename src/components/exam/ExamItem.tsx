@@ -3,16 +3,15 @@ import dayjs from "dayjs";
 
 type Props = {
   exam: Exam;
-  onclick: () => void;
 };
 
 
-export default function ExamItem({exam, onclick}: Props){
+export default function ExamItem({exam}: Props){
 
   const startTime = dayjs(exam.startTime).format('YYYY-MM-DD HH:mm');
   const endTime = dayjs(exam.endTime).format('YYYY-MM-DD HH:mm');
   return (
-    <div className="w-full flex flex-row items-start justify-start p-5 border-b border-gray-300" onClick={onclick}>
+    <div className="w-full flex flex-row items-start justify-start p-5 border-b border-gray-300">
       <div className="flex-1">
         <div className="text-xl font-semibold mb-4">
           {exam.name}
