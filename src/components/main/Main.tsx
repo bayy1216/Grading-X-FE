@@ -42,8 +42,9 @@ export default function Main() {
 
 
           <button onClick={onDashboardClick}
-                  className="h-8 mr-4 text-white text-[12px] font-light px-2.5 py-0.5 border border-gray-300 rounded
-                  bg-buttonGreen hover:bg-gray-400">
+                  className="h-7 mr-4 text-white text-[12px] font-light px-2.5 py-0.5
+                  border border-buttonGreenBorder rounded-[6px]
+                  hover:text-white hover:bg-[#38996b]/80 bg-buttonGreen">
             Dashboard
           </button>
           {memberStore.data == null &&

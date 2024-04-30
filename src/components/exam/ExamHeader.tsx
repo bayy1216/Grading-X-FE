@@ -1,5 +1,6 @@
 import React, { } from "react";
 import {Link, useLocation} from "react-router-dom";
+import {GreenButton} from "@/components/ui/GreenButton.tsx";
 
 type Props = {
   onSearch: () => void;
@@ -30,7 +31,11 @@ export default function ExamHeader({onSearch, examTitle, setExamTitle}: Props) {
         onKeyDown={onEnter}
         onChange={onChangeId} type="text" placeholder="시험 검색"
       />
-      <Link to={`${location.pathname}/create`} className="bg-green-500 text-white p-2 rounded-md cursor-pointer" >Create Exam</Link>
+      <GreenButton>
+        <Link to={`${location.pathname}/create`}>
+          시험 생성
+        </Link>
+      </GreenButton>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import {EXAMS, MINUTE_10, MINUTE_5} from "@/const/data.ts";
 import {getExamDetailById} from "@/api/exam/exam.api.ts";
 import dayjs from "dayjs";
 import {Button} from "@/components/ui/button.tsx";
+import {GreenButton} from "@/components/ui/GreenButton.tsx";
 
 export default function ExamDetailPage() {
   const nav = useNavigate();
@@ -40,16 +41,21 @@ export default function ExamDetailPage() {
           <div className="text-base font-medium mb-2">
             {endTime}
           </div>
-          <Link to={`${location.pathname}/edit`} className="border-2 m-2 p-2" onClick={onEditButtonClick}>Edit</Link>
+          <Button variant="outline" asChild>
+            <Link to={`${location.pathname}/edit`} className="border-2 m-2 p-2" onClick={onEditButtonClick}>
+              정보 수정
+            </Link>
+          </Button>
+
         </div>
       </div>
       <div className="flex flex-col items-center justify-center w-full p-5">
         <h2>Description</h2>
         <p>{data?.description}</p>
-
-        <Button className="items-center mt-32" size={"default"} asChild>
+        <div className="h-4"/>
+        <GreenButton>
           <Link to={`${location.pathname}/question-edit`}>문제 편집</Link>
-        </Button>
+        </GreenButton>
       </div>
 
     </div>

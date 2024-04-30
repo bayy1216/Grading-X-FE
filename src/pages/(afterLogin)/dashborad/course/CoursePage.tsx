@@ -4,7 +4,7 @@ import {CoursesResponse} from "@/api/course/course.response.ts";
 import {Link, useNavigate} from "react-router-dom";
 import CourseItem from "../../../../components/course/CourseItem.tsx";
 import {COURSES, DASHBOARD, MEMBER, MINUTE_5} from "@/const/data.ts";
-import {Button} from "@/components/ui/button.tsx";
+import {GreenButton} from "@/components/ui/GreenButton.tsx";
 
 export default function CoursePage() {
 
@@ -37,9 +37,9 @@ export default function CoursePage() {
       <div className="w-full border rounded flex flex-col items-center mt-6">
         <p className="mt-6 mb-4">새로운 강의를 만들어 보세요.</p>
 
-        <Button className="" size={"default"} asChild>
+        <GreenButton>
           <Link to="/dashboard/course/create">강의 추가</Link>
-        </Button>
+        </GreenButton>
         <div className="mb-12"/>
       </div>
 
