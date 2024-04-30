@@ -70,15 +70,12 @@ export default function AccountPage() {
 
   return (
     <div className="flex flex-col">
-      <Tabs defaultValue="account" className="w-full pl-24 pr-24 mt-24">
+      <Tabs defaultValue="account" className="w-full pl-8 pr-24 mt-12">
         <TabsList className="grid w-80 grid-cols-2">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
-        <div className="font-medium text-2xl mt-4 mb-2">
-          {member.name} settings
-        </div>
-        <Separator className="w-full mb-12"/>
+        <Separator className="w-full mt-2 mb-4"/>
         <TabsContent value="account">
             <AccountEditCard
               editedMember={editedMember}
