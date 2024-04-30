@@ -10,6 +10,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import CalendarWithTimePicker from "@/components/common/CalendarWithTimePicker.tsx";
+import {GreenButton} from "@/components/ui/GreenButton.tsx";
 
 export default function ExamDetailEditPage() {
   const navigate = useNavigate();
@@ -80,7 +81,6 @@ export default function ExamDetailEditPage() {
       endTime: new Date(updateExamDto.endTime).toISOString(),
     }
 
-    //TODO : updateExam
     await updateExamDetail(examId, converted);
 
     await queryClient.invalidateQueries({
@@ -97,13 +97,21 @@ export default function ExamDetailEditPage() {
   const cancelClick = () => {
     navigate(-1);
   }
+
+  const isEdited = (a: ExamUpdateRequest, b? : ExamDetail) => {
+    if (!b) return true;
+    return !(a.name === b.name && a.description === b.description && a.startTime === b.startTime && a.endTime === b.endTime);
+  }
+
   return (
     <div className="w-full h-full flex flex-col items-center">
       <Card className="mt-32 w-[350px]">
         <CardHeader>
-          <CardTitle>시험 생성</CardTitle>
+          <CardTitle>
+            시험 정보 수정
+          </CardTitle>
           <CardDescription>
-            신규 시험를 생성합니다.
+            시험 정보를 수정합니다.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -155,7 +163,12 @@ export default function ExamDetailEditPage() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button variant="outline" onClick={cancelClick}>취소</Button>
-          <Button type="button" onClick={handleSaveClick}>생성</Button>
+          <GreenButton
+            onClick={handleSaveClick}
+            disabled={!isEdited(updateExamDto, data)}
+          >
+            저장
+          </GreenButton>
         </CardFooter>
       </Card>
     </div>

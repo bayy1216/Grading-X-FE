@@ -9,6 +9,7 @@ import {Input} from "@/components/ui/input"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import CalendarWithTimePicker from "@/components/common/CalendarWithTimePicker.tsx";
+import {GreenButton} from "@/components/ui/GreenButton.tsx";
 
 
 export default function ExamCreatePage() {
@@ -52,9 +53,6 @@ export default function ExamCreatePage() {
   const queryClient = useQueryClient();
 
   const handleSaveClick = async () => {
-    if (!createExamDto.name || !createExamDto.description || !createExamDto.startTime || !createExamDto.endTime) {
-      alert('입력 값을 확인해주세요.');
-    }
     const converted = {
       ...createExamDto,
       startTime: new Date(createExamDto.startTime).toISOString(),
@@ -127,8 +125,15 @@ export default function ExamCreatePage() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline" onClick={cancelClick}>취소</Button>
-          <Button type="button" onClick={handleSaveClick}>생성</Button>
+          <Button variant="outline" onClick={cancelClick}>
+            취소
+          </Button>
+          <GreenButton
+            onClick={handleSaveClick}
+            disabled={!createExamDto.name || !createExamDto.description || !createExamDto.startTime || !createExamDto.endTime}
+          >
+            생성
+          </GreenButton>
         </CardFooter>
       </Card>
     </div>
