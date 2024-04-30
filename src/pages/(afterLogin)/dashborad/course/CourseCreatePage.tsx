@@ -12,6 +12,7 @@ import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {format} from "date-fns";
 import CalendarPicker from "@/components/common/CalendarPicker.tsx";
+import {GreenButton} from "@/components/ui/GreenButton.tsx";
 
 
 export default function CourseCreatePage() {
@@ -62,10 +63,6 @@ export default function CourseCreatePage() {
   });
 
   const onButtonClick = async () => {
-    if(!createCourseRequest.courseName || !createCourseRequest.startDate || !createCourseRequest.endDate){
-      alert('입력 값을 확인해주세요.');
-      return;
-    }
     mutation.mutate(createCourseRequest);
   }
 
@@ -124,7 +121,12 @@ export default function CourseCreatePage() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button variant="outline" onClick={cancelClick}>취소</Button>
-          <Button type="button" onClick={onButtonClick}>생성</Button>
+          <GreenButton
+            onClick={onButtonClick}
+            disabled={mutation.isPending || !createCourseRequest.courseName || !createCourseRequest.startDate || !createCourseRequest.endDate}
+          >
+            생성
+          </GreenButton>
         </CardFooter>
       </Card>
     </div>
