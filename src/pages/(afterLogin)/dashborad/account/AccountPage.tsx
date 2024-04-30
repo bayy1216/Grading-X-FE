@@ -46,10 +46,6 @@ export default function AccountPage() {
    * 수정된 회원 정보를 서버에 API 전송
    */
   const handleSaveClick = () => {
-    if (!editedMember.name || !editedMember.email || !editedMember.password) {
-      alert('입력 값을 확인해주세요.');
-      return;
-    }
     const request: MemberUpdateRequest = {
       name: editedMember.name,
       email: editedMember.email,
@@ -83,6 +79,7 @@ export default function AccountPage() {
               handleMemberTypeChange={handleMemberTypeChange}
               saveClick={handleSaveClick}
               cancelClick={cancelClick}
+              saveButtonDisabled={(!editedMember.name || !editedMember.email || !editedMember.password)}
             />
         </TabsContent>
       </Tabs>

@@ -12,9 +12,10 @@ interface Props {
   handleMemberTypeChange: (value: string) => void;
   cancelClick: () => void;
   saveClick: () => void;
+  saveButtonDisabled: boolean;
 }
 
-export default function AccountEditCard({editedMember, handleInputChange, handleMemberTypeChange, cancelClick, saveClick}: Props) {
+export default function AccountEditCard({editedMember, handleInputChange, handleMemberTypeChange, cancelClick, saveClick, saveButtonDisabled}: Props) {
   return (
     <Card className="w-[850px]">
       <CardHeader>
@@ -83,7 +84,10 @@ export default function AccountEditCard({editedMember, handleInputChange, handle
           취소
         </Button>
         <div className="w-2"/>
-        <GreenButton onClick={saveClick}>
+        <GreenButton
+          onClick={saveClick}
+          disabled={saveButtonDisabled}
+        >
           저장
         </GreenButton>
       </CardFooter>
