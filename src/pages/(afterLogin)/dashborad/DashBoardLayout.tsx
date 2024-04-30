@@ -51,8 +51,8 @@ export default function DashboardLayout() {
           defaultSize={defaultLayout[0]}
           collapsedSize={navCollapsedSize}
           collapsible={true}
-          minSize={12}
-          maxSize={12}
+          minSize={14}
+          maxSize={14}
           onCollapse={() => {
             console.log("onCollapse", isCollapsed);
             setIsCollapsed(true);
