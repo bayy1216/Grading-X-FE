@@ -1,7 +1,7 @@
 import {QuestionEdit} from "@/api/question/question.response.ts";
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
-import {ChevronDown, ChevronUp, Trash} from "lucide-react";
+import {ChevronDown, ChevronUp, Plus, Trash} from "lucide-react";
 import {Button} from "@/components/ui/button.tsx";
 
 interface Props {
@@ -35,7 +35,7 @@ export default function ExamQuestionEditItem({
                                              }: Props) {
 
   return (
-    <div className="flex flex-col border m-2 p-4 w-[600px]">
+    <div className="bg-[#ffffff] flex flex-col m-2 p-4 w-[600px] rounded-[6px]">
       <div className="flex flex-row">
         <div className="flex-1">
           문제 {question.index}
@@ -84,9 +84,18 @@ export default function ExamQuestionEditItem({
         />
       </div>
       <div className="mt-4 flex flex-col space-y-1.5">
-        <Label htmlFor="answer" className="text-left">
-          정답
-        </Label>
+        <div className="flex flex-row justify-between items-center">
+          <Label htmlFor="answer" className="text-left">
+            정답
+          </Label>
+
+          <Button
+            onClick={() => onAnswerAdd(question.id)}
+            variant="ghost" size="icon"
+          >
+            <Plus className="h-4 w-4"/>
+          </Button>
+        </div>
         {question.answers.map((answer, index) => (
           <div className="flex flex-row">
             <Input
@@ -97,24 +106,26 @@ export default function ExamQuestionEditItem({
             />
             <Button
               onClick={() => onAnswerDelete(question.id, index)}
-              variant="outline"
+              variant="outline" size="icon" className="ml-2"
             >
-              삭제
+              <Trash className="h-4 w-4"/>
             </Button>
+
           </div>
         ))}
-
-        <Button
-          onClick={() => onAnswerAdd(question.id)}
-          variant="outline"
-        >
-          정답 추가
-        </Button>
       </div>
       <div className="mt-4 flex flex-col space-y-1.5">
-        <Label htmlFor="keyword" className="text-left">
-          키워드
-        </Label>
+        <div className="flex flex-row justify-between items-center">
+          <Label htmlFor="keyword" className="text-left">
+            키워드
+          </Label>
+          <Button
+            onClick={() => onKeywordAdd(question.id)}
+            variant="ghost" size="icon"
+          >
+            <Plus className="h-4 w-4"/>
+          </Button>
+        </div>
         {question.keywords.map((keyword, index) => (
           <div className="flex flex-row">
             <Input
@@ -125,18 +136,12 @@ export default function ExamQuestionEditItem({
             />
             <Button
               onClick={() => onKeywordDelete(question.id, index)}
-              variant="outline"
+              variant="outline" size="icon" className="ml-2"
             >
-              삭제
+              <Trash className="h-4 w-4"/>
             </Button>
           </div>
         ))}
-        <Button
-          onClick={() => onKeywordAdd(question.id)}
-          variant="outline"
-        >
-          키워드 추가
-        </Button>
       </div>
     </div>
   );

@@ -237,8 +237,9 @@ export default function ExamQuestionEditPage() {
 
 
   return (
-    <div className="flex flex-row w-full h-full items-start justify-start overflow-y-auto relative">
-      <div className="flex flex-col items-end justify-start h-full w-1/2 pr-4">
+    <div className="bg-[#f6f6f6] flex flex-row w-full h-full items-start justify-start overflow-y-auto relative">
+      <div className="flex-1"/>
+      <div className="flex flex-col items-end justify-start h-full pr-4">
         {questions.map((question) => (
           <ExamQuestionEditItem
             key={question.id}
@@ -259,7 +260,7 @@ export default function ExamQuestionEditPage() {
           />
         ))}
       </div>
-      <div className="sticky w-1/2 right-0 top-0 flex flex-col items-start justify-center h-full">
+      <div className="sticky right-0 top-0 flex flex-col items-start justify-center h-full">
         <Button
           className="mb-2"
           onClick={onAddQuestion}
@@ -278,6 +279,7 @@ export default function ExamQuestionEditPage() {
           </div>
         </GreenButton>
       </div>
+      <div className="flex-1"/>
     </div>
   );
 }
