@@ -32,6 +32,7 @@ export default function SignupModal() {
   const [nickname, setNickname] = useState('');
   const [message, setMessage] = useState('');
   const [memberType, setMemberType] = useState('INSTRUCTOR');
+
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setMessage('');
@@ -116,7 +117,7 @@ export default function SignupModal() {
                 <div className={style.radioLabel}>
                   <div className={style.labelRow}>
                   <label htmlFor="INSTRUCTOR">
-                      선생님 <input id="INSTRUCTOR" name="memberType" type="radio" value="INSTRUCTOR" required onChange={
+                      교수자 <input id="INSTRUCTOR" name="memberType" type="radio" value="INSTRUCTOR" required onChange={
                     () => setMemberType(MemberType.INSTRUCTOR)
                   }/>
                     </label>

@@ -14,3 +14,20 @@ export interface Question {
   index: number;
   weightage: number;
 }
+
+export interface QuestionEdit {
+  id: number;
+  query: string;
+  index: number;
+  weightage: number;
+  answers: string[];
+  keywords: string[];
+}
+
+export interface QuestionEditResponse {
+  questions: QuestionEdit[];
+}
+
+export interface QuestionsResponse{
+  questions: Question[];
+}

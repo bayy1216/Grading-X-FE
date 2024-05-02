@@ -5,6 +5,8 @@ import SignupButton from "./SignupButton.tsx";
 import BackButton from "./BackButton.tsx";
 import {login} from "../../api/auth/auth.api.ts";
 import secureLocalStorage from "react-secure-storage";
+import {useMemberStore} from "../../store/member.store.ts";
+import {getMemberInfo} from "../../api/member/member.api.ts";
 
 
 export default function LoginModal() {
@@ -12,7 +14,12 @@ export default function LoginModal() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
+
   const navigate = useNavigate();
+
+  const memberStore = useMemberStore();
+
+
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setMessage('');
@@ -21,6 +28,9 @@ export default function LoginModal() {
       secureLocalStorage.setItem('accessToken', token.accessToken);
       secureLocalStorage.setItem('refreshToken', token.refreshToken);
       console.log('token', token);
+      const member = await getMemberInfo();
+      memberStore.setData(member);
+
       navigate('/dashboard');
     } catch (err) {
       console.error(err);

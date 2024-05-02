@@ -17,3 +17,8 @@ export async function signup(request: SignUpEmailRequest) : Promise<JwtToken>{
   });
   return resp.data;
 }
+
+export async function logout() : Promise<void>{
+  const resp = await axiosClient.get("/api/v1/auth/logout");
+  return resp.data;
+}

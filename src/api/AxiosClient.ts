@@ -11,7 +11,6 @@ export const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   (config) => {
-    if(config.url?.startsWith('/api/auth')) return config;
     const token = secureLocalStorage.getItem('accessToken');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
@@ -34,7 +33,7 @@ axiosClient.interceptors.response.use(
       if (!refreshToken) {
         return Promise.reject(error);
       }
-      const resp = await fetch(`/api/auth/reissue`, {
+      const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/reissue`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -43,10 +42,15 @@ axiosClient.interceptors.response.use(
         },
       });
       if (resp.ok) {
+        console.log('토큰 재발급 성공');
         const data = await resp.json();
         secureLocalStorage.setItem('accessToken', data.accessToken);
         secureLocalStorage.setItem('refreshToken', data.refreshToken);
         return axiosClient(originalRequest);
+      }else{
+        console.log('토큰 재발급 실패');
+        secureLocalStorage.removeItem('accessToken');
+        secureLocalStorage.removeItem('refreshToken');
       }
       return Promise.reject(error);
     }

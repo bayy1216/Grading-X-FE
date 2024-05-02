@@ -1,42 +1,57 @@
-import {Exam, ExamDetail} from "./exam.response.ts";
+import { ExamDetail, ExamsResponse} from "./exam.response.ts";
 import {QueryFunction} from "@tanstack/react-query";
 import {axiosClient} from "../AxiosClient.ts";
-
-const exams = [
-  {
-    id: 1,
-    name: "무역의 이해 1",
-    description: "무역의 이해 1 시험입니다.",
-    startTime: "2021-09-01T00:00:00Z",
-    endTime: "2021-09-08T00:00:00Z",
-  },
-  {
-    id: 2,
-    name: "자연과 역사 2",
-    description: "자연과 역사 2 시험입니다.",
-    startTime: "2021-09-01T00:00:00Z",
-    endTime: "2021-09-08T00:00:00Z",
-  },
-  {
-    id: 3,
-    name: "자바 프로그래밍 3",
-    description: "자바 프로그래밍 3 시험입니다.",
-    startTime: "2021-09-01T00:00:00Z",
-    endTime: "2021-09-08T00:00:00Z",
-  }
-]
+import {ExamCreateRequest, ExamSaveRequest, ExamTakeGuestRequest, ExamUpdateRequest} from "./exam.request.ts";
 
 
-export const getExams: QueryFunction<Exam[], [_1:string, _2:string, number]>
- = async ({queryKey}): Promise<Exam[]> => {
-  const [_1, _2, courseId] = queryKey;
-  const response = await axiosClient.get(`/api/v1/exam-content/course/${courseId}`);
-  return response.data.examContents;
+export const getExamsByCourseId: QueryFunction<ExamsResponse, [_1:string, _2:string, number, _4:string]>
+ = async ({queryKey}): Promise<ExamsResponse> => {
+  const [_1, _2, courseId, _4] = queryKey;
+  const response = await axiosClient.get(`/api/v1/course/${courseId}/exam-content`);
+  return response.data;
 }
 
-export const getExamDetail: QueryFunction<ExamDetail, [_1:string, _2:string, number]>
+export const getExamDetailById: QueryFunction<ExamDetail, [_1:string, number]>
  = async ({queryKey}): Promise<ExamDetail> => {
-  const [_1, _2, examId] = queryKey;
+  const [_1, examId] = queryKey;
 
-  return exams.find(exam => exam.id === examId) as ExamDetail;
+  const response = await axiosClient.get(`/api/v1/course/exam-content/${examId}`);
+  return response.data;
+}
+
+export async function createExam(courseId: number, examCreateRequest: ExamCreateRequest) : Promise<number>{
+  const resp = await axiosClient.post(`/api/v1/course/${courseId}/exam-content`, {
+    ...examCreateRequest
+  });
+  return resp.data;
+}
+
+export async function updateExamDetail(examId: number, examUpdateRequest: ExamUpdateRequest){
+  await axiosClient.put(`/api/v1/course/exam-content/${examId}`, {
+    ...examUpdateRequest
+  });
+  return;
+}
+
+
+
+/**
+ * 시험 시작
+ */
+export async function examStartGuestByExamId(examId: number, examTakeGuestRequest: ExamTakeGuestRequest): Promise<void> {
+  await axiosClient.post(`/api/v1/exam/${examId}`,{
+    ...examTakeGuestRequest
+  });
+  return;
+}
+
+
+/**
+ * 현재까지 풀은 문제 서버에 전송하기
+ */
+export async function saveExamAnswer(examId: number, examSaveRequest: ExamSaveRequest): Promise<void> {
+  await axiosClient.post(`/api/v1/exam/${examId}/save`,{
+    ...examSaveRequest
+  });
+  return;
 }
