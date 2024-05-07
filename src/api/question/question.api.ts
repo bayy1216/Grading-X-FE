@@ -1,5 +1,5 @@
 import {axiosClient} from "../AxiosClient.ts";
-import {Criteria, QuestionEditResponse} from "./question.response.ts";
+import {QuestionEditResponse, QuestionsResponse} from "./question.response.ts";
 import {
   QuestionCreateRequest,
   QuestionUpdateRequest
@@ -12,10 +12,10 @@ import {QueryFunction} from "@tanstack/react-query";
 //   return res.data;
 // }
 
-export const getQuestionsByExamId: QueryFunction<QuestionEditResponse, [_1: string, number]>
+export const getQuestionsByExamIdForUpdate: QueryFunction<QuestionEditResponse, [_1: string, number]>
   = async ({queryKey}) => {
   const [_1, examContentId] = queryKey;
-  const res = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/question`);
+  const res = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/instructor/question`);
   console.log(res.data);
   return {
     questions: [
@@ -48,8 +48,21 @@ export async function updateQuestion(request: QuestionUpdateRequest): Promise<nu
   return res.data;
 }
 
-export async function getCriteria(questionId: number): Promise<Criteria> {
-  const res
-    = await axiosClient.get(`/api/v1/course/exam-content/question/${questionId}/criteria`);
-  return res.data;
+export const getQuestionsByExamIdForSolve: QueryFunction<QuestionsResponse, [_1: string, number]>
+  = async ({queryKey}) => {
+  const [_1, examContentId] = queryKey;
+  const res = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/student/question`);
+  console.log(res.data);
+  return {
+    questions: [
+      {
+        query: "문제1",
+        index: 1,
+        weightage: 1,
+        answers: ["정답1", "정답2"],
+        keywords: ["키워드1", "키워드2"],
+        id: 1
+      }
+    ]
+  }
 }

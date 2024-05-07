@@ -2,7 +2,7 @@ import {useLocation, useNavigate, } from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import {QuestionsResponse} from "@/api/question/question.response.ts";
 import {MINUTE_5, QUESTIONS} from "@/const/data.ts";
-import {getQuestionsByExamId} from "@/api/question/question.api.ts";
+import {getQuestionsByExamIdForSolve} from "@/api/question/question.api.ts";
 import ExamQuestion from "@/components/exam/ExamQuestion.tsx";
 import {useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
@@ -18,7 +18,7 @@ export default function GuestExamTakePage() {
 
   const {data, isError} = useQuery<QuestionsResponse, Object, QuestionsResponse, [_1: string, _2: number]>({
     queryKey: [QUESTIONS, examId],
-    queryFn: getQuestionsByExamId,
+    queryFn: getQuestionsByExamIdForSolve,
     staleTime: MINUTE_5, // 5 minutes 동안 fresh data를 유지(fresh -> stale)
   });
 

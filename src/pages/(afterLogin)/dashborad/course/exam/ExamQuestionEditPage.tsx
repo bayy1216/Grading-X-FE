@@ -2,7 +2,7 @@ import {useLocation} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import {Question, QuestionEdit, QuestionEditResponse} from "@/api/question/question.response.ts";
 import {MINUTE_5, QUESTIONS} from "@/const/data.ts";
-import {getQuestionsByExamId} from "@/api/question/question.api.ts";
+import {getQuestionsByExamIdForUpdate} from "@/api/question/question.api.ts";
 import {useEffect, useState} from "react";
 import ExamQuestionEditItem from "@/components/exam/ExamQuestionEditItem.tsx";
 import {Button} from "@/components/ui/button.tsx";
@@ -18,7 +18,7 @@ export default function ExamQuestionEditPage() {
   const examId = parseInt(location.pathname.split("/")[5] || "0");
   const {data} = useQuery<QuestionEditResponse, Object, QuestionEditResponse, [_1: string, _2: number]>({
     queryKey: [QUESTIONS, examId],
-    queryFn: getQuestionsByExamId,
+    queryFn: getQuestionsByExamIdForUpdate,
     staleTime: MINUTE_5, // 5 minutes 동안 fresh data를 유지(fresh -> stale)
   });
 
