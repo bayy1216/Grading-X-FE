@@ -1,10 +1,10 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {getExamDetailById, updateExamDetail} from "../../../../../api/exam/exam.api.ts";
-import {COURSES, DASHBOARD, EXAMS, MINUTE_5} from "../../../../../const/data.ts";
-import {ExamDetail} from "../../../../../api/exam/exam.response.ts";
-import {ExamUpdateRequest} from "../../../../../api/exam/exam.request.ts";
+import {getExamDetailById, updateExamDetail} from "@/api/exam/exam.api.ts";
+import {COURSES, DASHBOARD, EXAMS, MINUTE_5} from "@/const/data.ts";
+import {ExamDetail} from "@/api/exam/exam.response.ts";
+import {ExamUpdateRequest} from "@/api/exam/exam.request.ts";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
@@ -16,12 +16,15 @@ export default function ExamDetailEditPage() {
   const navigate = useNavigate();
   const location = useLocation();
   // /dashboard/course/3/exam/4/edit 에서 4을 추출
-  const examId = parseInt(location.pathname.split("/")[5] || "0");
-  const courseId = parseInt(location.pathname.split("/")[3] || "0");
+
+  const currentUrl = location.pathname;
+  const prevUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+  const examId = parseInt(currentUrl.split("/")[5] || "0");
+  const courseId = parseInt(currentUrl.split("/")[3] || "0");
 
 
-  const {data} = useQuery<ExamDetail, Object, ExamDetail, [_1: string, _2: number]>({
-    queryKey: [EXAMS, examId],
+  const {data} = useQuery<ExamDetail, Object, ExamDetail, [_1: string, _2:string, _3: number]>({
+    queryKey: [DASHBOARD, EXAMS, examId],
     queryFn: getExamDetailById,
     staleTime: MINUTE_5,
   });
@@ -90,12 +93,13 @@ export default function ExamDetailEditPage() {
       queryKey: [DASHBOARD, EXAMS, examId],
     });
 
-    navigate(-1);
+    navigate(prevUrl, {replace: true});
   }
   const startDate = updateExamDto.startTime ? new Date(updateExamDto.startTime) : undefined;
   const endDate = updateExamDto.endTime ? new Date(updateExamDto.endTime) : undefined;
   const cancelClick = () => {
-    navigate(-1);
+    console.log('cancel');
+    navigate(prevUrl, {replace: true});
   }
 
   const isEdited = (a: ExamUpdateRequest, b? : ExamDetail) => {

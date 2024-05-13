@@ -11,9 +11,9 @@ export const getExamsByCourseId: QueryFunction<ExamsResponse, [_1:string, _2:str
   return response.data;
 }
 
-export const getExamDetailById: QueryFunction<ExamDetail, [_1:string, number]>
+export const getExamDetailById: QueryFunction<ExamDetail, [_1:string, _2:string, number]>
  = async ({queryKey}): Promise<ExamDetail> => {
-  const [_1, examId] = queryKey;
+  const [_1, _2, examId] = queryKey;
 
   const response = await axiosClient.get(`/api/v1/course/exam-content/${examId}`);
   return response.data;

@@ -1,7 +1,7 @@
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import {ExamDetail} from "@/api/exam/exam.response.ts";
-import {EXAMS, MINUTE_10, MINUTE_5} from "@/const/data.ts";
+import {DASHBOARD, EXAMS, MINUTE_10, MINUTE_5} from "@/const/data.ts";
 import {getExamDetailById} from "@/api/exam/exam.api.ts";
 import dayjs from "dayjs";
 import {Button} from "@/components/ui/button.tsx";
@@ -14,8 +14,8 @@ export default function ExamDetailPage() {
   const examId = parseInt(location.pathname.split("/").pop() || "0");
   console.log("exmmaID" + examId);
 
-  const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:number]>({
-    queryKey: [EXAMS, examId],
+  const { data} = useQuery<ExamDetail, Object, ExamDetail, [_1:string, _2:string, _3:number]>({
+    queryKey: [DASHBOARD, EXAMS, examId],
     queryFn: getExamDetailById,
     staleTime: MINUTE_5,
     gcTime: MINUTE_10,
