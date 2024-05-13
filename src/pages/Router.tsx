@@ -18,6 +18,7 @@ import {useMemberStore} from "../store/member.store.ts";
 import secureLocalStorage from "react-secure-storage";
 import GuestExamTakePage from "@/pages/(beforeLogin)/GuestExamTakePage.tsx";
 import ExamQuestionEditPage from "@/pages/(afterLogin)/dashborad/course/exam/ExamQuestionEditPage.tsx";
+import CourseDetailLayout from "@/pages/(afterLogin)/dashborad/course/CourseDetailLayout.tsx";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
@@ -30,13 +31,18 @@ const router = createBrowserRouter([
       {path: "", element: <Navigate replace to={"/dashboard/course"} />},
       {path: "course", element: <CoursePage />},
       {path: "course/create", element: <CourseCreatePage />},
-      {path: "course/:courseId", element: <CourseDetailPage />},
-      {path: "course/:courseId/exam", element: <ExamPage />},
-      {path: "course/:courseId/exam/create", element: <ExamCreatePage />},
-      {path: "course/:courseId/exam/:examId", element: <ExamDetailPage />},
-      {path: "course/:courseId/exam/:examId/edit", element: <ExamDetailEditPage />},
-      {path: "course/:courseId/exam/:examId/question-edit", element: <ExamQuestionEditPage />},
-      {path: "course/:courseId/exam/:examId/take", element: <ExamTakePage />},
+      {
+        path: "course/:courseId", element: <CourseDetailLayout />,
+        children: [
+          {path: "", element: <CourseDetailPage />},
+          {path: "exam", element: <ExamPage />},
+          {path: "exam/create", element: <ExamCreatePage />},
+          {path: "exam/:examId", element: <ExamDetailPage />},
+          {path: "exam/:examId/edit", element: <ExamDetailEditPage />},
+          {path: "exam/:examId/question-edit", element: <ExamQuestionEditPage />},
+          {path: "exam/:examId/take", element: <ExamTakePage />},
+        ],
+      },
       {path: "account", element: <AccountPage />},
     ]
   },
