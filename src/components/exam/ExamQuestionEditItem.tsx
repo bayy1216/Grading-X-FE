@@ -97,7 +97,7 @@ export default function ExamQuestionEditItem({
           </Button>
         </div>
         {question.answers.map((answer, index) => (
-          <div className="flex flex-row">
+          <div className="flex flex-row" key={index}>
             <Input
               name="answer" placeholder="정답"
               value={answer}
@@ -127,7 +127,7 @@ export default function ExamQuestionEditItem({
           </Button>
         </div>
         {question.keywords.map((keyword, index) => (
-          <div className="flex flex-row">
+          <div className="flex flex-row" key={index}>
             <Input
               name="keyword" placeholder="키워드"
               value={keyword}
