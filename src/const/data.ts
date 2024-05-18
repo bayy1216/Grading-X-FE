@@ -5,6 +5,8 @@ export const INFO = "info";
 
 export const DASHBOARD = "dashboard";
 
+export const RESULT = "result";
+
 export const COURSES = "courses";
 
 export const EXAMS = "exams";
