@@ -1,4 +1,4 @@
-import {Outlet, useLocation} from "react-router-dom";
+import {Link, Outlet, useLocation} from "react-router-dom";
 import {Separator} from "@/components/ui/separator.tsx";
 import {useQuery} from "@tanstack/react-query";
 import {CoursesResponse} from "@/api/course/course.response.ts";
@@ -13,6 +13,8 @@ export default function CourseDetailLayout() {
   });
   const location = useLocation();
   const courseId = parseInt(location.pathname.split("/")[3] || "0");
+  // /dashboard/course/1/exam에서 dashboard/course/1을 가져오기
+  const layoutPath = location.pathname.split("/").slice(0, 4).join("/");
 
   const course = data?.courseResponses.find((course) => course.id === courseId)
   return (
@@ -26,8 +28,16 @@ export default function CourseDetailLayout() {
           <div className="text-[12px] font-light mb-8">
             {course?.startDate} ~ {course?.endDate}
           </div>
-          <h1>시험</h1>
-          <h1>성적</h1>
+          <Link to={`${layoutPath}/exam`} >
+            <div className="text-[14px] font-medium">
+              시험
+            </div>
+          </Link>
+          <Link to={`${layoutPath}/result`} >
+            <div className="text-[14px] font-medium">
+              결과
+            </div>
+          </Link>
         </div>
 
         <Outlet/>
