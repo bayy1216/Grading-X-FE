@@ -23,7 +23,3 @@ export interface MemberExamAnswer {
   questionId: number;
   answer: string;
 }
-
-export interface ExamTakeGuestRequest {
-  email: string;
-}

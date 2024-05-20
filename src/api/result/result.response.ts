@@ -4,6 +4,8 @@ export interface ResultForInstructorResponse {
 
 export interface Result {
   email: string;
+  totalScore: number;
+  totalWeightage: number;
   gradingResponseList: GradingAnswer[];
 }
 

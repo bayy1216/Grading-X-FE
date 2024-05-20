@@ -35,11 +35,13 @@ export default function ExamResultBox({examId}: Props) {
           results.map((result) => (
             <div key={result.email}>
               <div>email : {result.email}</div>
+              <div> score : {result.totalScore}</div>
+              <div> total : {result.totalWeightage}</div>
               {result.gradingResponseList.map((grading) => (
                 <div key={grading.answerId}>
-                  <div>{grading.query}</div>
-                  <div>{grading.answer}</div>
-                  <div>{grading.score}</div>
+                  <div>문제 : {grading.query}</div>
+                  <div>답변 : {grading.answer}</div>
+                  <div>점수 : {grading.score}</div>
                 </div>
               ))}
             </div>
