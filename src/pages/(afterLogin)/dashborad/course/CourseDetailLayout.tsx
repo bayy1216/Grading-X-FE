@@ -28,6 +28,11 @@ export default function CourseDetailLayout() {
           <div className="text-[12px] font-light mb-8">
             {course?.startDate} ~ {course?.endDate}
           </div>
+          <Link to={`${layoutPath}/announcement`} >
+            <div className="text-[14px] font-medium">
+              공지
+            </div>
+          </Link>
           <Link to={`${layoutPath}/exam`} >
             <div className="text-[14px] font-medium">
               시험

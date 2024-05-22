@@ -20,6 +20,7 @@ import GuestExamTakePage from "@/pages/(beforeLogin)/GuestExamTakePage.tsx";
 import ExamQuestionEditPage from "@/pages/(afterLogin)/dashborad/course/exam/ExamQuestionEditPage.tsx";
 import CourseDetailLayout from "@/pages/(afterLogin)/dashborad/course/CourseDetailLayout.tsx";
 import CourseResultPage from "@/pages/(afterLogin)/dashborad/course/CourseResultPage.tsx";
+import CourseAnnouncementPage from "@/pages/(afterLogin)/dashborad/course/CourseAnnouncementPage.tsx";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
           {path: "exam/:examId/edit", element: <ExamDetailEditPage />},
           {path: "exam/:examId/question-edit", element: <ExamQuestionEditPage />},
           {path: "exam/:examId/take", element: <ExamTakePage />},
+          {path: "announcement", element: <CourseAnnouncementPage />},
           {path: "result", element: <CourseResultPage />}
         ],
       },

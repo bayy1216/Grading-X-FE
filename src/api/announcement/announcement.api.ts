@@ -1,8 +1,12 @@
 import {axiosClient} from "@/api/AxiosClient.ts";
 import {Announcement, AnnouncementsResponse} from "@/api/announcement/announcement.response.ts";
 import {AnnouncementCreateRequest, AnnouncementUpdateRequest} from "@/api/announcement/announcement.request.ts";
+import {QueryFunction} from "@tanstack/react-query";
 
-export async function getAnnouncementsByCourseId(courseId: number): Promise<AnnouncementsResponse> {
+
+export const getAnnouncementsByCourseId: QueryFunction<AnnouncementsResponse, [_1: string, _2: string, number, _4: string]>
+  = async ({queryKey}): Promise<AnnouncementsResponse> => {
+  const [_1, _2, courseId, _4] = queryKey;
   const response = await axiosClient.get(`/api/v2/announcement/${courseId}/announcement`);
   return response.data;
 }

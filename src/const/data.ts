@@ -9,6 +9,8 @@ export const RESULT = "result";
 
 export const COURSES = "courses";
 
+export const ANNOUNCEMENTS = "announcements";
+
 export const EXAMS = "exams";
 
 export const QUESTIONS = "questions";
