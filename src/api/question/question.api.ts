@@ -16,22 +16,10 @@ export const getQuestionsByExamIdForUpdate: QueryFunction<QuestionEditResponse, 
   = async ({queryKey}) => {
   const [_1, examContentId] = queryKey;
   const res = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/instructor/question`);
-  console.log(res.data);
-  return {
-    questions: [
-      {
-        query: "문제1",
-        index: 1,
-        weightage: 1,
-        answers: ["정답1", "정답2"],
-        keywords: ["키워드1", "키워드2"],
-        id: 1
-      }
-    ]
-  }
+  return res.data;
 }
 
-export async function createQuestion(examContentId: number, request: QuestionCreateRequest): Promise<number> {
+export async function createQuestion(examContentId: number, request: QuestionCreateRequest): Promise<void> {
   const res
     = await axiosClient.post(`/api/v1/course/exam-content/${examContentId}/question`, {
     ...request
@@ -52,17 +40,5 @@ export const getQuestionsByExamIdForSolve: QueryFunction<QuestionsResponse, [_1:
   = async ({queryKey}) => {
   const [_1, examContentId] = queryKey;
   const res = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/student/question`);
-  console.log(res.data);
-  return {
-    questions: [
-      {
-        query: "문제1",
-        index: 1,
-        weightage: 1,
-        answers: ["정답1", "정답2"],
-        keywords: ["키워드1", "키워드2"],
-        id: 1
-      }
-    ]
-  }
+  return res.data;
 }
