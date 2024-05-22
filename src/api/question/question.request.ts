@@ -6,7 +6,7 @@ export interface QuestionCreateModel {
   query: string;
   index: number;
   weightage: number;
-  answers: string[];
+  answer: string;
   keywords: string[];
 }
 
@@ -19,6 +19,6 @@ export interface QuestionUpdateModel {
   query: string;
   index: number;
   weightage: number;
-  answers: string[];
+  answer: string;
   keywords: string[];
 }

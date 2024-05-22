@@ -129,7 +129,7 @@ export default function ExamQuestionEditPage() {
           index: prev.length + 1,
           weightage: 0,
           query: "",
-          answers: [],
+          answer: "",
           keywords: [],
         }
       ];
@@ -147,49 +147,20 @@ export default function ExamQuestionEditPage() {
     return;
   }
 
-  const onAnswerAdd = (id: number) => {
-    setQuestions((prev) => {
-      return prev.map((q) => {
-        if (q.id === id) {
-          return {
-            ...q,
-            answers: [...q.answers, ""],
-          }
-        }
-        return q;
-      });
-    });
-  }
 
-  const onAnswerChange = (id: number, value: string, index: number) => {
+  const onAnswerChange = (id: number, value: string) => {
     setQuestions((prev) => {
       return prev.map((q) => {
         if (q.id === id) {
           return {
             ...q,
-            answers: q.answers.map((a, i) => {
-              return i === index ? value : a;
-            }),
+            answer: value,
           }
         }
         return q;
       });
     });
-  }
-
-  const onAnswerDelete = (id: number, index: number) => {
-    setQuestions((prev) => {
-      return prev.map((q) => {
-        if (q.id === id) {
-          return {
-            ...q,
-            answers: q.answers.filter((_, i) => i !== index),
-          }
-        }
-        return q;
-      });
-    });
-  }
+  };
 
   const onKeywordAdd = (id: number) => {
     setQuestions((prev) => {
@@ -250,9 +221,7 @@ export default function ExamQuestionEditPage() {
             onChangeUp={() => onChangeUp(question.id)}
             onChangeDown={() => onChangeDown(question.id)}
             onDelete={() => onDelete(question.id)}
-            onAnswerAdd={onAnswerAdd}
             onAnswerChange={onAnswerChange}
-            onAnswerDelete={onAnswerDelete}
             onKeywordAdd={onKeywordAdd}
             onKeywordDelete={onKeywordDelete}
             onKeywordChange={onKeywordChange}

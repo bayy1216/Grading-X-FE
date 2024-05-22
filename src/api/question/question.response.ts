@@ -20,7 +20,7 @@ export interface QuestionEdit {
   query: string;
   index: number;
   weightage: number;
-  answers: string[];
+  answer: string;
   keywords: string[];
 }
 
