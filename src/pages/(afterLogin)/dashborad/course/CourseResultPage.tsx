@@ -8,6 +8,7 @@ import ExamResultBox from "@/components/result/ExamResultBox.tsx";
 import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {gradeHealthCheck, startGradeExam} from "@/api/result/resut.api.ts";
+import {Oval} from "react-loader-spinner";
 
 export default function CourseResultPage() {
   const location = useLocation();
@@ -32,12 +33,15 @@ export default function CourseResultPage() {
     setSelectedExamId(examId);
   }
 
+  const [isGradeLoading, setIsGradeLoading] = useState(false);
+
   /**
    * 채점하기 버튼 클릭시 호출되는 함수
    * 채점 시작 API 호출 후, 1초마다 채점여부를 확인하고, 채점이 완료되면 결과를 보여준다.
    */
   const handleGradeClick = async (examId: number) => {
     await startGradeExam(examId);
+    setIsGradeLoading(true);
     //이후 1초마다 채점여부를 확인하고, 채점이 완료되면 결과를 보여준다.
     const intervalId = setInterval(async () => {
       const result = await gradeHealthCheck(examId);
@@ -67,6 +71,9 @@ export default function CourseResultPage() {
             <Button onClick={()=>handleGradeClick(selectedExamId)}>
                 <div>채점하기 </div>
             </Button>
+        }
+        {isGradeLoading &&
+          <Oval/>
         }
       </Tabs>
       {selectedExamId && <ExamResultBox examId={selectedExamId}/>}
