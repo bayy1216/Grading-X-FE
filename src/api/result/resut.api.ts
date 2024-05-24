@@ -9,3 +9,13 @@ export const getResultForInstructorByExamId: QueryFunction<ResultForInstructorRe
     const response = await axiosClient.get(`/api/v1/result/${examId}/instructor`);
     return response.data;
   }
+
+export async function startGradeExam(examId: number): Promise<void> {
+  const res = await axiosClient.post(`/api/v1/grading/${examId}`);
+  return res.data;
+}
+
+export async function gradeHealthCheck(examId: number): Promise<boolean> {
+  const res = await axiosClient.get(`/api/v1/grading/${examId}`);
+  return res.status === 200;
+}
