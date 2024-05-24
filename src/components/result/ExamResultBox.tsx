@@ -1,7 +1,8 @@
 import {useQuery} from "@tanstack/react-query";
 import {DASHBOARD, MINUTE_5, RESULT} from "@/const/data.ts";
-import {ResultForInstructorResponse} from "@/api/result/result.response.ts";
+import {Result, ResultForInstructorResponse} from "@/api/result/result.response.ts";
 import {getResultForInstructorByExamId} from "@/api/result/resut.api.ts";
+import {useState} from "react";
 
 interface Props {
   examId: number;
@@ -9,7 +10,6 @@ interface Props {
 }
 
 export default function ExamResultBox({examId}: Props) {
-  console.log(examId);
 
   const {data} = useQuery<ResultForInstructorResponse, Object, ResultForInstructorResponse, [_1: string, _2: string, _3: number]>({
     queryKey: [DASHBOARD, RESULT, examId],
@@ -19,31 +19,72 @@ export default function ExamResultBox({examId}: Props) {
 
   const results = data?.resultInstructorResponses ?? [];
 
+
   return (
     <div
       className="flex flex-col items-start justify-start
       w-full h-full overflow-y-auto"
     >
       {results.length === 0 ?
-          <div>
-              결과가 없습니다.
-          </div> :
-          results.map((result) => (
-            <div key={result.email}>
-              <div>email : {result.email}</div>
-              <div> score : {result.totalScore}</div>
-              <div> total : {result.totalWeightage}</div>
-              {result.gradingResponseList.map((grading) => (
-                <div key={grading.answerId}>
-                  <div>문제 : {grading.query}</div>
-                  <div>답변 : {grading.answer}</div>
-                  <div>점수 : {grading.score}</div>
-                </div>
-              ))}
+        <div>
+          결과가 없습니다.
+        </div> :
+        <>
+          <div className="flex flex-row pr-20 pl-20 w-full border">
+            <div className="flex-[2]">
+              이메일
             </div>
-          ))
+            <div className="flex-[1]">
+              점수
+            </div>
+            <div className="flex-[1]">
+              총점
+            </div>
+            <div className="flex-[1]"/>
+          </div>
+          {
+            results.map((result) => (
+              <AnswerItem key={result.email} result={result}/>
+            ))
+          }
+        </>
+
       }
 
+    </div>
+  );
+}
+
+
+interface AnswerItemProps {
+  result: Result;
+}
+
+function AnswerItem({result}: AnswerItemProps) {
+
+
+  const [selected, setSelected] = useState<boolean>(false);
+
+  const onClick = () => {
+    setSelected(!selected);
+  }
+  return (
+    <div className="flex flex-col w-full">
+      <div className="flex flex-row justify-between pr-20 pl-20 w-full">
+        <div className="flex-[2]">{result.email}</div>
+        <div className="flex-[1]">{result.totalScore}</div>
+        <div className="flex-[1]">{result.totalWeightage}</div>
+        <button className="flex-[1]" onClick={onClick}>답안 보기</button>
+
+      </div>
+
+      {selected && result.gradingResponseList.map((grading) => (
+        <div key={grading.answerId} className="p-2 border-2 m-1">
+          <div>문제 : {grading.query}</div>
+          <div>답변 : {grading.answer}</div>
+          <div>점수 : {grading.score}</div>
+        </div>
+      ))}
     </div>
   );
 }
