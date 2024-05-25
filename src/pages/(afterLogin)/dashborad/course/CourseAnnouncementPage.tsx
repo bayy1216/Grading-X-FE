@@ -18,13 +18,29 @@ export default function CourseAnnouncementPage() {
 
   return (
     <div className="flex flex-col items-start justify-start w-full h-full overflow-y-auto">
-      <h1>CourseAnnouncementPage</h1>
-      {data?.announcementResponses.map((announcement) => (
-        <div key={announcement.id}>
-          {announcement.title}
-          {announcement.content}
-        </div>
-      ))}
+      <div className="flex flex-col w-full h-full">
+        {data?.announcementResponses.map((announcement) => (
+          <div key={announcement.id} className="w-full border-t border-b p-4">
+            <div className="flex flex-row justify-start items-center">
+              <div>
+                {announcement.author}
+              </div>
+              <div className="w-4"/>
+              <div className="flex flex-col flex-[1] ">
+                <div className="text-2xl">
+                  {announcement.title}
+                </div>
+                <div>
+                  {announcement.content}
+                </div>
+              </div>
+              <div className="mr-4">
+                {announcement.createdDate ?? "생성일"}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
