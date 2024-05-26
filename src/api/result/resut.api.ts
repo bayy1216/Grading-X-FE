@@ -10,8 +10,8 @@ export const getResultForInstructorByExamId: QueryFunction<ResultForInstructorRe
     return response.data;
   }
 
-export async function startGradeExam(examId: number): Promise<void> {
-  const res = await axiosClient.post(`/api/v1/grading/${examId}`);
+export async function startGradeExam(examId: number, useKeyword: boolean): Promise<void> {
+  const res = await axiosClient.post(`/api/v1/grading/${examId}?useKeyword=${useKeyword}`);
   return res.data;
 }
 
