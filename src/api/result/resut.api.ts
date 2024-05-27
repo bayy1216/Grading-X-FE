@@ -16,6 +16,6 @@ export async function startGradeExam(examId: number, useKeyword: boolean): Promi
 }
 
 export async function gradeHealthCheck(examId: number): Promise<boolean> {
-  const res = await axiosClient.get(`/api/v1/grading/${examId}`);
+  const res = await axiosClient.get(`/api/v1/grading/${examId}/status`);
   return res.status === 200;
 }

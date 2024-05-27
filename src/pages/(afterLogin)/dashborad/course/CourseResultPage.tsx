@@ -53,10 +53,12 @@ export default function CourseResultPage() {
       const result = await gradeHealthCheck(examId);
       if (result) {
         clearInterval(intervalId);
+        setIsGradeLoading(false);
         await refetch();
       }
       if (healthCheckTimeout > 180) {
         clearInterval(intervalId);
+        setIsGradeLoading(false);
       }
     }, 1000);
   }
