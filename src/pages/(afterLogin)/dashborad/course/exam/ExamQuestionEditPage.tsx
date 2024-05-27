@@ -266,6 +266,7 @@ export default function ExamQuestionEditPage() {
             isLast={questions.length === question.index}
           />
         ))}
+        <div className="p-4"/>
       </div>
       <div className="sticky right-0 top-0 flex flex-col items-start justify-center h-full">
         <Button
