@@ -1,9 +1,6 @@
 import {axiosClient} from "../AxiosClient.ts";
 import {QuestionEditResponse, QuestionsResponse} from "./question.response.ts";
-import {
-  QuestionCreateRequest,
-  QuestionUpdateRequest
-} from "./question.request.ts";
+import {QuestionCreateRequest, QuestionUpdateRequest} from "./question.request.ts";
 import {QueryFunction} from "@tanstack/react-query";
 
 // export async function getQuestionsByExamId(examContentId: number): Promise<QuestionsResponse> {
@@ -41,4 +38,38 @@ export const getQuestionsByExamIdForSolve: QueryFunction<QuestionsResponse, [_1:
   const [_1, examContentId] = queryKey;
   const res = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/student/question`);
   return res.data;
+}
+
+
+//multpart form data로 문제 생성
+export async function createQuestionByAI(file : FormData) : Promise<QuestionAnswerResponse>{
+  console.log(file.get('file'));
+  // return {
+  //   questions_answers : [
+  //     {
+  //       문제 : "문제",
+  //       답안 : "답안"
+  //     }
+  //   ]
+  // }
+  const res = await fetch('http://43.201.130.60:8000/upload/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Cross-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*',
+    },
+    body: file,
+
+  });
+  return await res.json();
+}
+
+export interface QuestionAnswerResponse{
+  questions_answers : QuestionsAnswers[];
+}
+
+export interface QuestionsAnswers{
+  문제 : string;
+  답안 : string;
 }
