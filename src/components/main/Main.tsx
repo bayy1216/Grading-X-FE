@@ -30,6 +30,10 @@ export default function Main() {
     navigate(`/exam/${examCode}`);
   }
 
+  const onQuestionCreate = () => {
+    navigate('/question/create');
+  }
+
   return (
     <main className="flex flex-col  w-screen h-screen bg-bgGrey items-center">
       <div className="w-screen h-16 bg-bgGrey
@@ -57,7 +61,7 @@ export default function Main() {
 
         </div>
       </div>
-      <div className="mt-64 flex flex-col items-center text-5xl font-semibold">
+      <div className="mt-48 flex flex-col items-center text-5xl font-semibold">
         <div className="block text-[#F4FFFA00] bg-clip-text bg-gradient-to-b
         from-[#cccccc] via-[#cccccc] to-[#ffffff]">
           Automate Your questions
@@ -68,14 +72,14 @@ export default function Main() {
         </div>
       </div>
 
-      <div className="h-32"/>
+      <div className="h-24"/>
 
       <div className="flex flex-row bg-buttonGreen w-[600px] items-center rounded-full px-10 py-4">
-        <div className="text-2xl text-white">
-          Exam Access
+        <div className="text-2xl text-white w-[120px]">
+          시험 응시
         </div>
         <input
-          className="w-96 h-10  px-4 py-2 text-lg text-gray-700 border border-gray-300 rounded-md"
+          className="flex-1 h-10  px-4 py-2 text-lg text-gray-700 border border-gray-300 rounded-md"
           value={examCode}
           onChange={(e) => setExamCode(e.target.value)}
           placeholder="시험 코드를 입력하세요"
@@ -83,11 +87,20 @@ export default function Main() {
         />
         <button className="h-10 w-20 ml-2 bg-gray-700 text-white text-lg
           font-light px-2 py-1 border border-gray-300 rounded-md"
-          onClick={onCodeEnter}
+                onClick={onCodeEnter}
         >
           Enter
         </button>
       </div>
+
+      <div className="h-16"/>
+      <button className="h-12 w-32 ml-2 bg-buttonGreen text-white text-lg
+          font-medium px-2 py-1 border border-gray-300 rounded-md"
+              onClick={onQuestionCreate}
+      >
+        문제 생성
+      </button>
+
     </main>
   );
 }

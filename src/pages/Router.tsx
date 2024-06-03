@@ -21,12 +21,14 @@ import ExamQuestionEditPage from "@/pages/(afterLogin)/dashborad/course/exam/Exa
 import CourseDetailLayout from "@/pages/(afterLogin)/dashborad/course/CourseDetailLayout.tsx";
 import CourseResultPage from "@/pages/(afterLogin)/dashborad/course/CourseResultPage.tsx";
 import CourseAnnouncementPage from "@/pages/(afterLogin)/dashborad/course/CourseAnnouncementPage.tsx";
+import {CreateQuestionPage} from "@/pages/(beforeLogin)/CreateQuestionPage.tsx";
 
 const router = createBrowserRouter([
   {index: true, path: "/", element: <MainPage /> },
   {path: "/login", element: <LoginPage />},
   {path: "/signup", element: <SignupPage />},
   {path: "/exam/:examId", element: <GuestExamTakePage />},
+  {path: "/question/create", element: <CreateQuestionPage />},
   {
     path: "/dashboard", element: <DashboardLayout />,
     children: [
