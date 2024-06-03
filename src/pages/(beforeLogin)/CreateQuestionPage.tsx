@@ -35,7 +35,7 @@ export const CreateQuestionPage = () => {
     <div className="w-full h-full flex flex-col items-center justify-between">
       <h1>Upload a File</h1>
       <div className="flex flex-row items-stretch">
-        <form onSubmit={handleSubmit} className="border p-4 w-[600px]">
+        <form onSubmit={handleSubmit} encType="mult-part/form-data" className="border p-4 w-[600px]">
           <input type="file" onChange={handleFileChange}/>
           <button type="submit">업로드</button>
         </form>
@@ -45,9 +45,10 @@ export const CreateQuestionPage = () => {
       <div className="h-32"/>
       {response && (
         response.questions_answers.map((qa, index) => (
-          <div key={index} className="border rounded-md p-4 mb-4 w-[600px] h-28 flex flex-col justify-between">
+          <div key={index} className="border rounded-md p-4 mb-4 w-[600px] flex flex-col justify-between">
 
             <p>문제: {qa.답안}</p>
+            <div className="h-12" />
             <p>답안: {qa.문제}</p>
           </div>
         ))

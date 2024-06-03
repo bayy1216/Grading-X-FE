@@ -40,27 +40,11 @@ export const getQuestionsByExamIdForSolve: QueryFunction<QuestionsResponse, [_1:
   return res.data;
 }
 
-
-//multpart form data로 문제 생성
 export async function createQuestionByAI(file : FormData) : Promise<QuestionAnswerResponse>{
-  console.log(file.get('file'));
-  // return {
-  //   questions_answers : [
-  //     {
-  //       문제 : "문제",
-  //       답안 : "답안"
-  //     }
-  //   ]
-  // }
+
   const res = await fetch('http://43.201.130.60:8000/upload/', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      'Cross-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Origin': '*',
-    },
     body: file,
-
   });
   return await res.json();
 }
