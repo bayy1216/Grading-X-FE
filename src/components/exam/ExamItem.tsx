@@ -23,6 +23,9 @@ export default function ExamItem({exam}: Props){
           <div className="text-base font-medium mb-2">
             {endTime}
           </div>
+          <div className="ml-2 text-base font-medium mb-2">
+            / 시험코드 : {exam.id}
+          </div>
         </div>
       </div>
     </div>

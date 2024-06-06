@@ -33,7 +33,7 @@ export default function ExamDetailPage() {
   return (
     <div className="flex flex-col items-start justify-start w-full h-full">
       <div className="flex flex-row items-center justify-between w-full p-5 border-b border-gray-300">
-        <h1>{data?.name}</h1>
+        <h1>{data?.name} /  시험코드 : {data?.id}</h1>
         <div className="flex flex-row items-center">
           <div className="text-base font-medium mb-2 mr-5">
             {startTime}
