@@ -13,9 +13,7 @@ interface Props {
   onKeywordAdd: (id: number) => void;
   onKeywordChange: (id: number, value: string, keywordIndex: number) => void;
   onKeywordDelete: (id: number, keywordIndex: number) => void;
-  onAnswerAdd: (id: number) => void;
-  onAnswerChange: (id: number, value: string, answerIndex: number) => void;
-  onAnswerDelete: (id: number, answerIndex: number) => void;
+  onAnswerChange: (id: number, value: string) => void;
   isLast: boolean;
 }
 
@@ -26,9 +24,7 @@ export default function ExamQuestionEditItem({
                                                onChangeDown,
                                                onDelete,
                                                isLast,
-                                               onAnswerAdd,
                                                onAnswerChange,
-                                               onAnswerDelete,
                                                onKeywordAdd,
                                                onKeywordChange,
                                                onKeywordDelete,
@@ -88,31 +84,16 @@ export default function ExamQuestionEditItem({
           <Label htmlFor="answer" className="text-left">
             정답
           </Label>
-
-          <Button
-            onClick={() => onAnswerAdd(question.id)}
-            variant="ghost" size="icon"
-          >
-            <Plus className="h-4 w-4"/>
-          </Button>
         </div>
-        {question.answers.map((answer, index) => (
-          <div className="flex flex-row">
-            <Input
-              name="answer" placeholder="정답"
-              value={answer}
-              onChange={(e) => onAnswerChange(question.id, e.target.value, index)}
-              className="col-span-3"
-            />
-            <Button
-              onClick={() => onAnswerDelete(question.id, index)}
-              variant="outline" size="icon" className="ml-2"
-            >
-              <Trash className="h-4 w-4"/>
-            </Button>
+        <div className="flex flex-row">
+          <Input
+            name="answer" placeholder="정답"
+            value={question.answer}
+            onChange={(e) => onAnswerChange(question.id, e.target.value)}
+            className="col-span-3"
+          />
 
-          </div>
-        ))}
+        </div>
       </div>
       <div className="mt-4 flex flex-col space-y-1.5">
         <div className="flex flex-row justify-between items-center">
@@ -127,7 +108,7 @@ export default function ExamQuestionEditItem({
           </Button>
         </div>
         {question.keywords.map((keyword, index) => (
-          <div className="flex flex-row">
+          <div className="flex flex-row" key={index}>
             <Input
               name="keyword" placeholder="키워드"
               value={keyword}

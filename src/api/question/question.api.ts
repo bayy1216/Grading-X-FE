@@ -1,9 +1,6 @@
 import {axiosClient} from "../AxiosClient.ts";
-import {Criteria, QuestionEditResponse} from "./question.response.ts";
-import {
-  QuestionCreateRequest,
-  QuestionUpdateRequest
-} from "./question.request.ts";
+import {QuestionEditResponse, QuestionsResponse} from "./question.response.ts";
+import {QuestionCreateRequest, QuestionUpdateRequest} from "./question.request.ts";
 import {QueryFunction} from "@tanstack/react-query";
 
 // export async function getQuestionsByExamId(examContentId: number): Promise<QuestionsResponse> {
@@ -12,26 +9,14 @@ import {QueryFunction} from "@tanstack/react-query";
 //   return res.data;
 // }
 
-export const getQuestionsByExamId: QueryFunction<QuestionEditResponse, [_1: string, number]>
+export const getQuestionsByExamIdForUpdate: QueryFunction<QuestionEditResponse, [_1: string, number]>
   = async ({queryKey}) => {
   const [_1, examContentId] = queryKey;
-  const res = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/question`);
-  console.log(res.data);
-  return {
-    questions: [
-      {
-        query: "문제1",
-        index: 1,
-        weightage: 1,
-        answers: ["정답1", "정답2"],
-        keywords: ["키워드1", "키워드2"],
-        id: 1
-      }
-    ]
-  }
+  const res = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/instructor/question`);
+  return res.data;
 }
 
-export async function createQuestion(examContentId: number, request: QuestionCreateRequest): Promise<number> {
+export async function createQuestion(examContentId: number, request: QuestionCreateRequest): Promise<void> {
   const res
     = await axiosClient.post(`/api/v1/course/exam-content/${examContentId}/question`, {
     ...request
@@ -48,8 +33,27 @@ export async function updateQuestion(request: QuestionUpdateRequest): Promise<nu
   return res.data;
 }
 
-export async function getCriteria(questionId: number): Promise<Criteria> {
-  const res
-    = await axiosClient.get(`/api/v1/course/exam-content/question/${questionId}/criteria`);
+export const getQuestionsByExamIdForSolve: QueryFunction<QuestionsResponse, [_1: string, number]>
+  = async ({queryKey}) => {
+  const [_1, examContentId] = queryKey;
+  const res = await axiosClient.get(`/api/v1/course/exam-content/${examContentId}/student/question`);
   return res.data;
+}
+
+export async function createQuestionByAI(file : FormData) : Promise<QuestionAnswerResponse>{
+
+  const res = await fetch('http://43.201.130.60:8000/upload/', {
+    method: 'POST',
+    body: file,
+  });
+  return await res.json();
+}
+
+export interface QuestionAnswerResponse{
+  questions_answers : QuestionsAnswers[];
+}
+
+export interface QuestionsAnswers{
+  문제 : string;
+  답안 : string;
 }

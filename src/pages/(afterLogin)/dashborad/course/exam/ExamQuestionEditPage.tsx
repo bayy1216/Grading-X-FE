@@ -1,12 +1,13 @@
 import {useLocation} from "react-router-dom";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {Question, QuestionEdit, QuestionEditResponse} from "@/api/question/question.response.ts";
 import {MINUTE_5, QUESTIONS} from "@/const/data.ts";
-import {getQuestionsByExamId} from "@/api/question/question.api.ts";
+import {createQuestion, getQuestionsByExamIdForUpdate, updateQuestion} from "@/api/question/question.api.ts";
 import {useEffect, useState} from "react";
 import ExamQuestionEditItem from "@/components/exam/ExamQuestionEditItem.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {GreenButton} from "@/components/ui/GreenButton.tsx";
+import {QuestionCreateRequest, QuestionUpdateRequest} from "@/api/question/question.request.ts";
 
 
 const isChanged = (origin: Question, current: Question) => {
@@ -18,9 +19,10 @@ export default function ExamQuestionEditPage() {
   const examId = parseInt(location.pathname.split("/")[5] || "0");
   const {data} = useQuery<QuestionEditResponse, Object, QuestionEditResponse, [_1: string, _2: number]>({
     queryKey: [QUESTIONS, examId],
-    queryFn: getQuestionsByExamId,
+    queryFn: getQuestionsByExamIdForUpdate,
     staleTime: MINUTE_5, // 5 minutes 동안 fresh data를 유지(fresh -> stale)
   });
+  const queryClient = useQueryClient();
 
   const [questions, setQuestions] = useState<QuestionEdit[]>([]);
   useEffect(() => {
@@ -129,67 +131,74 @@ export default function ExamQuestionEditPage() {
           index: prev.length + 1,
           weightage: 0,
           query: "",
-          answers: [],
+          answer: "",
           keywords: [],
         }
       ];
     });
   }
 
-  const onQuestionSave = () => {
+  const onQuestionSave = async () => {
     const createQuestions = questions.filter((q) => q.id < 0);
     const updateQuestions = questions.filter((q) => {
       const originQuestion = data?.questions?.find((oq) => oq.id === q.id);
       return originQuestion && isChanged(originQuestion, q);
     });
-    console.log("createQuestions", createQuestions);
-    console.log("updateQuestions", updateQuestions);
+    const createRequest : QuestionCreateRequest = {
+      questions: createQuestions.map((q) => {
+        return {
+          query: q.query,
+          index: q.index,
+          weightage: q.weightage,
+          answer: q.answer,
+          keywords: q.keywords,
+        }
+      })
+    };
+    const updateRequest : QuestionUpdateRequest = {
+      questions: updateQuestions.map((q) => {
+        return {
+          id: q.id,
+          query: q.query,
+          index: q.index,
+          weightage: q.weightage,
+          answer: q.answer,
+          keywords: q.keywords,
+        }
+      })
+    };
+
+    const promises = [];
+    if(createQuestions.length > 0){
+      const pro =  createQuestion(examId, createRequest);
+      promises.push(pro);
+    }
+    if(updateQuestions.length > 0){
+      await updateQuestion(updateRequest);
+    }
+    await Promise.all(promises);
+    await queryClient.invalidateQueries({
+      queryKey: [QUESTIONS, examId],
+    });
+
+
     return;
   }
 
-  const onAnswerAdd = (id: number) => {
-    setQuestions((prev) => {
-      return prev.map((q) => {
-        if (q.id === id) {
-          return {
-            ...q,
-            answers: [...q.answers, ""],
-          }
-        }
-        return q;
-      });
-    });
-  }
 
-  const onAnswerChange = (id: number, value: string, index: number) => {
+  const onAnswerChange = (id: number, value: string) => {
     setQuestions((prev) => {
       return prev.map((q) => {
         if (q.id === id) {
           return {
             ...q,
-            answers: q.answers.map((a, i) => {
-              return i === index ? value : a;
-            }),
+            answer: value,
           }
         }
         return q;
       });
     });
-  }
-
-  const onAnswerDelete = (id: number, index: number) => {
-    setQuestions((prev) => {
-      return prev.map((q) => {
-        if (q.id === id) {
-          return {
-            ...q,
-            answers: q.answers.filter((_, i) => i !== index),
-          }
-        }
-        return q;
-      });
-    });
-  }
+  };
 
   const onKeywordAdd = (id: number) => {
     setQuestions((prev) => {
@@ -250,15 +259,14 @@ export default function ExamQuestionEditPage() {
             onChangeUp={() => onChangeUp(question.id)}
             onChangeDown={() => onChangeDown(question.id)}
             onDelete={() => onDelete(question.id)}
-            onAnswerAdd={onAnswerAdd}
             onAnswerChange={onAnswerChange}
-            onAnswerDelete={onAnswerDelete}
             onKeywordAdd={onKeywordAdd}
             onKeywordDelete={onKeywordDelete}
             onKeywordChange={onKeywordChange}
             isLast={questions.length === question.index}
           />
         ))}
+        <div className="p-4"/>
       </div>
       <div className="sticky right-0 top-0 flex flex-col items-start justify-center h-full">
         <Button
