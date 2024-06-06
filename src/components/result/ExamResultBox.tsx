@@ -2,22 +2,28 @@ import {useQuery} from "@tanstack/react-query";
 import {DASHBOARD, MINUTE_5, RESULT} from "@/const/data.ts";
 import {Result, ResultForInstructorResponse} from "@/api/result/result.response.ts";
 import {getResultForInstructorByExamId} from "@/api/result/resut.api.ts";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 interface Props {
   examId: number;
-
+  forceUpdateFlag: boolean;
 }
 
-export default function ExamResultBox({examId}: Props) {
+export default function ExamResultBox({examId, forceUpdateFlag}: Props) {
 
-  const {data} = useQuery<ResultForInstructorResponse, Object, ResultForInstructorResponse, [_1: string, _2: string, _3: number]>({
+  const {data, refetch} = useQuery<ResultForInstructorResponse, Object, ResultForInstructorResponse, [_1: string, _2: string, _3: number]>({
     queryKey: [DASHBOARD, RESULT, examId],
     queryFn: getResultForInstructorByExamId,
     staleTime: MINUTE_5,
   });
 
   const results = data?.resultInstructorResponses ?? [];
+
+  useEffect(() => {
+    if(forceUpdateFlag){
+      refetch();
+    }
+  }, [forceUpdateFlag]);
 
 
   return (

@@ -15,8 +15,7 @@ export default function CourseResultPage() {
   const courseId = parseInt(location.pathname.split("/")[3] || "0");
 
   const {
-    data,
-    refetch
+    data
   } = useQuery<ExamsResponse, Object, ExamsResponse, [_1: string, _2: string, _3: number, _4: string]>({
     queryKey: [DASHBOARD, COURSES, courseId, EXAMS],
     queryFn: getExamsByCourseId,
@@ -40,6 +39,8 @@ export default function CourseResultPage() {
   const [useKeyword, setUseKeyword] = useState<boolean>(false);
   const [healthCheckTimeout, setHealthCheckTimeout] = useState<number>(0);
 
+  const [refetch, setRefetch] = useState<boolean>(false);
+
   /**
    * 채점하기 버튼 클릭시 호출되는 함수
    * 채점 시작 API 호출 후, 1초마다 채점여부를 확인하고, 채점이 완료되면 결과를 보여준다.
@@ -54,7 +55,7 @@ export default function CourseResultPage() {
       if (result) {
         clearInterval(intervalId);
         setIsGradeLoading(false);
-        await refetch();
+        setRefetch((prev) => !prev);
       }
       if (healthCheckTimeout > 180) {
         clearInterval(intervalId);
@@ -99,7 +100,10 @@ export default function CourseResultPage() {
 
       </div>
 
-      {selectedExamId && <ExamResultBox examId={selectedExamId}/>}
+      {selectedExamId && <ExamResultBox
+          examId={selectedExamId}
+          forceUpdateFlag={refetch}
+      />}
     </div>
 
   );
