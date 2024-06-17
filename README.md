@@ -1,30 +1,12 @@
-# React + TypeScript + Vite
+## 1. 서비스 개요
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+교수자들의 반복적인 채점작업을 자동화하기 위해 서술형 자동채점 어플리케이션을 개발
 
-Currently, two official plugins are available:
+## 2. 배포링크
+- Organization : https://github.com/orgs/Grading-X/repositories
+- Web : https://grading-x.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 3. 사용기술
+- `React` `Typescript` `react-query` `zustand` `axios`
+- `tailwind-css` `shadcn/ui`
+- `vercel`
